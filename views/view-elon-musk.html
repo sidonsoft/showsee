@@ -18,263 +18,100 @@
   
   .header {
     padding: 10px 16px;
-    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    background: #161b22;
     border-bottom: 1px solid #21262d;
     flex-shrink: 0;
   }
-  .header h1 { color: #c9d1d9; font-size: 18px; }
-  .header .subtitle { color: #8b949e; font-size: 11px; margin-top: 2px; }
+  .header h1 { color: #c9d1d9; font-size: 16px; }
   
   .content {
     flex: 1;
     display: flex;
-    gap: 14px;
-    padding: 14px;
-    overflow: auto;
-  }
-  
-  /* LEFT */
-  .left { width: 220px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
-  
-  .card { background: #161b22; border-radius: 12px; padding: 12px; }
-  .card h3 { color: #58a6ff; font-size: 11px; margin-bottom: 8px; }
-  
-  .profile-card { text-align: center; }
-  .profile-card h2 { color: #c9d1d9; font-size: 16px; margin-bottom: 2px; }
-  .profile-card .born { color: #8b949e; font-size: 10px; margin-bottom: 6px; }
-  .profile-card .title { color: #f0883e; font-size: 10px; background: rgba(240, 136, 62, 0.1); padding: 3px 10px; border-radius: 10px; display: inline-block; margin-bottom: 8px; }
-  
-  .social-links { display: flex; justify-content: center; gap: 6px; }
-  .social-btn { background: #0d1117; border: 1px solid #30363d; color: #8b949e; padding: 4px 8px; border-radius: 4px; font-size: 10px; text-decoration: none; }
-  
-  .quote { background: linear-gradient(135deg, #2d2416 0%, #161b22 100%); border: 1px solid #f0883e; }
-  .quote p { color: #c9d1d9; font-size: 11px; font-style: italic; line-height: 1.4; margin-bottom: 4px; }
-  .quote .author { color: #8b949e; font-size: 9px; text-align: right; }
-  
-  .stats-grid .stat-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #21262d; font-size: 10px; }
-  .stats-grid .stat-row:last-child { border-bottom: none; }
-  .stats-grid .label { color: #8b949e; }
-  .stats-grid .value { color: #c9d1d9; font-weight: bold; }
-  .stats-grid .value.green { color: #3fb950; }
-  
-  /* MIDDLE - 2.5D Timeline */
-  .middle { 
-    flex: 1; 
-    min-width: 340px; 
-    background: #161b22; 
-    border-radius: 12px; 
-    display: flex; 
-    flex-direction: column; 
-    overflow: hidden;
-    perspective: 800px;
-  }
-  
-  /* Featured - slides in */
-  .featured-container {
-    height: 130px;
-    position: relative;
+    gap: 12px;
+    padding: 12px;
     overflow: hidden;
   }
   
-  .featured-event {
-    position: absolute;
-    inset: 0;
+  .left { width: 200px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+  
+  .card { background: #161b22; border-radius: 10px; padding: 12px; }
+  .card h3 { color: #58a6ff; font-size: 10px; margin-bottom: 8px; }
+  
+  .profile h2 { color: #c9d1d9; font-size: 15px; }
+  .profile .born { color: #8b949e; font-size: 10px; margin: 4px 0; }
+  .profile .title { color: #f0883e; font-size: 9px; background: rgba(240,136,62,0.1); padding: 2px 8px; border-radius: 8px; display: inline-block; }
+  
+  .quote p { color: #c9d1d9; font-size: 10px; font-style: italic; line-height: 1.4; }
+  .quote .author { color: #8b949e; font-size: 9px; text-align: right; margin-top: 4px; }
+  
+  .stats .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 10px; border-bottom: 1px solid #21262d; }
+  .stats .row:last-child { border: none; }
+  .stats .label { color: #8b949e; }
+  .stats .value { color: #c9d1d9; font-weight: bold; }
+  .stats .value.green { color: #3fb950; }
+  
+  .links { display: flex; gap: 6px; }
+  .links a { background: #0d1117; border: 1px solid #30363d; color: #8b949e; padding: 3px 8px; border-radius: 4px; font-size: 9px; text-decoration: none; }
+  
+  .main { flex: 1; background: #161b22; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; }
+  
+  .current {
     padding: 16px 20px;
-    background: linear-gradient(180deg, rgba(88, 166, 255, 0.15) 0%, transparent 100%);
+    background: linear-gradient(135deg, rgba(88,166,255,0.1) 0%, transparent 100%);
     border-bottom: 1px solid #21262d;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: all 0.3s ease;
-  }
-  .featured-event.active {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  .featured-event.past {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  
-  .featured-event .year { font-size: 48px; font-weight: bold; color: #58a6ff; line-height: 1; }
-  .featured-event h2 { color: #c9d1d9; font-size: 18px; margin: 8px 0 4px; }
-  .featured-event p { color: #8b949e; font-size: 13px; line-height: 1.5; }
-  .featured-event .detail { margin-top: 8px; font-size: 12px; color: #3fb950; }
-  
-  /* 2.5D Ribbon Timeline */
-  .ribbon-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px 30px;
-    transform-style: preserve-3d;
-  }
-  
-  .ribbon {
-    position: relative;
-    height: 120px;
-    transform: rotateX(15deg);
-    transform-style: preserve-3d;
-  }
-  
-  .ribbon-track {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 8px;
-    background: linear-gradient(180deg, #21262d 0%, #30363d 50%, #21262d 100%);
-    border-radius: 4px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  }
-  
-  .ribbon-events {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 100%;
+    gap: 16px;
   }
   
-  .event-dot {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    transform-style: preserve-3d;
-    transition: all 0.3s ease;
-  }
+  .current .year { font-size: 42px; font-weight: bold; color: #58a6ff; min-width: 70px; }
+  .current .info h2 { color: #c9d1d9; font-size: 16px; }
+  .current .info p { color: #8b949e; font-size: 12px; margin-top: 4px; }
+  .current .detail { margin-top: 6px; font-size: 11px; color: #3fb950; padding-top: 6px; border-top: 1px solid #21262d; }
   
-  .event-dot .dot {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #30363d;
-    border-radius: 50%;
-    border: 3px solid #30363d;
-    transition: all 0.3s ease;
-    transform: translateZ(0);
-  }
+  .ribbon-area { flex: 1; display: flex; align-items: center; padding: 20px 30px; perspective: 800px; }
   
-  .event-dot.passed .dot {
-    background: #58a6ff;
-    border-color: #58a6ff;
-    box-shadow: 0 0 15px rgba(88, 166, 255, 0.5);
-  }
+  .ribbon { width: 100%; height: 80px; position: relative; transform: rotateX(12deg); transform-style: preserve-3d; }
   
-  .event-dot.active .dot {
-    background: #3fb950;
-    border-color: #3fb950;
-    box-shadow: 0 0 25px rgba(63, 185, 80, 0.7);
-    transform: translateZ(30px) scale(1.3);
-  }
+  .track { position: absolute; top: 50%; left: 0; right: 0; height: 6px; background: linear-gradient(180deg, #21262d, #30363d, #21262d); border-radius: 3px; transform: translateY(-50%); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
   
-  .event-dot .label {
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%) translateZ(0);
-    font-size: 10px;
-    color: #484f58;
-    white-space: nowrap;
-    transition: all 0.3s ease;
-  }
+  .dots { position: absolute; top: 50%; left: 0; right: 0; height: 0; display: flex; justify-content: space-between; transform: translateY(-50%); }
   
-  .event-dot.passed .label { color: #8b949e; }
+  .dot { width: 20px; height: 20px; background: #30363d; border-radius: 50%; border: 3px solid #30363d; position: relative; cursor: pointer; transition: all 0.25s ease; transform: translateZ(0); }
+  .dot:hover { transform: translateZ(20px) scale(1.2); }
+  .dot.passed { background: #58a6ff; border-color: #58a6ff; box-shadow: 0 0 12px rgba(88,166,255,0.4); }
+  .dot.active { background: #3fb950; border-color: #3fb950; box-shadow: 0 0 20px rgba(63,185,80,0.6); transform: translateZ(40px) scale(1.4); }
   
-  .event-dot.active .label {
-    color: #3fb950;
-    font-weight: bold;
-    font-size: 11px;
-    transform: translateX(-50%) translateZ(40px);
-  }
+  .dot .label { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateZ(0); margin-top: 8px; font-size: 9px; color: #484f58; white-space: nowrap; transition: all 0.25s ease; }
+  .dot.passed .label { color: #8b949e; }
+  .dot.active .label { color: #3fb950; font-weight: bold; transform: translateX(-50%) translateZ(40px); }
   
-  /* Card popup */
-  .event-card {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%) translateZ(60px) scale(0.8);
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 8px;
-    padding: 10px 14px;
-    width: 140px;
-    text-align: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease;
-  }
+  .dot .card { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateZ(50px); margin-bottom: 10px; padding: 8px 10px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; width: 120px; text-align: center; opacity: 0; pointer-events: none; transition: all 0.25s ease; }
+  .dot:hover .card, .dot.active .card { opacity: 1; }
+  .dot .card .year { font-size: 11px; font-weight: bold; color: #58a6ff; }
+  .dot .card .title { font-size: 10px; color: #c9d1d9; margin-top: 2px; }
   
-  .event-dot.active .event-card {
-    opacity: 1;
-    transform: translateX(-50%) translateZ(60px) scale(1);
-  }
+  .hover-zone { position: absolute; inset: 0; cursor: ew-resize; }
   
-  .event-card .year { font-size: 12px; font-weight: bold; color: #58a6ff; }
-  .event-card .title { font-size: 11px; color: #c9d1d9; margin-top: 4px; }
-  .event-card .desc { font-size: 10px; color: #8b949e; margin-top: 2px; }
+  .right { width: 180px; flex-shrink: 0; display: flex; flex-direction: column; }
   
-  /* Hover interaction zone */
-  .hover-zone {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    cursor: ew-resize;
-  }
+  .right .card { flex: 1; }
   
-  /* Events list - subtle at bottom */
-  .events-footer {
-    padding: 12px 16px;
-    border-top: 1px solid #21262d;
-    max-height: 120px;
-    overflow-y: auto;
-  }
+  .company { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #21262d; }
+  .company:last-child { border: none; }
   
-  .events-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+  .logo { width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; color: #0d1117; }
+  .logo.tesla { background: #e82127; }
+  .logo.spacex { background: #c9d1d9; }
+  .logo.x { background: #000; color: #fff; }
+  .logo.xai { background: #a371f7; }
+  .logo.neuralink { background: #3fb950; }
   
-  .event-chip {
-    background: #0d1117;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 10px;
-    color: #484f58;
-    border: 1px solid transparent;
-    transition: all 0.2s;
-  }
-  .event-chip.passed { color: #8b949e; }
-  .event-chip.active { color: #3fb950; border-color: #3fb950; }
-  
-  /* RIGHT */
-  .right { width: 220px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
-  
-  .companies .company { background: #0d1117; border-radius: 8px; padding: 8px; margin-bottom: 6px; }
-  .companies .company:last-child { margin-bottom: 0; }
-  
-  .company-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .company-logo { width: 24px; height: 24px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #0d1117; }
-  .company-logo.tesla { background: #e82127; }
-  .company-logo.spacex { background: #c9d1d9; }
-  .company-logo.x { background: #000; color: #fff; }
-  .company-logo.xai { background: #a371f7; }
-  .company-logo.neuralink { background: #3fb950; }
-  
-  .company .name { font-size: 11px; font-weight: bold; color: #c9d1d9; }
-  .company .role { font-size: 9px; color: #8b949e; }
-  
-  .company-stats { display: flex; gap: 8px; }
-  .company .stat { flex: 1; }
-  .company .stat .val { font-size: 11px; font-weight: bold; color: #3fb950; }
+  .company .info { flex: 1; }
+  .company .info .name { font-size: 10px; font-weight: bold; color: #c9d1d9; }
+  .company .info .role { font-size: 8px; color: #8b949e; }
+  .company .stat { text-align: right; }
+  .company .stat .val { font-size: 10px; font-weight: bold; color: #3fb950; }
   .company .stat .label { font-size: 8px; color: #8b949e; }
 </style>
 </head>
@@ -282,20 +119,15 @@
 
 <div class="header">
   <h1>Elon Musk</h1>
-  <div class="subtitle">CEO Tesla, SpaceX, xAI</div>
 </div>
 
 <div class="content">
   
   <div class="left">
-    <div class="card profile-card">
+    <div class="card profile">
       <h2>Elon Musk</h2>
       <div class="born">June 28, 1971</div>
       <div class="title">CEO & Visionary</div>
-      <div class="social-links">
-        <a href="https://x.com/elonmusk" target="_blank" class="social-btn">𝕏</a>
-        <a href="https://en.wikipedia.org/wiki/Elon_Musk" target="_blank" class="social-btn">Wiki</a>
-      </div>
     </div>
     
     <div class="card quote">
@@ -303,90 +135,69 @@
       <div class="author">— Elon Musk</div>
     </div>
     
-    <div class="card stats-grid">
-      <div class="stat-row"><span class="label">Net Worth</span><span class="value green">$850B</span></div>
-      <div class="stat-row"><span class="label">Companies</span><span class="value">9</span></div>
-      <div class="stat-row"><span class="label">Children</span><span class="value">11+</span></div>
+    <div class="card stats">
+      <h3>Quick Stats</h3>
+      <div class="row"><span class="label">Net Worth</span><span class="value green">$850B</span></div>
+      <div class="row"><span class="label">Companies</span><span class="value">9</span></div>
+      <div class="row"><span class="label">Children</span><span class="value">11+</span></div>
+    </div>
+    
+    <div class="card links">
+      <a href="https://x.com/elonmusk" target="_blank">𝕏</a>
+      <a href="https://en.wikipedia.org/wiki/Elon_Musk" target="_blank">Wiki</a>
     </div>
   </div>
   
-  <!-- MIDDLE - 2.5D Timeline -->
-  <div class="middle">
-    <div class="featured-container" id="featured-container">
-      <!-- Featured events slide in from sides -->
-    </div>
-    
-    <div class="ribbon-container">
-      <div class="hover-zone" id="hover-zone">
-        <div class="ribbon" id="ribbon">
-          <div class="ribbon-track"></div>
-          <div class="ribbon-events" id="ribbon-events"></div>
-        </div>
+  <div class="main">
+    <div class="current" id="current">
+      <div class="year">1971</div>
+      <div class="info">
+        <h2>Born</h2>
+        <p>Pretoria, South Africa</p>
       </div>
     </div>
     
-    <div class="events-footer">
-      <div class="events-row" id="events-row"></div>
+    <div class="ribbon-area">
+      <div class="ribbon">
+        <div class="track"></div>
+        <div class="dots" id="dots"></div>
+        <div class="hover-zone" id="hover-zone"></div>
+      </div>
     </div>
   </div>
   
   <div class="right">
-    <div class="card companies">
+    <div class="card">
       <h3>Companies</h3>
       
       <div class="company">
-        <div class="company-header">
-          <div class="company-logo tesla">T</div>
-          <div><div class="name">Tesla</div><div class="role">CEO</div></div>
-        </div>
-        <div class="company-stats">
-          <div class="stat"><div class="val">$1.1T</div><div class="label">Cap</div></div>
-          <div class="stat"><div class="val">13.5%</div><div class="label">Stake</div></div>
-        </div>
+        <div class="logo tesla">T</div>
+        <div class="info"><div class="name">Tesla</div><div class="role">CEO</div></div>
+        <div class="stat"><div class="val">$1.1T</div><div class="label">Cap</div></div>
       </div>
       
       <div class="company">
-        <div class="company-header">
-          <div class="company-logo spacex">S</div>
-          <div><div class="name">SpaceX</div><div class="role">CEO</div></div>
-        </div>
-        <div class="company-stats">
-          <div class="stat"><div class="val">$350B</div><div class="label">Value</div></div>
-          <div class="stat"><div class="val">42%</div><div class="label">Stake</div></div>
-        </div>
+        <div class="logo spacex">S</div>
+        <div class="info"><div class="name">SpaceX</div><div class="role">CEO</div></div>
+        <div class="stat"><div class="val">$350B</div><div class="label">Value</div></div>
       </div>
       
       <div class="company">
-        <div class="company-header">
-          <div class="company-logo x">X</div>
-          <div><div class="name">X / Twitter</div><div class="role">Owner</div></div>
-        </div>
-        <div class="company-stats">
-          <div class="stat"><div class="val">$19B</div><div class="label">Value</div></div>
-          <div class="stat"><div class="val">$44B</div><div class="label">Paid</div></div>
-        </div>
+        <div class="logo x">X</div>
+        <div class="info"><div class="name">X / Twitter</div><div class="role">Owner</div></div>
+        <div class="stat"><div class="val">$19B</div><div class="label">Value</div></div>
       </div>
       
       <div class="company">
-        <div class="company-header">
-          <div class="company-logo xai">X</div>
-          <div><div class="name">xAI</div><div class="role">Founder</div></div>
-        </div>
-        <div class="company-stats">
-          <div class="stat"><div class="val">$75B</div><div class="label">Value</div></div>
-          <div class="stat"><div class="val">Grok</div><div class="label">Product</div></div>
-        </div>
+        <div class="logo xai">X</div>
+        <div class="info"><div class="name">xAI</div><div class="role">Founder</div></div>
+        <div class="stat"><div class="val">$75B</div><div class="label">Value</div></div>
       </div>
       
       <div class="company">
-        <div class="company-header">
-          <div class="company-logo neuralink">N</div>
-          <div><div class="name">Neuralink</div><div class="role">Founder</div></div>
-        </div>
-        <div class="company-stats">
-          <div class="stat"><div class="val">$5B</div><div class="label">Value</div></div>
-          <div class="stat"><div class="val">2</div><div class="label">Patients</div></div>
-        </div>
+        <div class="logo neuralink">N</div>
+        <div class="info"><div class="name">Neuralink</div><div class="role">Founder</div></div>
+        <div class="stat"><div class="val">$5B</div><div class="label">Value</div></div>
       </div>
     </div>
   </div>
@@ -397,111 +208,68 @@
 const events = [
   { year: 1971, title: 'Born', desc: 'Pretoria, South Africa' },
   { year: 1989, title: 'Moves to Canada', desc: 'Emigrated at 17' },
-  { year: 1995, title: 'Zip2 Founded', desc: 'City guide software', detail: 'Sold for $307M' },
-  { year: 1999, title: 'X.com / PayPal', desc: 'Founds X.com', detail: 'PayPal sold for $1.5B' },
+  { year: 1995, title: 'Zip2', desc: 'City guide software', detail: 'Sold $307M' },
+  { year: 1999, title: 'X.com / PayPal', desc: 'Founds X.com', detail: 'Sold $1.5B' },
   { year: 2002, title: 'SpaceX Founded', desc: 'Rocket company' },
   { year: 2004, title: 'Joins Tesla', desc: 'Co-founder' },
-  { year: 2008, title: 'Falcon 1 Success', desc: 'First private rocket', detail: 'To orbit' },
+  { year: 2008, title: 'Falcon 1', desc: 'First private rocket to orbit' },
   { year: 2010, title: 'Tesla IPO', desc: 'Goes public' },
   { year: 2016, title: 'Neuralink', desc: 'Brain-computer' },
   { year: 2020, title: 'Starlink', desc: 'Most valuable car co' },
-  { year: 2022, title: 'Twitter / X', desc: 'Acquires for $44B', detail: 'World richest' },
-  { year: 2023, title: 'xAI + Cybertruck', desc: 'Founds xAI' },
-  { year: 2024, title: 'Starship + Robotaxi', desc: 'Orbit + unveiled' },
+  { year: 2022, title: 'Twitter / X', desc: 'Acquires $44B', detail: 'World richest' },
+  { year: 2023, title: 'xAI', desc: 'Founds xAI + Cybertruck' },
+  { year: 2024, title: 'Starship', desc: 'Orbit + Robotaxi' },
   { year: 2025, title: 'DOGE + Grok', desc: 'Government team' },
   { year: 2026, title: 'Forbes #1', desc: '$850B net worth' }
 ];
 
-const ribbonEvents = document.getElementById('ribbon-events');
-const featuredContainer = document.getElementById('featured-container');
-const eventsRow = document.getElementById('events-row');
+const dots = document.getElementById('dots');
 const hoverZone = document.getElementById('hover-zone');
-
-// Build featured slides
-featuredContainer.innerHTML = events.map((e, i) => `
-  <div class="featured-event" data-index="${i}">
-    <div class="year">${e.year}</div>
-    <h2>${e.title}</h2>
-    <p>${e.desc}</p>
-    ${e.detail ? `<div class="detail">${e.detail}</div>` : ''}
-  </div>
-`).join('');
-
-const featuredSlides = featuredContainer.querySelectorAll('.featured-event');
-
-// Build ribbon dots
-ribbonEvents.innerHTML = events.map((e, i) => `
-  <div class="event-dot" data-index="${i}">
-    <div class="dot"></div>
-    <div class="label">${e.year}</div>
-    <div class="event-card">
-      <div class="year">${e.year}</div>
-      <div class="title">${e.title}</div>
-      <div class="desc">${e.desc}</div>
-    </div>
-  </div>
-`).join('');
-
-const eventDots = ribbonEvents.querySelectorAll('.event-dot');
-
-// Build footer chips
-eventsRow.innerHTML = events.map((e, i) => `
-  <div class="event-chip" data-index="${i}">${e.year} ${e.title}</div>
-`).join('');
-
-const eventChips = eventsRow.querySelectorAll('.event-chip');
+const currentEl = document.getElementById('current');
 
 let currentIndex = 0;
 
-function updateTimeline(index) {
-  currentIndex = Math.max(0, Math.min(events.length - 1, Math.round(index)));
+dots.innerHTML = events.map((e, i) => `
+  <div class="dot" data-index="${i}">
+    <div class="card"><div class="year">${e.year}</div><div class="title">${e.title}</div></div>
+    <div class="label">${e.year}</div>
+  </div>
+`).join('');
+
+const dotEls = dots.querySelectorAll('.dot');
+
+function update(index) {
+  currentIndex = Math.round(index);
+  const e = events[currentIndex];
   
-  featuredSlides.forEach((slide, i) => {
-    slide.classList.remove('active', 'past');
-    if (i < currentIndex) slide.classList.add('past');
-    else if (i === currentIndex) slide.classList.add('active');
+  dotEls.forEach((d, i) => {
+    d.classList.remove('active', 'passed');
+    if (i < currentIndex) d.classList.add('passed');
+    else if (i === currentIndex) d.classList.add('active');
   });
   
-  eventDots.forEach((dot, i) => {
-    dot.classList.remove('active', 'passed');
-    if (i < currentIndex) dot.classList.add('passed');
-    else if (i === currentIndex) dot.classList.add('active');
-  });
-  
-  eventChips.forEach((chip, i) => {
-    chip.classList.remove('active', 'passed');
-    if (i < currentIndex) chip.classList.add('passed');
-    else if (i === currentIndex) chip.classList.add('active');
-  });
+  currentEl.innerHTML = `
+    <div class="year">${e.year}</div>
+    <div class="info">
+      <h2>${e.title}</h2>
+      <p>${e.desc}</p>
+      ${e.detail ? `<div class="detail">${e.detail}</div>` : ''}
+    </div>
+  `;
 }
 
-// Hover interaction
-let isHovering = false;
-
-hoverZone.addEventListener('mouseenter', () => { isHovering = true; });
-hoverZone.addEventListener('mouseleave', () => { isHovering = false; });
+dotEls.forEach((dot, i) => {
+  dot.addEventListener('mouseenter', () => update(i));
+});
 
 hoverZone.addEventListener('mousemove', (e) => {
-  if (!isHovering) return;
-  
   const rect = hoverZone.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const percent = x / rect.width;
-  const index = percent * (events.length - 1);
-  
-  updateTimeline(index);
+  update(percent * (events.length - 1));
 });
 
-// Also hover on dots directly
-eventDots.forEach((dot, i) => {
-  dot.addEventListener('mouseenter', () => updateTimeline(i));
-});
-
-eventChips.forEach((chip, i) => {
-  chip.addEventListener('mouseenter', () => updateTimeline(i));
-});
-
-updateTimeline(0);
+update(0);
 </script>
 
 </body>
