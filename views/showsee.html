@@ -101,15 +101,15 @@
 </div>
 
 <div class="content">
-  <iframe id="frame" src="/view-rust.html"></iframe>
+  <iframe id="frame" src="/view-dna.html"></iframe>
 </div>
 
 <script>
 const STORAGE_KEY = 'showsee_history';
 const MAX_HISTORY = 30;
 
-let currentViewId = 'view-rust';
-let currentViewTitle = 'Rust';
+let currentViewId = 'view-dna';
+let currentViewTitle = 'DNA Double Helix';
 
 function loadHistory() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } 
