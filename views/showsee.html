@@ -38,6 +38,31 @@
   .tool-btn:hover { background: #30363d; }
   .tool-btn.share { opacity: 0.4; cursor: default; } /* future */
   
+  .feedback-btn { padding: 6px 10px; font-size: 14px; }
+  .feedback-btn.like { color: #3fb950; }
+  .feedback-btn.like:hover { background: rgba(63, 185, 80, 0.2); }
+  .feedback-btn.like.done { background: rgba(63, 185, 80, 0.3); }
+  .feedback-btn.dislike { color: #f85149; }
+  .feedback-btn.dislike:hover { background: rgba(248, 81, 73, 0.2); }
+  .feedback-btn.dislike.done { background: rgba(248, 81, 73, 0.3); }
+  
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #21262d;
+    border: 1px solid #30363d;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #c9d1d9;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+  }
+  .toast.show { opacity: 1; }
+  
   .history-dropdown { position: relative; }
   .history-menu {
     display: none;
@@ -90,6 +115,9 @@
   <span class="current" id="current-view"><span>Loading...</span></span>
   
   <button class="tool-btn share" title="Share (coming soon)" style="margin-left:auto">Share</button>
+  
+  <button class="tool-btn feedback-btn like" onclick="giveFeedback('like')" title="I liked this view">👍</button>
+  <button class="tool-btn feedback-btn dislike" onclick="giveFeedback('dislike')" title="I didn't like this view">👎</button>
   
   <div class="history-dropdown">
     <button class="tool-btn" onclick="toggleHistory()">History ▾</button>
@@ -186,6 +214,52 @@ document.addEventListener('click', (e) => {
 document.getElementById('current-view').innerHTML = '<span>' + currentViewTitle + '</span>';
 addToHistory(currentViewId, currentViewTitle);
 renderHistory();
+// Feedback system
+let lastFeedback = null;
+
+function giveFeedback(type) {
+  if (lastFeedback === type) return; // Don't allow double feedback
+  
+  const feedback = {
+    viewId: currentViewId,
+    viewTitle: currentViewTitle,
+    type: type,
+    timestamp: Date.now()
+  };
+  
+  // Save to localStorage
+  let feedbackList = JSON.parse(localStorage.getItem('showsee_feedback') || '[]');
+  feedbackList.unshift(feedback);
+  feedbackList = feedbackList.slice(0, 50); // Keep last 50
+  localStorage.setItem('showsee_feedback', JSON.stringify(feedbackList));
+  
+  // Mark button
+  document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('done'));
+  document.querySelector('.feedback-btn.' + type).classList.add('done');
+  
+  lastFeedback = type;
+  
+  // Toast
+  showToast(type === 'like' ? '👍 Saved as liked' : '👎 Saved as not liked');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// Load existing feedback for this view
+const existing = JSON.parse(localStorage.getItem('showsee_feedback') || '[]');
+const existingFeedback = existing.find(f => f.viewId === currentViewId);
+if (existingFeedback) {
+  lastFeedback = existingFeedback.type;
+  document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('done'));
+  document.querySelector('.feedback-btn.' + existingFeedback.type).classList.add('done');
+}
 </script>
+
+<div id="toast" class="toast"></div>
 </body>
 </html>
