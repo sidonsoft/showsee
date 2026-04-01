@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LLaMA — What It Is & How It Compares</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .header h1 {
+    color: #f0883e;
+    font-size: 18px;
+  }
+  .header .badge {
+    background: #21262d;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #58a6ff;
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  /* LEFT: What is LLaMA */
+  .left {
+    flex: 1;
+    padding: 24px;
+    overflow: auto;
+    border-right: 1px solid #21262d;
+  }
+  
+  .section {
+    margin-bottom: 28px;
+  }
+  .section h2 {
+    color: #58a6ff;
+    font-size: 14px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #21262d;
+  }
+  .section p {
+    color: #8b949e;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .models {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .model {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .model h3 {
+    font-size: 14px;
+    color: #c9d1d9;
+    margin-bottom: 6px;
+  }
+  .model p {
+    font-size: 12px;
+    margin: 0;
+  }
+  .model .tag {
+    display: inline-block;
+    background: #21262d;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    margin-right: 4px;
+  }
+  .model .scout { color: #58a6ff; }
+  .model .maverick { color: #f0883e; }
+  .model .behemoth { color: #a371f7; }
+  .model .moe { color: #3fb950; }
+  .model .multimodal { color: #79c0ff; }
+  
+  .key-points {
+    background: #161b22;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .key-points li {
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 8px;
+    padding-left: 16px;
+    position: relative;
+  }
+  .key-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #f0883e;
+  }
+  
+  /* RIGHT: Timeline + Comparison */
+  .right {
+    flex: 1;
+    padding: 24px;
+    overflow: auto;
+  }
+  
+  .timeline {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #30363d;
+  }
+  
+  .event {
+    position: relative;
+    margin-bottom: 18px;
+    padding-left: 20px;
+  }
+  .event::before {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid;
+  }
+  
+  .event.year::before { border-color: #f0883e; background: #f0883e; }
+  .event.release::before { border-color: #58a6ff; background: #58a6ff; }
+  
+  .event h3 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .event.year h3 { color: #f0883e; font-size: 14px; }
+  .event.release h3 { color: #58a6ff; }
+  
+  .event p {
+    color: #8b949e;
+    font-size: 12px;
+    margin: 0;
+  }
+  
+  .compare-table {
+    background: #161b22;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .compare-table h3 {
+    color: #58a6ff;
+    font-size: 13px;
+    padding: 12px;
+    border-bottom: 1px solid #30363d;
+  }
+  .compare-table table {
+    width: 100%;
+    font-size: 12px;
+    border-collapse: collapse;
+  }
+  .compare-table th {
+    color: #8b949e;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid #21262d;
+    font-weight: normal;
+  }
+  .compare-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #21262d;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table .name { color: #c9d1d9; font-weight: bold; }
+  .compare-table .open { color: #3fb950; }
+  .compare-table .closed { color: #f85149; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Meta LLaMA</h1>
+  <span class="badge">Open Source AI</span>
+</div>
+
+<div class="content">
+  
+  <!-- LEFT: What is LLaMA -->
+  <div class="left">
+    <div class="section">
+      <h2>What is LLaMA?</h2>
+      <p>Meta's open source language model. "Large Language Model Meta AI." Weights are free to download and run locally.</p>
+      <p>Anyone can run a GPT-class AI on their own hardware. No API costs. No data leaving your machine.</p>
+    </div>
+    
+    <div class="section">
+      <h2>LLaMA 4 Models (April 2025)</h2>
+      <div class="models">
+        <div class="model">
+          <h3>Llama 4 Scout</h3>
+          <p><span class="tag scout">17B active</span><span class="tag moe">MoE</span><span class="tag multimodal">multimodal</span></p>
+          <p>Fits in single H100 GPU. 10M token context. Best in class for its size.</p>
+        </div>
+        <div class="model">
+          <h3>Llama 4 Maverick</h3>
+          <p><span class="tag maverick">17B active</span><span class="tag moe">MoE</span><span class="tag multimodal">multimodal</span></p>
+          <p>Most capable for general use. Matches GPT-4o on benchmarks. Cost-effective.</p>
+        </div>
+        <div class="model">
+          <h3>Llama 4 Behemoth</h3>
+          <p><span class="tag behemoth">training</span><span class="tag moe">MoE</span></p>
+          <p>Frontier model still in training. Expected to rival GPT-4.5 class.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Key Points</h2>
+      <ul class="key-points">
+        <li><strong>MoE Architecture</strong> — only activates needed experts, faster inference</li>
+        <li><strong>Native Multimodal</strong> — sees images and text together (early fusion)</li>
+        <li><strong>Open Weights</strong> — download, modify, run locally, fine-tune</li>
+        <li><strong>Massive Context</strong> — up to 10M tokens (Scout)</li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- RIGHT: Timeline + Comparison -->
+  <div class="right">
+    <div class="section">
+      <h2>Timeline</h2>
+      <div class="timeline">
+        <div class="event year">
+          <h3>Feb 2023</h3>
+          <p>LLaMA 1 released (7B-65B)</p>
+        </div>
+        <div class="event release">
+          <h3>March 2023</h3>
+          <p>Weights leak → everyone runs it locally</p>
+        </div>
+        <div class="event year">
+          <h3>July 2023</h3>
+          <p>LLaMA 2 — commercial license</p>
+        </div>
+        <div class="event release">
+          <h3>April 2024</h3>
+          <p>LLaMA 3 (8B, 70B) — fully open</p>
+        </div>
+        <div class="event year">
+          <h3>April 2025</h3>
+          <p>LLaMA 4 — MoE, multimodal</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="compare-table">
+        <h3>vs Other Models</h3>
+        <table>
+          <tr>
+            <th>Model</th>
+            <th>Type</th>
+            <th>Context</th>
+          </tr>
+          <tr>
+            <td class="name">LLaMA 4 Maverick</td>
+            <td class="open">Open</td>
+            <td>1M</td>
+          </tr>
+          <tr>
+            <td class="name">GPT-4o</td>
+            <td class="closed">Closed</td>
+            <td>128k</td>
+          </tr>
+          <tr>
+            <td class="name">Claude 3.7</td>
+            <td class="closed">Closed</td>
+            <td>200k</td>
+          </tr>
+          <tr>
+            <td class="name">DeepSeek R1</td>
+            <td class="open">Open</td>
+            <td>64k</td>
+          </tr>
+          <tr>
+            <td class="name">Gemini 2.0</td>
+            <td class="closed">Closed</td>
+            <td>1M</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+</body>
+</html>
