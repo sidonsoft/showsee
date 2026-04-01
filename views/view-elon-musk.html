@@ -222,16 +222,22 @@
     gap: 10px;
     margin-bottom: 8px;
   }
-  .company .icon {
+  .company-logo {
     width: 36px;
     height: 36px;
-    background: #161b22;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #0d1117;
   }
+  .company-logo.tesla { background: #e82127; }
+  .company-logo.spacex { background: #c9d1d9; }
+  .company-logo.x { background: #000; color: #fff; }
+  .company-logo.xai { background: #a371f7; }
+  .company-logo.neuralink { background: #3fb950; }
   .company .name {
     font-size: 13px;
     font-weight: bold;
@@ -338,6 +344,11 @@
       </div>
     </div>
     
+    <div class="quote">
+      <p>"When something is important enough, you do it even if the odds are not in your favor."</p>
+      <div class="author">— Elon Musk</div>
+    </div>
+    
     <div class="stats-grid">
       <h3>📊 Key Numbers</h3>
       <div class="stat-row">
@@ -369,7 +380,7 @@
   
   <!-- MIDDLE: Timeline -->
   <div class="middle">
-    <h3>📅 Life Timeline</h3>
+    <h3>Life Timeline</h3>
     <div class="timeline">
       <div class="event year">
         <h4>1971</h4>
@@ -457,11 +468,11 @@
   <!-- RIGHT: Companies + Achievements -->
   <div class="right">
     <div class="companies">
-      <h3>🏢 Companies & Empire</h3>
+      <h3>Companies</h3>
       
       <div class="company">
         <div class="company-header">
-          <div class="icon">🚗</div>
+          <div class="company-logo tesla">T</div>
           <div>
             <div class="name">Tesla</div>
             <div class="role">CEO & Co-founder</div>
@@ -481,7 +492,7 @@
       
       <div class="company">
         <div class="company-header">
-          <div class="icon">🚀</div>
+          <div class="company-logo spacex">S</div>
           <div>
             <div class="name">SpaceX</div>
             <div class="role">CEO & Founder</div>
@@ -501,7 +512,7 @@
       
       <div class="company">
         <div class="company-header">
-          <div class="icon">𝕏</div>
+          <div class="company-logo x">X</div>
           <div>
             <div class="name">X / Twitter</div>
             <div class="role">Owner</div>
@@ -521,7 +532,7 @@
       
       <div class="company">
         <div class="company-header">
-          <div class="icon">🤖</div>
+          <div class="company-logo xai">X</div>
           <div>
             <div class="name">xAI</div>
             <div class="role">Founder</div>
@@ -541,7 +552,7 @@
       
       <div class="company">
         <div class="company-header">
-          <div class="icon">🧠</div>
+          <div class="company-logo neuralink">N</div>
           <div>
             <div class="name">Neuralink</div>
             <div class="role">Founder</div>
@@ -597,11 +608,6 @@
           <div class="desc">7,000+ satellites, global internet</div>
         </div>
       </div>
-    </div>
-    
-    <div class="quote">
-      <p>"When something is important enough, you do it even if the odds are not in your favor."</p>
-      <div class="author">— Elon Musk</div>
     </div>
   </div>
   
