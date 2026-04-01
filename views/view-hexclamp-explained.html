@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HexClamp Explained</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  h1 { 
+    color: #58a6ff; 
+    font-size: 16px; 
+    padding: 12px 16px;
+    border-bottom: 1px solid #30363d;
+    flex-shrink: 0;
+  }
+  .split {
+    flex: 1;
+    display: flex;
+    gap: 1px;
+    background: #30363d;
+  }
+  .panel {
+    flex: 1;
+    background: #0d1117;
+    overflow: auto;
+    padding: 20px;
+  }
+  .panel h2 {
+    font-size: 14px;
+    color: #8b949e;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  /* Flowchart */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding-top: 10px;
+  }
+  .stage {
+    background: #161b22;
+    border: 2px solid;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .arrow { color: #484f58; font-size: 16px; }
+  
+  /* Explanation */
+  .explain {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+  .explain h3 {
+    color: #58a6ff;
+    font-size: 15px;
+    margin: 20px 0 10px;
+  }
+  .explain h3:first-child { margin-top: 0; }
+  .explain p { margin-bottom: 12px; color: #8b949e; }
+  .explain strong { color: #c9d1d9; }
+  .explain .stage-mention { 
+    background: #161b22;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .explain .o { color: #58a6ff; }
+  .explain .c { color: #79c0ff; }
+  .explain .p { color: #a5d6ff; }
+  .explain .e { color: #f0883e; }
+  .explain .v { color: #a371f7; }
+  .explain .t { color: #3fb950; }
+</style>
+</head>
+<body>
+
+<h1>HexClamp: What It Is & How It Works</h1>
+
+<div class="split">
+  <div class="panel">
+    <h2>The Flow</h2>
+    <div class="flow">
+      <div class="stage" style="border-color:#58a6ff;color:#58a6ff;">OBSERVE</div>
+      <div class="arrow">↓</div>
+      <div class="stage" style="border-color:#79c0ff;color:#79c0ff;">CONDENSE</div>
+      <div class="arrow">↓</div>
+      <div class="stage" style="border-color:#a5d6ff;color:#a5d6ff;">PLAN</div>
+      <div class="arrow">↓</div>
+      <div class="stage" style="border-color:#f0883e;color:#f0883e;">EXECUTE</div>
+      <div class="arrow">↓</div>
+      <div class="stage" style="border-color:#a371f7;color:#a371f7;">VERIFY</div>
+      <div class="arrow">↰ if fail</div>
+      <div class="arrow">↓</div>
+      <div class="stage" style="border-color:#3fb950;color:#3fb950;">PERSIST</div>
+      <div class="arrow">↻ loop</div>
+    </div>
+  </div>
+  
+  <div class="panel">
+    <h2>The Explanation</h2>
+    <div class="explain">
+      <h3>What is HexClamp?</h3>
+      <p>An autonomous loop that never stops. It keeps running, learning, and improving with each cycle.</p>
+      
+      <h3>How It Works</h3>
+      <p><span class="stage-mention o">OBSERVE</span> — Look around. What just happened? What's the current state?</p>
+      <p><span class="stage-mention c">CONDENSE</span> — Filter out the noise. Keep only what's relevant.</p>
+      <p><span class="stage-mention p">PLAN</span> — Decide: what should we do next?</p>
+      <p><span class="stage-mention e">EXECUTE</span> — Do it. Run the plan.</p>
+      <p><span class="stage-mention v">VERIFY</span> — Did it work? Find any problems?</p>
+      <p><span class="stage-mention t">PERSIST</span> — Save the results. Remember for next loop.</p>
+      
+      <h3>The Loop</h3>
+      <p>After <strong>PERSIST</strong>, it loops back to <strong>OBSERVE</strong> and starts again. Forever.</p>
+      <p>If <strong>VERIFY</strong> finds a problem, it loops back to <strong>PLAN</strong> to try again.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
