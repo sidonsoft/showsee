@@ -21,9 +21,21 @@ Choose the visual format that fits the topic:
 | **Static Diagram** | Flows, hierarchies, org charts | Neural network layers |
 | **Animated CSS** | Simple movements, transitions | Twisting helix |
 | **3D (Three.js)** | Physical structure, spatial relationships | DNA, molecules, machines |
-| **Interactive** | User needs to explore, rotate, zoom | 3D models |
+| **Interactive** | User can explore, compare, calculate | Sliders, charts, toggles |
+
+**Interactive elements** (combine with any visualization):
+- **Sliders** — adjust values, see results update
+- **Charts** — Chart.js for bar/line/pie data viz
+- **Toggles** — show/hide options, switch views
+- **Inputs** — calculators, converters, estimators
 
 **Rule**: If the topic has physical/spatial structure → consider 3D. Otherwise → simpler is better.
+
+**When to add interactivity:**
+- Topic involves numbers/comparisons → calculator or chart
+- User might want to explore different values → sliders
+- Multiple data series → chart with toggle
+- "What if" questions → interactive exploration
 
 ### Step 3: Pick View Layout
 Choose the layout that fits the content:
@@ -72,6 +84,10 @@ Topic has physical/spatial structure?
 - **Three.js**: `https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js` — 3D
 - **Chart.js**: `https://cdn.jsdelivr.net/npm/chart.js` — charts
 - **D3.js**: `https://d3js.org/d3.v7.min.js` — data visualization
+
+**Interactive examples:**
+- Loan calculator: sliders + live math + bar chart
+- Population chart: Chart.js line/bar with toggle
 
 ## Output
 
