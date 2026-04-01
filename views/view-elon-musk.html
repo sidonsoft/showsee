@@ -318,8 +318,6 @@ events.forEach((e, i) => {
   dot.dataset.year = e.year;
   const pos = (i / (events.length - 1)) * 100;
   dot.style.left = pos + '%';
-  dot.addEventListener('click', () => updateTimeline(e.year));
-  dot.addEventListener('touchend', () => updateTimeline(e.year));
   sliderTrack.appendChild(dot);
 });
 
@@ -337,14 +335,16 @@ eventsList.innerHTML = events.map(e => `
 const eventEls = eventsList.querySelectorAll('.event');
 const dots = sliderTrack.querySelectorAll('.slider-dot');
 
-function updateTimeline(year) {
-  const currentEvent = events.find(e => year >= e.year) || events[events.length - 1];
-  const eventIndex = events.indexOf(currentEvent);
+function updateFromPosition(percent) {
+  // Percent is 0-100 based on slider position
+  const index = Math.round((percent / 100) * (events.length - 1));
+  const currentEvent = events[Math.max(0, Math.min(events.length - 1, index))];
   
-  const progress = (eventIndex / (events.length - 1)) * 100;
-  sliderProgress.style.width = progress + '%';
-  sliderThumb.style.left = progress + '%';
+  // Update thumb/progress to match position
+  sliderProgress.style.width = percent + '%';
+  sliderThumb.style.left = percent + '%';
   
+  // Update featured
   featured.innerHTML = `
     <div class="year">${currentEvent.year}</div>
     <h2>${currentEvent.title}</h2>
@@ -352,39 +352,50 @@ function updateTimeline(year) {
     ${currentEvent.detail ? `<div class="detail">${currentEvent.detail}</div>` : ''}
   `;
   
-  eventEls.forEach(el => {
-    const ey = parseInt(el.dataset.year);
+  // Highlight events
+  eventEls.forEach((el, i) => {
     el.classList.remove('active', 'past');
-    if (ey === currentEvent.year) el.classList.add('active');
-    else if (ey < year) el.classList.add('past');
+    if (i === index) el.classList.add('active');
+    else if (i < index) el.classList.add('past');
   });
   
-  dots.forEach(d => {
-    const dy = parseInt(d.dataset.year);
+  // Highlight dots
+  dots.forEach((d, i) => {
     d.classList.remove('passed', 'active');
-    if (dy === currentEvent.year) d.classList.add('active');
-    else if (dy < year) d.classList.add('passed');
+    if (i === index) d.classList.add('active');
+    else if (i < index) d.classList.add('passed');
   });
+}
+
+function updateTimeline(year) {
+  const percent = ((year - startYear) / totalYears) * 100;
+  updateFromPosition(percent);
 }
 
 let isDragging = false;
 
-function getYearFromX(clientX) {
+function getPercentFromX(clientX) {
   const rect = sliderTrack.getBoundingClientRect();
   const x = clientX - rect.left;
-  const percent = Math.max(0, Math.min(1, x / rect.width));
-  return startYear + (percent * totalYears);
+  return Math.max(0, Math.min(100, (x / rect.width) * 100));
 }
 
-sliderTrack.addEventListener('mousedown', e => { isDragging = true; updateTimeline(getYearFromX(e.clientX)); });
-document.addEventListener('mousemove', e => { if (isDragging) updateTimeline(getYearFromX(e.clientX)); });
+sliderTrack.addEventListener('mousedown', e => { isDragging = true; updateFromPosition(getPercentFromX(e.clientX)); });
+document.addEventListener('mousemove', e => { if (isDragging) updateFromPosition(getPercentFromX(e.clientX)); });
 document.addEventListener('mouseup', () => { isDragging = false; });
 
-sliderTrack.addEventListener('touchstart', e => { isDragging = true; updateTimeline(getYearFromX(e.touches[0].clientX)); });
-document.addEventListener('touchmove', e => { if (isDragging) updateTimeline(getYearFromX(e.touches[0].clientX)); });
+sliderTrack.addEventListener('touchstart', e => { isDragging = true; updateFromPosition(getPercentFromX(e.touches[0].clientX)); });
+document.addEventListener('touchmove', e => { if (isDragging) updateFromPosition(getPercentFromX(e.touches[0].clientX)); });
 document.addEventListener('touchend', () => { isDragging = false; });
 
-updateTimeline(startYear);
+// Clicking dots
+dots.forEach((d, i) => {
+  const pos = (i / (events.length - 1)) * 100;
+  d.addEventListener('click', () => updateFromPosition(pos));
+  d.addEventListener('touchend', () => updateFromPosition(pos));
+});
+
+updateFromPosition(0);
 </script>
 
 </body>
