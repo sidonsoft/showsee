@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Flowchart</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 { color: #58a6ff; font-size: 20px; margin-bottom: 30px; }
+  
+  .flowchart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-width: 600px;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .stage {
+    background: #161b22;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .arrow { color: #484f58; font-size: 20px; }
+  .arrow.left { transform: rotate(-90deg); }
+  .arrow.right { transform: rotate(90deg); }
+  
+  .note {
+    margin-top: 30px;
+    padding: 16px 24px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #8b949e;
+    max-width: 500px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<h1>Flowchart</h1>
+<div class="flowchart" id="flow"></div>
+<div class="note" id="note"></div>
+
+<script>
+// Embedded content - replace this object to change the flowchart
+const config = {
+  title: "HexClamp Loop",
+  stages: [
+    { id: "obs", label: "OBSERVE", color: "#58a6ff" },
+    { id: "con", label: "CONDENSE", color: "#79c0ff" },
+    { id: "plan", label: "PLAN", color: "#a5d6ff" },
+    { id: "exe", label: "EXECUTE", color: "#f0883e" },
+    { id: "ver", label: "VERIFY", color: "#a371f7" },
+    { id: "per", label: "PERSIST", color: "#3fb950" }
+  ],
+  notes: "Main loop: OBSERVE → PERSIST → back to OBSERVE. VERIFY can loop back to PLAN if something fails."
+};
+
+// Render
+document.getElementById("flow").innerHTML = config.stages.map((s, i) => {
+  const arrow = i < config.stages.length - 1 
+    ? '<div class="arrow">↓</div>' 
+    : '<div class="arrow">↻</div>';
+  return `
+    <div class="stage" style="border-color:${s.color};color:${s.color}">${s.label}</div>
+    ${i < config.stages.length - 1 ? arrow : '<div style="color:#3fb950;font-size:12px">loop</div>'}
+  `;
+}).join('');
+
+if (config.notes) {
+  document.getElementById("note").textContent = config.notes;
+}
+</script>
+</body>
+</html>

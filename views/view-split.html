@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Split View</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  h1 { 
+    color: #58a6ff; 
+    font-size: 18px; 
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid #30363d;
+    flex-shrink: 0;
+  }
+  .split {
+    flex: 1;
+    display: flex;
+    gap: 1px;
+    background: #30363d;
+    overflow: hidden;
+  }
+  .panel {
+    flex: 1;
+    background: #0d1117;
+    overflow: auto;
+    padding: 20px;
+  }
+  .panel h2 {
+    font-size: 15px;
+    color: #8b949e;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #21262d;
+  }
+  .panel iframe {
+    width: 100%;
+    height: calc(100% - 40px);
+    border: none;
+    background: #0d1117;
+  }
+</style>
+</head>
+<body>
+<h1>Split View</h1>
+<div class="split">
+  <div class="panel">
+    <h2 id="left-title">Left Panel</h2>
+    <div id="left-content"></div>
+  </div>
+  <div class="panel">
+    <h2 id="right-title">Right Panel</h2>
+    <div id="right-content"></div>
+  </div>
+</div>
+
+<script>
+// Configure content here
+const left = {
+  title: "HexClamp Flow",
+  content: `
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div style="background:#161b22;border:2px solid #58a6ff;border-radius:6px;padding:10px 20px;color:#58a6ff;font-weight:bold;">OBSERVE</div>
+      <div style="color:#484f58;">↓</div>
+      <div style="background:#161b22;border:2px solid #79c0ff;border-radius:6px;padding:10px 20px;color:#79c0ff;font-weight:bold;">CONDENSE</div>
+      <div style="color:#484f58;">↓</div>
+      <div style="background:#161b22;border:2px solid #a5d6ff;border-radius:6px;padding:10px 20px;color:#a5d6ff;font-weight:bold;">PLAN</div>
+      <div style="color:#484f58;">↓</div>
+      <div style="background:#161b22;border:2px solid #f0883e;border-radius:6px;padding:10px 20px;color:#f0883e;font-weight:bold;">EXECUTE</div>
+      <div style="color:#484f58;">↓</div>
+      <div style="background:#161b22;border:2px solid #a371f7;border-radius:6px;padding:10px 20px;color:#a371f7;font-weight:bold;">VERIFY</div>
+      <div style="color:#484f58;">↓</div>
+      <div style="background:#161b22;border:2px solid #3fb950;border-radius:6px;padding:10px 20px;color:#3fb950;font-weight:bold;">PERSIST</div>
+    </div>
+  `
+};
+
+const right = {
+  title: "What Each Stage Does",
+  content: `
+    <div style="font-size:13px;line-height:1.6;">
+      <div style="margin-bottom:16px;">
+        <strong style="color:#58a6ff;">OBSERVE</strong>
+        <p style="color:#8b949e;">Gather info, check what's happening right now</p>
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong style="color:#79c0ff;">CONDENSE</strong>
+        <p style="color:#8b949e;">Filter noise, keep what's relevant</p>
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong style="color:#a5d6ff;">PLAN</strong>
+        <p style="color:#8b949e;">Decide what to do next</p>
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong style="color:#f0883e;">EXECUTE</strong>
+        <p style="color:#8b949e;">Take action, run the plan</p>
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong style="color:#a371f7;">VERIFY</strong>
+        <p style="color:#8b949e;">Check if it worked, find problems</p>
+      </div>
+      <div>
+        <strong style="color:#3fb950;">PERSIST</strong>
+        <p style="color:#8b949e;">Save results, remember for next loop</p>
+      </div>
+    </div>
+  `
+};
+
+document.getElementById("left-title").textContent = left.title;
+document.getElementById("left-content").innerHTML = left.content;
+document.getElementById("right-title").textContent = right.title;
+document.getElementById("right-content").innerHTML = right.content;
+</script>
+</body>
+</html>
