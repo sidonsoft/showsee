@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rust</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .header h1 {
+    color: #f0883e;
+    font-size: 20px;
+  }
+  .header .badge {
+    background: #21262d;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #8b949e;
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  /* LEFT */
+  .left {
+    flex: 1;
+    padding: 24px;
+    overflow: auto;
+    border-right: 1px solid #21262d;
+  }
+  
+  .section {
+    margin-bottom: 28px;
+  }
+  .section h2 {
+    color: #58a6ff;
+    font-size: 14px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #21262d;
+  }
+  .section p {
+    color: #8b949e;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .concept {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .concept h3 {
+    font-size: 13px;
+    color: #c9d1d9;
+    margin-bottom: 6px;
+  }
+  .concept p {
+    font-size: 12px;
+    margin: 0;
+  }
+  
+  .highlight {
+    background: #1f2937;
+    border-left: 3px solid #f0883e;
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: #c9d1d9;
+  }
+  
+  /* RIGHT */
+  .right {
+    flex: 1;
+    padding: 24px;
+    overflow: auto;
+  }
+  
+  .uses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .use {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  .use .icon { margin-right: 6px; }
+  .use .name { color: #c9d1d9; font-weight: bold; }
+  .use .desc { color: #8b949e; font-size: 11px; }
+  
+  .timeline {
+    position: relative;
+    padding-left: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #30363d;
+  }
+  
+  .event {
+    position: relative;
+    margin-bottom: 14px;
+    padding-left: 18px;
+  }
+  .event::before {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid;
+  }
+  .event.year::before { border-color: #f0883e; background: #f0883e; }
+  .event.release::before { border-color: #58a6ff; background: #58a6ff; }
+  .event.big::before { border-color: #3fb950; background: #3fb950; }
+  
+  .event h3 {
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+  .event.year h3 { color: #f0883e; }
+  .event.release h3 { color: #58a6ff; }
+  .event.big h3 { color: #3fb950; }
+  .event p {
+    color: #8b949e;
+    font-size: 12px;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Rust</h1>
+  <span class="badge">Systems Programming</span>
+  <span class="badge">Memory Safe</span>
+</div>
+
+<div class="content">
+  
+  <!-- LEFT: What + Why -->
+  <div class="left">
+    <div class="section">
+      <h2>What is Rust?</h2>
+      <p>A systems programming language created by Mozilla in 2010. Fast, safe, and practical.</p>
+      <p>No garbage collector. No runtime. Compiles to native code.</p>
+    </div>
+    
+    <div class="section">
+      <h2>Why Rust Exists</h2>
+      <div class="highlight">
+        C and C++ let you shoot yourself in the foot with memory bugs.
+      </div>
+      <p>Rust prevents those bugs at compile time. If it compiles, it's memory-safe.</p>
+    </div>
+    
+    <div class="section">
+      <h2>Key Concepts</h2>
+      <div class="concept">
+        <h3>Ownership</h3>
+        <p>Each piece of data has one owner. When the owner goes away, the data is freed. No garbage collector needed.</p>
+      </div>
+      <div class="concept">
+        <h3>Borrowing</h3>
+        <p>You can "borrow" data without taking ownership. The compiler checks you're not breaking the rules.</p>
+      </div>
+      <div class="concept">
+        <h3>Zero-Cost Abstractions</h3>
+        <p>High-level features that don't slow you down. You pay only for what you use.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- RIGHT: Uses + Timeline -->
+  <div class="right">
+    <div class="section">
+      <h2>What It's Used For</h2>
+      <div class="uses">
+        <div class="use">
+          <span class="icon">⚙️</span>
+          <span class="name">Linux Kernel</span>
+          <span class="desc">Kernel 6.1+ supports Rust for drivers</span>
+        </div>
+        <div class="use">
+          <span class="icon">☁️</span>
+          <span class="name">Cloud/Infrastructure</span>
+          <span class="desc">AWS, Dropbox, Discord use it</span>
+        </div>
+        <div class="use">
+          <span class="icon">🎮</span>
+          <span class="name">Games</span>
+          <span class="desc">Bevy game engine, tooling</span>
+        </div>
+        <div class="use">
+          <span class="icon">🔒</span>
+          <span class="name">Security</span>
+          <span class="desc">Memory safety = fewer exploits</span>
+        </div>
+        <div class="use">
+          <span class="icon">🔧</span>
+          <span class="name">CLI Tools</span>
+          <span class="desc">ripgrep, fd, bat — blazing fast</span>
+        </div>
+        <div class="use">
+          <span class="icon">🌐</span>
+          <span class="name">WebAssembly</span>
+          <span class="desc">Run Rust in browsers</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Timeline</h2>
+      <div class="timeline">
+        <div class="event year">
+          <h3>2010</h3>
+          <p>Mozilla creates Rust</p>
+        </div>
+        <div class="event release">
+          <h3>2015</h3>
+          <p>Rust 1.0 stable release</p>
+        </div>
+        <div class="event big">
+          <h3>2019</h3>
+          <p>Stack Overflow's "most loved" language — every year since 2016</p>
+        </div>
+        <div class="event year">
+          <h3>2022</h3>
+          <p>Linux kernel 6.1 adds Rust support</p>
+        </div>
+        <div class="event release">
+          <h3>2025</h3>
+          <p>Rust 2024 edition, massive ecosystem growth</p>
+        </div>
+        <div class="event big">
+          <h3>2026</h3>
+          <p>Critical for systems programming, AI infrastructure</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+</body>
+</html>

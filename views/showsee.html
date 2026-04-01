@@ -101,15 +101,15 @@
 </div>
 
 <div class="content">
-  <iframe id="frame" src="/view-llama-multi.html"></iframe>
+  <iframe id="frame" src="/view-rust.html"></iframe>
 </div>
 
 <script>
 const STORAGE_KEY = 'showsee_history';
 const MAX_HISTORY = 30;
 
-let currentViewId = 'view-llama-multi';
-let currentViewTitle = 'LLaMA';
+let currentViewId = 'view-rust';
+let currentViewTitle = 'Rust';
 
 function loadHistory() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } 
