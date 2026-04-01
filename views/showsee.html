@@ -2,40 +2,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Showsee — Visual Presenter</title>
+<title>Showsee</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  body {
-    background: #0d1117;
-    color: #c9d1d9;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
-  
-  /* Toolbar */
   .toolbar {
     background: #161b22;
     border-bottom: 1px solid #30363d;
-    padding: 10px 20px;
+    padding: 8px 12px;
     display: flex;
+    gap: 8px;
     align-items: center;
-    gap: 10px;
     flex-shrink: 0;
   }
-  
-  .toolbar-title {
-    color: #58a6ff;
-    font-size: 16px;
-    font-weight: 600;
-    margin-right: 10px;
-  }
-  
-  .toolbar-btn {
+  .logo { color: #58a6ff; font-weight: bold; font-size: 14px; margin-right: 16px; }
+  .nav-btn {
     background: #21262d;
     border: 1px solid #30363d;
     color: #c9d1d9;
@@ -43,437 +31,177 @@
     border-radius: 6px;
     font-size: 12px;
     cursor: pointer;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    text-decoration: none;
   }
+  .nav-btn:hover { background: #30363d; }
+  .nav-btn.active { background: #1f3d1f; border-color: #3fb950; color: #3fb950; }
   
-  .toolbar-btn:hover { background: #30363d; }
-  .toolbar-btn.primary { background: #1f3d1f; border-color: #3fb950; color: #3fb950; }
-  .toolbar-btn.primary:hover { background: #2d5a2d; }
-  .toolbar-btn.danger { color: #f85149; }
-  .toolbar-btn.danger:hover { background: #3d1a1a; }
-  
-  .spacer { flex: 1; }
-  
-  .history-toggle {
-    position: relative;
-  }
-  
-  .history-panel {
+  .history-dropdown { position: relative; }
+  .history-menu {
     display: none;
     position: absolute;
     top: 100%;
-    right: 0;
-    margin-top: 5px;
+    left: 0;
     background: #161b22;
     border: 1px solid #30363d;
-    border-radius: 8px;
-    width: 320px;
-    max-height: 500px;
+    border-radius: 6px;
+    min-width: 200px;
+    max-height: 300px;
     overflow-y: auto;
     z-index: 100;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    margin-top: 4px;
   }
-  
-  .history-panel.open { display: block; }
-  
-  .history-header {
-    padding: 12px 15px;
-    border-bottom: 1px solid #30363d;
-    font-size: 12px;
-    color: #8b949e;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
+  .history-menu.show { display: block; }
   .history-item {
-    padding: 12px 15px;
+    padding: 10px 12px;
     border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
-    transition: background 0.2s;
   }
-  
   .history-item:hover { background: #21262d; }
   .history-item:last-child { border-bottom: none; }
-  
-  .history-item-title {
-    font-size: 13px;
-    color: #e6edf3;
-    margin-bottom: 4px;
-  }
-  
-  .history-item-meta {
-    font-size: 11px;
-    color: #8b949e;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .history-item-delete {
-    color: #f85149;
-    font-size: 11px;
-    padding: 2px 6px;
-    background: transparent;
+  .history-item .title { font-size: 13px; color: #c9d1d9; }
+  .history-item .date { font-size: 11px; color: #8b949e; }
+  .history-item .delete {
+    background: none;
     border: none;
+    color: #f85149;
     cursor: pointer;
-    border-radius: 3px;
+    padding: 4px;
+    font-size: 14px;
+    opacity: 0.5;
   }
+  .history-item .delete:hover { opacity: 1; }
+  .empty-history { padding: 20px; text-align: center; color: #8b949e; font-size: 12px; }
   
-  .history-item-delete:hover { background: #3d1a1a; }
-  
-  .empty-history {
-    padding: 30px;
-    text-align: center;
-    color: #8b949e;
-    font-size: 13px;
-  }
-  
-  /* Notification badge */
-  .notif-badge {
-    display: none;
-    background: #f85149;
-    color: white;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 10px;
-    margin-left: 5px;
-    animation: pulse-badge 1s infinite;
-  }
-  
-  .notif-badge.show { display: inline-block; }
-  
-  @keyframes pulse-badge {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-  
-  /* Content area */
   .content {
     flex: 1;
-    overflow-y: auto;
-    padding: 0;
+    overflow: auto;
+    padding: 30px;
   }
-  
-  /* Welcome screen */
   .welcome {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
     text-align: center;
-    padding: 40px;
+    padding-top: 80px;
   }
-  
-  .welcome h1 {
-    color: #58a6ff;
-    font-size: 48px;
-    font-weight: 300;
-    margin-bottom: 10px;
-  }
-  
-  .welcome p {
-    color: #8b949e;
-    font-size: 16px;
-    margin-bottom: 30px;
-  }
-  
-  .welcome-views {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    max-width: 800px;
-    width: 100%;
-  }
-  
-  .view-card {
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 8px;
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .view-card:hover {
-    border-color: #58a6ff;
-    transform: translateY(-2px);
-  }
-  
-  .view-card h3 { color: #e6edf3; font-size: 14px; margin-bottom: 5px; }
-  .view-card p { color: #8b949e; font-size: 12px; margin: 0; }
-  .view-card .date { color: #484f58; font-size: 11px; margin-top: 8px; }
-  
-  /* Iframe container */
-  .iframe-container {
-    display: none;
-    height: 100%;
-  }
-  
-  .iframe-container.active { display: block; }
-  
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background: white;
-  }
+  .welcome h2 { color: #58a6ff; margin-bottom: 10px; }
+  .welcome p { color: #8b949e; font-size: 14px; }
 </style>
 </head>
 <body>
 
 <div class="toolbar">
-  <span class="toolbar-title">Showsee</span>
+  <span class="logo">Showsee</span>
+  <button class="nav-btn active" onclick="showView('view-hexclamp')">HexClamp</button>
+  <button class="nav-btn" onclick="showView('view-excalidraw-intro')">Excalidraw</button>
   
-  <button class="toolbar-btn primary" onclick="showCurrent()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"/></svg>
-    Current View
-    <span class="notif-badge" id="notif-badge">NEW</span>
-  </button>
-  
-  <div class="history-toggle">
-    <button class="toolbar-btn" onclick="toggleHistory()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-      History <span id="history-count"></span>
-    </button>
-    <div class="history-panel" id="history-panel"></div>
+  <div class="history-dropdown">
+    <button class="nav-btn" onclick="toggleHistory()">History ▾</button>
+    <div class="history-menu" id="history-menu">
+      <div class="empty-history" id="empty-history">No history yet</div>
+      <div id="history-list"></div>
+    </div>
   </div>
-  
-  <div class="spacer"></div>
-  
-  <button class="toolbar-btn" onclick="refresh()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-    Refresh
-  </button>
-  <button class="toolbar-btn" onclick="openExternal()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-    Open
-  </button>
 </div>
 
-<div class="content">
-  <div class="welcome" id="welcome-screen">
-    <h1>Showsee</h1>
-    <p>Select a view from history, or ask the agent to create a new one.</p>
-    <div class="welcome-views" id="welcome-views"></div>
-  </div>
-  
-  <div class="iframe-container" id="iframe-container">
-    <iframe id="view-frame" src="about:blank"></iframe>
+<div class="content" id="content">
+  <div class="welcome">
+    <h2>Showsee</h2>
+    <p>Click a view above, or ask the agent to create a new one.</p>
   </div>
 </div>
 
 <script>
-// View management
-const STORAGE_KEY = 'showsee_views';
-const MAX_VIEWS = 50;
+const STORAGE_KEY = 'showsee_history';
+const MAX_HISTORY = 20;
 
-let currentView = null;
-let views = [];
-
-// Load views from localStorage
-function loadViews() {
+function loadHistory() {
   try {
-    views = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch {
-    views = [];
-  }
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch { return []; }
 }
 
-// Save views to localStorage
-function saveViews() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(views.slice(0, MAX_VIEWS)));
+function saveHistory(history) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
 }
 
-// Add a new view
-function addView(title, filename) {
-  const view = {
-    id: Date.now(),
-    title: title,
-    filename: filename,
-    date: new Date().toISOString(),
-    viewed: false
-  };
-  
-  // Mark previous as viewed
-  if (currentView) {
-    currentView.viewed = true;
-  }
-  
-  views.unshift(view);
-  saveViews();
-  
-  // Show notification
-  document.getElementById('notif-badge').classList.add('show');
-  
-  showView(view);
-}
-
-// Show a specific view
-function showView(view) {
-  currentView = view;
-  view.viewed = true;
-  saveViews();
-  
-  document.getElementById('welcome-screen').style.display = 'none';
-  document.getElementById('iframe-container').classList.add('active');
-  document.getElementById('view-frame').src = view.filename;
-  document.getElementById('notif-badge').classList.remove('show');
-  
+function addToHistory(id, title) {
+  const history = loadHistory();
+  // Remove if exists
+  history.unshift({ id, title, time: Date.now() });
+  // Dedupe by id
+  const seen = new Set();
+  const filtered = history.filter(h => {
+    if (seen.has(h.id)) return false;
+    seen.add(h.id);
+    return true;
+  }).slice(0, MAX_HISTORY);
+  saveHistory(filtered);
   renderHistory();
 }
 
-// Show current/latest view
-function showCurrent() {
-  if (views.length > 0) {
-    showView(views[0]);
-  }
+function deleteHistory(index, event) {
+  event.stopPropagation();
+  const history = loadHistory();
+  history.splice(index, 1);
+  saveHistory(history);
+  renderHistory();
 }
 
-// Toggle history panel
-function toggleHistory() {
-  document.getElementById('history-panel').classList.toggle('open');
-}
-
-// Render history list
 function renderHistory() {
-  const panel = document.getElementById('history-panel');
-  const count = document.getElementById('history-count');
-  const welcome = document.getElementById('welcome-views');
+  const history = loadHistory();
+  const list = document.getElementById('history-list');
+  const empty = document.getElementById('empty-history');
   
-  count.textContent = views.length > 0 ? `(${views.length})` : '';
-  
-  if (views.length === 0) {
-    panel.innerHTML = '<div class="empty-history">No views yet.<br>Ask the agent to show you something.</div>';
-    welcome.innerHTML = '<p style="color:#8b949e;grid-column:1/-1;">No history yet — ask the agent to show you something visual.</p>';
+  if (history.length === 0) {
+    empty.style.display = 'block';
+    list.innerHTML = '';
     return;
   }
   
-  // History panel
-  panel.innerHTML = `
-    <div class="history-header">
-      <span>View History</span>
-      <button class="toolbar-btn danger" onclick="clearAll(event)" style="padding:3px 8px;font-size:10px;">Clear All</button>
-    </div>
-    ${views.map((v, i) => `
-      <div class="history-item ${i === 0 ? 'current' : ''}" onclick="showView(views[${i}])">
-        <div class="history-item-title">
-          ${escapeHtml(v.title)}
-          ${i === 0 ? '<span style="color:#3fb950;font-size:10px;margin-left:5px;">CURRENT</span>' : ''}
-        </div>
-        <div class="history-item-meta">
-          <span>${formatDate(v.date)}</span>
-          <button class="history-item-delete" onclick="event.stopPropagation();deleteView(${i})">Delete</button>
-        </div>
+  empty.style.display = 'none';
+  list.innerHTML = history.map((h, i) => `
+    <div class="history-item" onclick="showView('${h.id}')">
+      <div>
+        <div class="title">${h.title}</div>
+        <div class="date">${new Date(h.time).toLocaleString()}</div>
       </div>
-    `).join('')}
-  `;
-  
-  // Welcome screen cards (last 6)
-  welcome.innerHTML = views.slice(0, 6).map((v, i) => `
-    <div class="view-card" onclick="showView(views[${i}])">
-      <h3>${escapeHtml(v.title)}</h3>
-      <p>${i === 0 ? 'Latest view' : 'Click to view'}</p>
-      <div class="date">${formatDate(v.date)}</div>
+      <button class="delete" onclick="deleteHistory(${i}, event)">✕</button>
     </div>
   `).join('');
 }
 
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+function toggleHistory() {
+  document.getElementById('history-menu').classList.toggle('show');
 }
 
-// Format date
-function formatDate(iso) {
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = now - d;
-  
-  if (diff < 60000) return 'Just now';
-  if (diff < 3600000) return `${Math.floor(diff/60000)}m ago`;
-  if (diff < 86400000) return `${Math.floor(diff/3600000)}h ago`;
-  
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-// Delete a view
-function deleteView(index) {
-  const view = views[index];
-  if (currentView && currentView.id === view.id) {
-    views.splice(index, 1);
-    if (views.length > 0) {
-      showView(views[0]);
-    } else {
-      showWelcome();
+function showView(id) {
+  document.getElementById('history-menu').classList.remove('show');
+  document.getElementById('content').innerHTML = '<iframe src="/' + id + '.html" style="width:100%;height:100%;border:none;background:#0d1117;"></iframe>';
+  // Update nav buttons
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const btns = document.querySelectorAll('.nav-btn');
+  // Find matching button
+  btns.forEach(b => {
+    if (b.textContent.includes(id.split('-')[1]?.charAt(0).toUpperCase() + id.split('-')[1]?.slice(1))) {
+      b.classList.add('active');
     }
-  } else {
-    views.splice(index, 1);
-  }
-  saveViews();
-  renderHistory();
+  });
+  // Add to history
+  const title = id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  addToHistory(id, title);
 }
-
-// Clear all views
-function clearAll(e) {
-  e.stopPropagation();
-  if (confirm('Delete all view history?')) {
-    views = [];
-    saveViews();
-    showWelcome();
-    renderHistory();
-  }
-}
-
-// Show welcome screen
-function showWelcome() {
-  document.getElementById('welcome-screen').style.display = 'flex';
-  document.getElementById('iframe-container').classList.remove('active');
-  currentView = null;
-}
-
-// Refresh current view
-function refresh() {
-  if (currentView) {
-    document.getElementById('view-frame').src = currentView.filename + '?t=' + Date.now();
-  }
-}
-
-// Open in new tab
-function openExternal() {
-  if (currentView) {
-    window.open(currentView.filename, '_blank');
-  }
-}
-
-// Check for new views from server
-let lastCheck = 0;
-async function checkForUpdates() {
-  try {
-    const resp = await fetch('/views/');
-    // Server could return a manifest, for now just poll
-  } catch (e) {}
-}
-
-// Poll for updates
-setInterval(checkForUpdates, 3000);
 
 // Close history when clicking outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.history-toggle')) {
-    document.getElementById('history-panel').classList.remove('open');
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.history-dropdown')) {
+    document.getElementById('history-menu').classList.remove('show');
   }
 });
 
-// Init - load welcome
-loadViews();
+// Init
 renderHistory();
 </script>
-
 </body>
 </html>
