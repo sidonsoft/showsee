@@ -89,6 +89,88 @@ Topic has physical/spatial structure?
 - Loan calculator: sliders + live math + bar chart
 - Population chart: Chart.js line/bar with toggle
 
+## Code Blocks
+
+When showing code snippets, include copy and download buttons:
+
+```html
+<div class="code-block" data-filename="example.py">
+  <div class="code-header">
+    <span class="code-lang">Python</span>
+    <div class="code-actions">
+      <button onclick="copyCode(this)">Copy</button>
+      <button onclick="downloadCode(this)">Download</button>
+    </div>
+  </div>
+  <pre><code># your code here</code></pre>
+</div>
+```
+
+Required JS:
+```javascript
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code);
+  btn.textContent = 'Copied!';
+  setTimeout(() => btn.textContent = 'Copy', 2000);
+}
+
+function downloadCode(btn) {
+  const block = btn.closest('.code-block');
+  const code = block.querySelector('code').textContent;
+  const filename = block.dataset.filename || 'code.txt';
+  const blob = new Blob([code], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+```
+
+Required CSS:
+```css
+.code-block {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  margin: 12px 0;
+  overflow: hidden;
+}
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+}
+.code-lang {
+  font-size: 11px;
+  color: #8b949e;
+}
+.code-actions { display: flex; gap: 8px; }
+.code-actions button {
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.code-actions button:hover { border-color: #58a6ff; }
+.code-block pre {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+}
+.code-block code {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 12px;
+  color: #c9d1d9;
+}
+```
+
 ## Output
 
 Create a new `.html` file in `/Users/burnz/showsee/views/`:
