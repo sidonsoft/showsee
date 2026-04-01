@@ -80,88 +80,113 @@
   .closed { border: 1px solid #f85149; color: #f85149; }
   .free { border: 1px solid #58a6ff; color: #58a6ff; }
   .paid { border: 1px solid #f0883e; color: #f0883e; }
+  .hybrid { border: 1px solid #a371f7; color: #a371f7; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>LLM Comparison</h1>
-  <p>How LLaMA stacks up against GPT and Claude</p>
+  <p>Open vs Closed models — March 2026</p>
 </div>
 
 <div class="compare">
   <div class="col llama">
-    <h2>LLaMA</h2>
-    
-    <h3>What</h3>
-    <p>Meta's open source language model. "Large Language Model Meta AI"</p>
+    <h2>Open Models</h2>
+    <p style="color:#c9d1d9;font-size:14px;">LLaMA, Mistral, Gemma, DeepSeek</p>
     
     <h3>Access</h3>
-    <p><span class="badge open">Open</span> Free, downloadable weights</p>
+    <p><span class="badge open">Open</span> Weights downloadable</p>
+    <p><span class="badge free">Free</span> Run locally forever</p>
     
     <h3>Good at</h3>
     <ul>
-      <li>Research, experimentation</li>
-      <li>Running locally</li>
-      <li>Fine-tuning on custom data</li>
-      <li>No API costs</li>
+      <li>Running on your own hardware</li>
+      <li>No data leaves your machine</li>
+      <li>Fine-tune on your data</li>
+      <li>Experiment freely</li>
+      <li>No API costs at scale</li>
+    </ul>
+    
+    <h3>Models available</h3>
+    <ul>
+      <li>LLaMA 3.1 (8B-405B)</li>
+      <li>DeepSeek R1 (reasoning)</li>
+      <li>Mistral Large</li>
+      <li>Gemma 3</li>
     </ul>
     
     <h3>Trade-offs</h3>
     <ul>
-      <li>Needs powerful hardware</li>
-      <li>Setup required</li>
-      <li>Smaller models less capable</li>
+      <li>Need your own hardware</li>
+      <li>Setup takes effort</li>
+      <li>Top models still lag GPT-4o</li>
     </ul>
   </div>
   
   <div class="col gpt">
     <h2>GPT (OpenAI)</h2>
-    
-    <h3>What</h3>
-    <p>Closed API model. Most widely used. Powers ChatGPT.</p>
+    <p style="color:#c9d1d9;font-size:14px;">ChatGPT, API access</p>
     
     <h3>Access</h3>
-    <p><span class="badge closed">Closed</span> <span class="badge paid">Paid</span> API only, usage fees</p>
+    <p><span class="badge closed">Closed</span> Proprietary</p>
+    <p><span class="badge paid">Paid</span> Free tier limited</p>
     
     <h3>Good at</h3>
     <ul>
-      <li>General purpose tasks</li>
-      <li>Easy to use</li>
-      <li>Most capable (GPT-4)</li>
-      <li>Good tooling ecosystem</li>
+      <li>GPT-4o: top tier reasoning</li>
+      <li>Vision, audio, video</li>
+      <li>Code interpreter, plugins</li>
+      <li>Best-in-class benchmarks</li>
+      <li>Huge ecosystem</li>
+    </ul>
+    
+    <h3>Models available</h3>
+    <ul>
+      <li>GPT-4o (latest)</li>
+      <li>GPT-4o-mini (fast, cheap)</li>
+      <li>o1/o3 (reasoning)</li>
+      <li>4o with Canvas</li>
     </ul>
     
     <h3>Trade-offs</h3>
     <ul>
-      <li>Costs money to use</li>
-      <li>Not open source</li>
-      <li>Data leaves your machine</li>
+      <li>Costs money</li>
+      <li>Data to OpenAI</li>
+      <li>Rate limits</li>
     </ul>
   </div>
   
   <div class="col claude">
-    <h2>Claude</h2>
-    
-    <h3>What</h3>
-    <p>Anthropic's model. Known for long context, ethics focus.</p>
+    <h2>Claude (Anthropic)</h2>
+    <p style="color:#c9d1d9;font-size:14px;">Focused on safety, long context</p>
     
     <h3>Access</h3>
-    <p><span class="badge closed">Closed</span> <span class="badge paid">Paid</span> API + free tier (limited)</p>
+    <p><span class="badge closed">Closed</span> Proprietary</p>
+    <p><span class="badge hybrid">Hybrid</span> Free tier + Pro</p>
     
     <h3>Good at</h3>
     <ul>
-      <li>Long documents (200k context)</li>
+      <li>200k token context</li>
       <li>Careful, nuanced answers</li>
-      <li>Reading files, analysis</li>
-      <li>Less likely to hallucinate</li>
+      <li>Large document analysis</li>
+      <li>Writing, editing tasks</li>
+      <li>Reading codebases</li>
+    </ul>
+    
+    <h3>Models available</h3>
+    <ul>
+      <li>Claude 3.7 Sonnet (latest)</li>
+      <li>Claude 3.5 Sonnet</li>
+      <li>Claude 3.5 Haiku (fast)</li>
+      <li>Extended thinking</li>
     </ul>
     
     <h3>Trade-offs</h3>
     <ul>
       <li>Not open source</li>
-      <li>Costs money for heavy use</li>
-      <li>Data leaves your machine</li>
+      <li>Data to Anthropic</li>
+      <li>Pricier than GPT</li>
     </ul>
   </div>
 </div>
