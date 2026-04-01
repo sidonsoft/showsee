@@ -16,14 +16,17 @@
   .toolbar {
     background: #161b22;
     border-bottom: 1px solid #30363d;
-    padding: 8px 12px;
+    padding: 10px 16px;
     display: flex;
-    gap: 8px;
     align-items: center;
+    gap: 12px;
     flex-shrink: 0;
   }
-  .logo { color: #58a6ff; font-weight: bold; font-size: 14px; margin-right: 16px; }
-  .nav-btn {
+  .logo { color: #58a6ff; font-weight: bold; font-size: 15px; }
+  .current { color: #8b949e; font-size: 13px; margin-right: auto; }
+  .current span { color: #c9d1d9; }
+  
+  .tool-btn {
     background: #21262d;
     border: 1px solid #30363d;
     color: #c9d1d9;
@@ -31,95 +34,86 @@
     border-radius: 6px;
     font-size: 12px;
     cursor: pointer;
-    text-decoration: none;
   }
-  .nav-btn:hover { background: #30363d; }
-  .nav-btn.active { background: #1f3d1f; border-color: #3fb950; color: #3fb950; }
+  .tool-btn:hover { background: #30363d; }
+  .tool-btn.share { opacity: 0.4; cursor: default; } /* future */
   
   .history-dropdown { position: relative; }
   .history-menu {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0;
     background: #161b22;
     border: 1px solid #30363d;
     border-radius: 6px;
-    min-width: 200px;
-    max-height: 300px;
+    min-width: 220px;
+    max-height: 350px;
     overflow-y: auto;
     z-index: 100;
-    margin-top: 4px;
+    margin-top: 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
   .history-menu.show { display: block; }
   .history-item {
-    padding: 10px 12px;
+    padding: 12px 14px;
     border-bottom: 1px solid #21262d;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px;
     cursor: pointer;
   }
   .history-item:hover { background: #21262d; }
   .history-item:last-child { border-bottom: none; }
-  .history-item .title { font-size: 13px; color: #c9d1d9; }
-  .history-item .date { font-size: 11px; color: #8b949e; }
+  .history-item .title { flex: 1; font-size: 13px; color: #c9d1d9; }
+  .history-item .date { font-size: 11px; color: #6e7681; }
   .history-item .delete {
     background: none;
     border: none;
     color: #f85149;
     cursor: pointer;
-    padding: 4px;
+    padding: 4px 8px;
     font-size: 14px;
-    opacity: 0.5;
+    border-radius: 4px;
   }
-  .history-item .delete:hover { opacity: 1; }
-  .empty-history { padding: 20px; text-align: center; color: #8b949e; font-size: 12px; }
+  .history-item .delete:hover { background: #f8514922; }
+  .empty { padding: 20px; text-align: center; color: #8b949e; font-size: 12px; }
   
-  .content {
-    flex: 1;
-    overflow: auto;
-    padding: 30px;
-  }
-  .welcome {
-    text-align: center;
-    padding-top: 80px;
-  }
-  .welcome h2 { color: #58a6ff; margin-bottom: 10px; }
-  .welcome p { color: #8b949e; font-size: 14px; }
+  .content { flex: 1; overflow: hidden; }
+  iframe { width: 100%; height: 100%; border: none; background: #0d1117; }
 </style>
 </head>
 <body>
 
 <div class="toolbar">
-  <span class="logo">Showsee</span>
-  <button class="nav-btn active" onclick="showView('view-hexclamp')">HexClamp</button>
-  <button class="nav-btn" onclick="showView('view-excalidraw-intro')">Excalidraw</button>
+  <span class="logo">Showsee:</span>
+  <span class="current" id="current-view"><span>Loading...</span></span>
+  
+  <button class="tool-btn share" title="Share (coming soon)">Share</button>
   
   <div class="history-dropdown">
-    <button class="nav-btn" onclick="toggleHistory()">History ▾</button>
+    <button class="tool-btn" onclick="toggleHistory()">History ▾</button>
     <div class="history-menu" id="history-menu">
-      <div class="empty-history" id="empty-history">No history yet</div>
+      <div class="empty" id="empty-history">No history yet</div>
       <div id="history-list"></div>
     </div>
   </div>
 </div>
 
-<div class="content" id="content">
-  <div class="welcome">
-    <h2>Showsee</h2>
-    <p>Click a view above, or ask the agent to create a new one.</p>
-  </div>
+<div class="content">
+  <iframe id="frame" src="/view-hexclamp.html"></iframe>
 </div>
 
 <script>
 const STORAGE_KEY = 'showsee_history';
-const MAX_HISTORY = 20;
+const MAX_HISTORY = 30;
+
+let currentViewId = 'view-hexclamp';
+let currentViewTitle = 'HexClamp';
 
 function loadHistory() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch { return []; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } 
+  catch { return []; }
 }
 
 function saveHistory(history) {
@@ -128,9 +122,7 @@ function saveHistory(history) {
 
 function addToHistory(id, title) {
   const history = loadHistory();
-  // Remove if exists
   history.unshift({ id, title, time: Date.now() });
-  // Dedupe by id
   const seen = new Set();
   const filtered = history.filter(h => {
     if (seen.has(h.id)) return false;
@@ -151,56 +143,48 @@ function deleteHistory(index, event) {
 
 function renderHistory() {
   const history = loadHistory();
-  const list = document.getElementById('history-list');
-  const empty = document.getElementById('empty-history');
-  
-  if (history.length === 0) {
-    empty.style.display = 'block';
-    list.innerHTML = '';
-    return;
-  }
-  
-  empty.style.display = 'none';
-  list.innerHTML = history.map((h, i) => `
-    <div class="history-item" onclick="showView('${h.id}')">
-      <div>
-        <div class="title">${h.title}</div>
-        <div class="date">${new Date(h.time).toLocaleString()}</div>
-      </div>
+  document.getElementById('empty-history').style.display = history.length ? 'none' : 'block';
+  document.getElementById('history-list').innerHTML = history.map((h, i) => `
+    <div class="history-item" onclick="showView('${h.id}', '${h.title}')">
+      <div class="title">${h.title}</div>
+      <div class="date">${formatDate(h.time)}</div>
       <button class="delete" onclick="deleteHistory(${i}, event)">✕</button>
     </div>
   `).join('');
+}
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  const now = new Date();
+  if (d.toDateString() === now.toDateString()) {
+    return d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  }
+  return d.toLocaleDateString([], {month: 'short', day: 'numeric'});
 }
 
 function toggleHistory() {
   document.getElementById('history-menu').classList.toggle('show');
 }
 
-function showView(id) {
+function showView(id, title) {
   document.getElementById('history-menu').classList.remove('show');
-  document.getElementById('content').innerHTML = '<iframe src="/' + id + '.html" style="width:100%;height:100%;border:none;background:#0d1117;"></iframe>';
-  // Update nav buttons
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const btns = document.querySelectorAll('.nav-btn');
-  // Find matching button
-  btns.forEach(b => {
-    if (b.textContent.includes(id.split('-')[1]?.charAt(0).toUpperCase() + id.split('-')[1]?.slice(1))) {
-      b.classList.add('active');
-    }
-  });
-  // Add to history
-  const title = id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  document.getElementById('frame').src = '/' + id + '.html';
+  document.getElementById('current-view').innerHTML = '<span>' + title + '</span>';
+  currentViewId = id;
+  currentViewTitle = title;
   addToHistory(id, title);
 }
 
 // Close history when clicking outside
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.history-dropdown')) {
+  if (!e.closest('.history-dropdown')) {
     document.getElementById('history-menu').classList.remove('show');
   }
 });
 
 // Init
+document.getElementById('current-view').innerHTML = '<span>' + currentViewTitle + '</span>';
+addToHistory(currentViewId, currentViewTitle);
 renderHistory();
 </script>
 </body>
