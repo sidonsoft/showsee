@@ -15,16 +15,17 @@
   }
   
   .header {
-    padding: 16px 24px;
+    padding: 14px 20px;
     border-bottom: 1px solid #21262d;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     flex-shrink: 0;
+    background: #161b22;
   }
   .header h1 {
     color: #f0883e;
-    font-size: 20px;
+    font-size: 18px;
   }
   .header .badge {
     background: #21262d;
@@ -40,207 +41,338 @@
     overflow: hidden;
   }
   
-  /* LEFT */
-  .left {
+  /* PANELS */
+  .panel {
     flex: 1;
-    padding: 24px;
+    padding: 18px;
     overflow: auto;
     border-right: 1px solid #21262d;
   }
+  .panel:last-child { border-right: none; }
   
   .section {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
   }
   .section h2 {
     color: #58a6ff;
-    font-size: 14px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
     border-bottom: 1px solid #21262d;
   }
   .section p {
     color: #8b949e;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.6;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
+  .section ul {
+    color: #8b949e;
+    font-size: 12px;
+    line-height: 1.6;
+    padding-left: 16px;
+    margin-bottom: 8px;
+  }
+  .section li { margin-bottom: 4px; }
   
+  /* CONCEPTS */
   .concept {
     background: #161b22;
     border: 1px solid #30363d;
     border-radius: 6px;
-    padding: 12px;
-    margin-bottom: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
   }
   .concept h3 {
-    font-size: 13px;
+    font-size: 12px;
     color: #c9d1d9;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .concept p {
-    font-size: 12px;
+    font-size: 11px;
     margin: 0;
+    color: #8b949e;
   }
   
-  .highlight {
-    background: #1f2937;
-    border-left: 3px solid #f0883e;
-    padding: 10px 14px;
-    margin: 14px 0;
-    font-size: 13px;
-    color: #c9d1d9;
+  /* CODE EXAMPLE */
+  .code {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 10px;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin-bottom: 10px;
   }
+  .code .comment { color: #6a737d; }
+  .code .keyword { color: #f97583; }
+  .code .string { color: #9ecbff; }
+  .code .fn { color: #b392f0; }
   
-  /* RIGHT */
-  .right {
-    flex: 1;
-    padding: 24px;
-    overflow: auto;
+  /* PROS/CONS */
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
   }
+  .item {
+    background: #161b22;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .item.pro { border: 1px solid #3fb950; color: #3fb950; }
+  .item.con { border: 1px solid #f85149; color: #f85149; }
   
+  /* COMPARISON TABLE */
+  .compare {
+    background: #161b22;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 11px;
+  }
+  .compare table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .compare th {
+    background: #21262d;
+    color: #8b949e;
+    text-align: left;
+    padding: 8px;
+    font-weight: normal;
+  }
+  .compare td {
+    padding: 8px;
+    border-bottom: 1px solid #21262d;
+    vertical-align: top;
+  }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare .lang { color: #c9d1d9; font-weight: bold; }
+  .compare .val { color: #8b949e; }
+  
+  /* USES */
   .uses {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 24px;
+    gap: 6px;
+    margin-bottom: 10px;
   }
   .use {
     background: #161b22;
     border: 1px solid #30363d;
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 12px;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 11px;
+    color: #8b949e;
   }
-  .use .icon { margin-right: 6px; }
-  .use .name { color: #c9d1d9; font-weight: bold; }
-  .use .desc { color: #8b949e; font-size: 11px; }
   
+  /* TIMELINE */
   .timeline {
     position: relative;
-    padding-left: 20px;
+    padding-left: 16px;
   }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 6px;
+    left: 5px;
     top: 0;
     bottom: 0;
     width: 2px;
     background: #30363d;
   }
-  
   .event {
     position: relative;
-    margin-bottom: 14px;
-    padding-left: 18px;
+    margin-bottom: 12px;
+    padding-left: 14px;
   }
   .event::before {
     content: '';
     position: absolute;
-    left: -18px;
-    top: 5px;
-    width: 10px;
-    height: 10px;
+    left: -15px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     border: 2px solid;
   }
   .event.year::before { border-color: #f0883e; background: #f0883e; }
   .event.release::before { border-color: #58a6ff; background: #58a6ff; }
   .event.big::before { border-color: #3fb950; background: #3fb950; }
-  
-  .event h3 {
-    font-size: 13px;
-    margin-bottom: 3px;
-  }
+  .event h3 { font-size: 12px; margin-bottom: 2px; }
   .event.year h3 { color: #f0883e; }
   .event.release h3 { color: #58a6ff; }
   .event.big h3 { color: #3fb950; }
-  .event p {
-    color: #8b949e;
-    font-size: 12px;
-    margin: 0;
-  }
+  .event p { font-size: 11px; margin: 0; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>Rust</h1>
-  <span class="badge">Systems Programming</span>
+  <span class="badge">Systems Language</span>
   <span class="badge">Memory Safe</span>
+  <span class="badge">No GC</span>
 </div>
 
 <div class="content">
   
-  <!-- LEFT: What + Why -->
-  <div class="left">
+  <!-- PANEL 1: What + How -->
+  <div class="panel">
     <div class="section">
       <h2>What is Rust?</h2>
-      <p>A systems programming language created by Mozilla in 2010. Fast, safe, and practical.</p>
-      <p>No garbage collector. No runtime. Compiles to native code.</p>
+      <p>A systems programming language that gives you control over memory without the danger of C/C++. No garbage collector, no runtime overhead.</p>
+      <p>Created by Mozilla in 2010 to solve a specific problem: writing browser components that are fast AND safe.</p>
+      <p>The key innovation: <strong>the compiler enforces memory safety</strong>. If your code compiles, it's free from whole classes of bugs (buffer overflows, null pointers, data races).</p>
     </div>
     
     <div class="section">
-      <h2>Why Rust Exists</h2>
-      <div class="highlight">
-        C and C++ let you shoot yourself in the foot with memory bugs.
+      <h2>How It Works: The Ownership System</h2>
+      <p>Rust uses three rules enforced at compile time:</p>
+      
+      <div class="concept">
+        <h3>1. Ownership</h3>
+        <p>Every piece of data has one "owner". When the owner goes out of scope, the data is freed. No garbage collector needed.</p>
       </div>
-      <p>Rust prevents those bugs at compile time. If it compiles, it's memory-safe.</p>
+      <div class="concept">
+        <h3>2. Borrowing</h3>
+        <p>You can lend data to functions without giving away ownership. The compiler tracks references and enforces rules.</p>
+      </div>
+      <div class="concept">
+        <h3>3. Lifetimes</h3>
+        <p>Ensures references don't outlive the data they point to. Prevents dangling pointers.</p>
+      </div>
+      
+      <p>The "borrow checker" is what makes Rust unique. It rejects code that could cause memory errors — at compile time, not runtime.</p>
     </div>
     
     <div class="section">
-      <h2>Key Concepts</h2>
-      <div class="concept">
-        <h3>Ownership</h3>
-        <p>Each piece of data has one owner. When the owner goes away, the data is freed. No garbage collector needed.</p>
-      </div>
-      <div class="concept">
-        <h3>Borrowing</h3>
-        <p>You can "borrow" data without taking ownership. The compiler checks you're not breaking the rules.</p>
-      </div>
-      <div class="concept">
-        <h3>Zero-Cost Abstractions</h3>
-        <p>High-level features that don't slow you down. You pay only for what you use.</p>
+      <h2>Code Example</h2>
+      <div class="code">
+<span class="comment">// Ownership: s is moved, not copied</span>
+<span class="keyword">let</span> s1 = String::from(<span class="string">"hello"</span>);
+<span class="keyword">let</span> s2 = s1;  <span class="comment">// s1 is moved to s2</span>
+<span class="comment">// println!("{}"); // ERROR: s1 is invalid</span>
+
+<span class="comment">// Borrowing: lend without moving</span>
+<span class="keyword">let</span> s3 = String::from(<span class="string">"world"</span>);
+<span class="keyword">let</span> len = calculate_length(&s3);  <span class="comment">// & means borrow</span>
+<span class="fn">println!</span>(<span class="string">"{} has {} chars"</span>, s3, len);  <span class="comment">// s3 still valid</span>
       </div>
     </div>
   </div>
   
-  <!-- RIGHT: Uses + Timeline -->
-  <div class="right">
+  <!-- PANEL 2: Pros/Cons + Compare -->
+  <div class="panel">
+    <div class="section">
+      <h2>Pros</h2>
+      <div class="list">
+        <span class="item pro">Memory safe</span>
+        <span class="item pro">No runtime crashes</span>
+        <span class="item pro">C-level performance</span>
+        <span class="item pro">Fearless concurrency</span>
+        <span class="item pro">Zero-cost abstractions</span>
+        <span class="item pro">Great tooling (cargo)</span>
+        <span class="item pro">Built-in testing</span>
+        <span class="item pro">WebAssembly support</span>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Cons</h2>
+      <div class="list">
+        <span class="item con">Steeper learning curve</span>
+        <span class="item con">Slow compile times</span>
+        <span class="item con">Verbose code</span>
+        <span class="item con">Smaller ecosystem than C++</span>
+        <span class="item con">Borrow checker frustration</span>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>vs Other Languages</h2>
+      <div class="compare">
+        <table>
+          <tr>
+            <th></th>
+            <th>Rust</th>
+            <th>C++</th>
+            <th>Go</th>
+            <th>Python</th>
+          </tr>
+          <tr>
+            <td class="lang">Speed</td>
+            <td class="val">★★★★★</td>
+            <td class="val">★★★★★</td>
+            <td class="val">★★★★</td>
+            <td class="val">★★</td>
+          </tr>
+          <tr>
+            <td class="lang">Safety</td>
+            <td class="val">★★★★★</td>
+            <td class="val">★★</td>
+            <td class="val">★★★★</td>
+            <td class="val">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="lang">Learn</td>
+            <td class="val">★★</td>
+            <td class="val">★★</td>
+            <td class="val">★★★★★</td>
+            <td class="val">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="lang">Compile</td>
+            <td class="val">★★</td>
+            <td class="val">★★★</td>
+            <td class="val">★★★★</td>
+            <td class="val">N/A</td>
+          </tr>
+          <tr>
+            <td class="lang">GC</td>
+            <td class="val">None</td>
+            <td class="val">None</td>
+            <td class="val">Yes</td>
+            <td class="val">Yes</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Who Uses It?</h2>
+      <div class="uses">
+        <span class="use">Mozilla</span>
+        <span class="use">Amazon (Firecracker)</span>
+        <span class="use">Google (ChromeOS, Android)</span>
+        <span class="use">Microsoft (Windows)</span>
+        <span class="use">Discord</span>
+        <span class="use">Dropbox</span>
+        <span class="use">Cloudflare</span>
+        <span class="use">Tesla</span>
+        <span class="use">Linux kernel</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- PANEL 3: Uses + Timeline -->
+  <div class="panel">
     <div class="section">
       <h2>What It's Used For</h2>
-      <div class="uses">
-        <div class="use">
-          <span class="icon">⚙️</span>
-          <span class="name">Linux Kernel</span>
-          <span class="desc">Kernel 6.1+ supports Rust for drivers</span>
-        </div>
-        <div class="use">
-          <span class="icon">☁️</span>
-          <span class="name">Cloud/Infrastructure</span>
-          <span class="desc">AWS, Dropbox, Discord use it</span>
-        </div>
-        <div class="use">
-          <span class="icon">🎮</span>
-          <span class="name">Games</span>
-          <span class="desc">Bevy game engine, tooling</span>
-        </div>
-        <div class="use">
-          <span class="icon">🔒</span>
-          <span class="name">Security</span>
-          <span class="desc">Memory safety = fewer exploits</span>
-        </div>
-        <div class="use">
-          <span class="icon">🔧</span>
-          <span class="name">CLI Tools</span>
-          <span class="desc">ripgrep, fd, bat — blazing fast</span>
-        </div>
-        <div class="use">
-          <span class="icon">🌐</span>
-          <span class="name">WebAssembly</span>
-          <span class="desc">Run Rust in browsers</span>
-        </div>
-      </div>
+      <ul>
+        <li><strong>Operating Systems</strong> — Linux kernel drivers, Redox OS</li>
+        <li><strong>Web Browsers</strong> — Firefox components, Servo engine</li>
+        <li><strong>Command Line Tools</strong> — ripgrep, fd, bat, exa (10-100x faster)</li>
+        <li><strong>WebAssembly</strong> — run Rust in browsers at near-native speed</li>
+        <li><strong>Networking</strong> — high-performance servers, proxies</li>
+        <li><strong>Embedded</strong> — microcontrollers, no_std environments</li>
+        <li><strong>Games</strong> — Bevy engine, game tooling</li>
+        <li><strong>Blockchain</strong> — Solana, Polkadot, Ethereum clients</li>
+        <li><strong>AI/ML</strong> — inference engines, ML frameworks</li>
+      </ul>
     </div>
     
     <div class="section">
@@ -255,22 +387,39 @@
           <p>Rust 1.0 stable release</p>
         </div>
         <div class="event big">
-          <h3>2019</h3>
-          <p>Stack Overflow's "most loved" language — every year since 2016</p>
-        </div>
-        <div class="event year">
-          <h3>2022</h3>
-          <p>Linux kernel 6.1 adds Rust support</p>
+          <h3>2016-2019</h3>
+          <p>Stack Overflow "Most Loved Language" — every year</p>
         </div>
         <div class="event release">
-          <h3>2025</h3>
-          <p>Rust 2024 edition, massive ecosystem growth</p>
+          <h3>2021</h3>
+          <p>Rust in Linux kernel 6.1 (second language)</p>
         </div>
         <div class="event big">
+          <h3>2024</h3>
+          <p>Rust Foundation grows, major adoption in cloud</p>
+        </div>
+        <div class="event year">
           <h3>2026</h3>
-          <p>Critical for systems programming, AI infrastructure</p>
+          <p>Critical for systems, AI infrastructure, security</p>
         </div>
       </div>
+    </div>
+    
+    <div class="section">
+      <h2>Should You Learn Rust?</h2>
+      <p><strong>Yes if you:</strong></p>
+      <ul>
+        <li>Want C/C++ performance with safety guarantees</li>
+        <li>Build systems where bugs are expensive</li>
+        <li>Enjoy solving puzzles (the borrow checker)</li>
+        <li>Care about long-term code quality</li>
+      </ul>
+      <p><strong>Maybe not if:</strong></p>
+      <ul>
+        <li>You need fast iteration / prototypes</li>
+        <li>Your team can't handle the learning curve</li>
+        <li>Python/JS is good enough for your use case</li>
+      </ul>
     </div>
   </div>
   
