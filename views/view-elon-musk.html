@@ -141,11 +141,24 @@
     display: flex;
     gap: 12px;
     align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
   }
   
-  .event-item .year { font-size: 11px; font-weight: bold; color: #484f58; min-width: 40px; }
-  .event-item .title { font-size: 11px; color: #8b949e; }
-  .event-item .desc { font-size: 10px; color: #6e7681; margin-left: auto; }
+  .event-item:hover {
+    background: #161b22;
+    border-color: #30363d;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  
+  .event-item .year { font-size: 11px; font-weight: bold; color: #484f58; min-width: 40px; transition: color 0.2s; }
+  .event-item:hover .year { color: #58a6ff; }
+  .event-item .title { font-size: 11px; color: #8b949e; transition: color 0.2s; }
+  .event-item:hover .title { color: #c9d1d9; }
+  .event-item .desc { font-size: 10px; color: #6e7681; margin-left: auto; transition: color 0.2s; }
+  .event-item:hover .desc { color: #8b949e; }
   
   /* RIGHT */
   .right { width: 180px; flex-shrink: 0; }
@@ -299,6 +312,7 @@ dots.innerHTML = events.map((e, i) => `<div class="dot" data-index="${i}"><div c
 eventsListEl.innerHTML = events.map(e => `<div class="event-item"><span class="year">${e.year}</span><span class="title">${e.title}</span><span class="desc">${e.desc}</span></div>`).join('');
 
 const dotEls = dots.querySelectorAll('.dot');
+const eventItems = eventsListEl.querySelectorAll('.event-item');
 
 function update(index) {
   const i = Math.round(index);
@@ -314,7 +328,8 @@ function update(index) {
   detailEl.innerHTML = `<h3>Details</h3><p>${e.detail}</p>`;
 }
 
-dotEls.forEach((dot, i) => dot.addEventListener('mouseenter', () => update(i)));
+dotEls.forEach((dot, i) => dot.addEventListener('mouseenter', () => update(i));
+eventItems.forEach((item, i) => item.addEventListener('mouseenter', () => update(i)));
 hoverZone.addEventListener('mousemove', e => {
   const rect = hoverZone.getBoundingClientRect();
   update((e.clientX - rect.left) / rect.width * (events.length - 1));
