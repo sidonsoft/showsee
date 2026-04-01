@@ -41,7 +41,7 @@
   
   /* LEFT: Profile */
   .left {
-    width: 280px;
+    width: 260px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -59,12 +59,10 @@
     margin-bottom: 10px;
   }
   
-  .profile-card {
-    text-align: center;
-  }
+  .profile-card { text-align: center; }
   .profile-card h2 {
     color: #c9d1d9;
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 4px;
   }
   .profile-card .born {
@@ -113,11 +111,7 @@
     line-height: 1.5;
     margin-bottom: 6px;
   }
-  .quote .author {
-    color: #8b949e;
-    font-size: 10px;
-    text-align: right;
-  }
+  .quote .author { color: #8b949e; font-size: 10px; text-align: right; }
   
   .stats-grid .stat-row {
     display: flex;
@@ -131,10 +125,10 @@
   .stats-grid .value { color: #c9d1d9; font-weight: bold; }
   .stats-grid .value.green { color: #3fb950; }
   
-  /* MIDDLE: Timeline */
+  /* MIDDLE: Timeline Slider */
   .middle {
     flex: 1;
-    min-width: 300px;
+    min-width: 320px;
     background: #161b22;
     border-radius: 12px;
     display: flex;
@@ -143,126 +137,143 @@
   }
   
   .timeline-header {
-    padding: 12px 14px;
+    padding: 12px 16px;
     border-bottom: 1px solid #21262d;
     flex-shrink: 0;
   }
   .timeline-header h3 {
     color: #58a6ff;
     font-size: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   
-  .year-selector {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
+  .year-display {
+    text-align: center;
+    margin-bottom: 16px;
   }
-  .year-btn {
+  .year-display .year {
+    font-size: 36px;
+    font-weight: bold;
+    color: #58a6ff;
+  }
+  .year-display .label {
+    font-size: 10px;
+    color: #8b949e;
+  }
+  
+  .slider-container {
+    position: relative;
+    padding: 0 20px;
+  }
+  
+  .slider-track {
+    height: 6px;
+    background: #21262d;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .slider-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #58a6ff, #3fb950);
+    border-radius: 3px;
+    transition: width 0.1s;
+  }
+  
+  .slider-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: #58a6ff;
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 2px 8px rgba(88, 166, 255, 0.4);
+    transition: transform 0.1s;
+  }
+  .slider-thumb:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.2); }
+  
+  .year-markers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 9px;
+    color: #8b949e;
+  }
+  
+  .play-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .play-btn {
     background: #21262d;
     border: 1px solid #30363d;
-    color: #8b949e;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 10px;
+    color: #c9d1d9;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 12px;
     cursor: pointer;
-    transition: all 0.2s;
   }
-  .year-btn:hover { border-color: #58a6ff; color: #58a6ff; }
-  .year-btn.active { 
-    background: #58a6ff; 
-    border-color: #58a6ff; 
-    color: #0d1117;
-  }
+  .play-btn:hover { border-color: #58a6ff; }
+  .play-btn.playing { background: #58a6ff; border-color: #58a6ff; color: #0d1117; }
   
-  .timeline-content {
+  .timeline-events {
     flex: 1;
     overflow: auto;
-    padding: 14px;
-  }
-  
-  .timeline {
-    position: relative;
-    padding-left: 20px;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: #30363d;
+    padding: 16px;
   }
   
   .event {
-    position: relative;
-    margin-bottom: 12px;
-    padding: 10px 12px;
     background: #0d1117;
     border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid transparent;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 3px solid #30363d;
+    opacity: 0.3;
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
   }
-  .event:hover { border-color: #30363d; }
-  .event.expanded { border-color: #58a6ff; }
+  .event.active {
+    opacity: 1;
+    transform: translateX(0);
+    border-left-color: #3fb950;
+  }
+  .event.past {
+    opacity: 0.6;
+    transform: translateX(0);
+    border-left-color: #58a6ff;
+  }
   
-  .event::before {
-    content: '';
-    position: absolute;
-    left: -19px;
-    top: 12px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid;
-  }
-  .event.year::before { border-color: #f0883e; background: #f0883e; }
-  .event.big::before { border-color: #3fb950; background: #3fb950; }
-  .event.normal::before { border-color: #58a6ff; background: #58a6ff; }
-  
-  .event-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
   .event h4 {
-    font-size: 12px;
+    font-size: 13px;
     color: #c9d1d9;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
-  .event.year h4 { color: #f0883e; }
-  .event .year-badge {
-    font-size: 10px;
-    background: #21262d;
-    padding: 2px 6px;
-    border-radius: 4px;
-    color: #8b949e;
-  }
-  
+  .event.active h4 { color: #3fb950; }
   .event p {
-    color: #8b949e;
     font-size: 11px;
+    color: #8b949e;
     margin: 0;
     line-height: 1.4;
-    display: none;
   }
-  .event.expanded p { display: block; margin-top: 6px; }
-  
   .event .detail {
-    display: none;
-    margin-top: 8px;
-    padding-top: 8px;
+    margin-top: 6px;
+    padding-top: 6px;
     border-top: 1px solid #21262d;
-    font-size: 11px;
+    font-size: 10px;
     color: #8b949e;
   }
-  .event.expanded .detail { display: block; }
   
   /* RIGHT: Companies */
   .right {
-    width: 280px;
+    width: 260px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -284,13 +295,13 @@
     margin-bottom: 8px;
   }
   .company-logo {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     color: #0d1117;
   }
@@ -300,73 +311,37 @@
   .company-logo.xai { background: #a371f7; }
   .company-logo.neuralink { background: #3fb950; }
   
-  .company .name {
-    font-size: 13px;
-    font-weight: bold;
-    color: #c9d1d9;
-  }
-  .company .role {
-    font-size: 10px;
-    color: #8b949e;
-  }
+  .company .name { font-size: 12px; font-weight: bold; color: #c9d1d9; }
+  .company .role { font-size: 10px; color: #8b949e; }
   
   .company-stats {
     display: flex;
-    gap: 12px;
+    gap: 10px;
   }
   .company .stat { flex: 1; }
-  .company .stat .val {
-    font-size: 13px;
-    font-weight: bold;
-    color: #3fb950;
-  }
-  .company .stat .label {
-    font-size: 9px;
-    color: #8b949e;
-  }
-  
-  .achievements .achievement {
-    display: flex;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid #21262d;
-    font-size: 11px;
-  }
-  .achievements .achievement:last-child { border-bottom: none; }
-  .achievements .name {
-    color: #c9d1d9;
-    font-weight: bold;
-  }
-  .achievements .desc {
-    color: #8b949e;
-    font-size: 10px;
-  }
+  .company .stat .val { font-size: 12px; font-weight: bold; color: #3fb950; }
+  .company .stat .label { font-size: 9px; color: #8b949e; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>Elon Musk</h1>
-  <div class="subtitle">CEO Tesla, SpaceX, xAI • Chairman SolarCity • Owner X</div>
+  <div class="subtitle">CEO Tesla, SpaceX, xAI • Owner X</div>
 </div>
 
 <div class="content">
   
-  <!-- LEFT: Profile -->
+  <!-- LEFT -->
   <div class="left">
     <div class="card profile-card">
       <h2>Elon Musk</h2>
-      <div class="born">June 28, 1971 • Pretoria, SA</div>
+      <div class="born">June 28, 1971 • Pretoria</div>
       <div class="title">CEO & Visionary</div>
       
       <div class="social-links">
-        <a href="https://x.com/elonmusk" target="_blank" class="social-btn">
-          <span>𝕏</span>
-          <span>@elonmusk</span>
-        </a>
-        <a href="https://en.wikipedia.org/wiki/Elon_Musk" target="_blank" class="social-btn">
-          <span>Wiki</span>
-        </a>
+        <a href="https://x.com/elonmusk" target="_blank" class="social-btn">𝕏 @elonmusk</a>
+        <a href="https://en.wikipedia.org/wiki/Elon_Musk" target="_blank" class="social-btn">Wiki</a>
       </div>
     </div>
     
@@ -381,10 +356,6 @@
         <span class="value green">$850B</span>
       </div>
       <div class="stat-row">
-        <span class="label">X Followers</span>
-        <span class="value">200M+</span>
-      </div>
-      <div class="stat-row">
         <span class="label">Companies</span>
         <span class="value">9</span>
       </div>
@@ -392,157 +363,127 @@
         <span class="label">Children</span>
         <span class="value">11+</span>
       </div>
-      <div class="stat-row">
-        <span class="label">Work Week</span>
-        <span class="value">120 hrs</span>
-      </div>
     </div>
   </div>
   
-  <!-- MIDDLE: Interactive Timeline -->
+  <!-- MIDDLE: Timeline Slider -->
   <div class="middle">
     <div class="timeline-header">
       <h3>Life Timeline</h3>
-      <div class="year-selector">
-        <button class="year-btn" onclick="filterYear('all')">All</button>
-        <button class="year-btn" onclick="filterYear('1970s')">1970s</button>
-        <button class="year-btn" onclick="filterYear('1990s')">1990s</button>
-        <button class="year-btn" onclick="filterYear('2000s')">2000s</button>
-        <button class="year-btn" onclick="filterYear('2010s')">2010s</button>
-        <button class="year-btn" onclick="filterYear('2020s')">2020s</button>
-        <button class="year-btn" onclick="filterYear('2026')">2026</button>
+      
+      <div class="year-display">
+        <div class="year" id="current-year">1971</div>
+        <div class="label">Drag slider to explore</div>
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-track" id="slider-track">
+          <div class="slider-progress" id="slider-progress"></div>
+          <div class="slider-thumb" id="slider-thumb"></div>
+        </div>
+        <div class="year-markers">
+          <span>1971</span>
+          <span>1990</span>
+          <span>2000</span>
+          <span>2010</span>
+          <span>2020</span>
+          <span>2026</span>
+        </div>
+      </div>
+      
+      <div class="play-controls">
+        <button class="play-btn" id="play-btn" onclick="togglePlay()">Play</button>
+        <button class="play-btn" onclick="resetTimeline()">Reset</button>
       </div>
     </div>
     
-    <div class="timeline-content" id="timeline">
-      <div class="event year" data-year="1970s">
-        <div class="event-header">
-          <h4>Born</h4>
-          <span class="year-badge">1971</span>
-        </div>
-        <p>Pretoria, South Africa. Bullied in school. Learned programming at age 10.</p>
+    <div class="timeline-events" id="timeline-events">
+      
+      <div class="event" data-year="1971" data-end="1971">
+        <h4>Born</h4>
+        <p>Pretoria, South Africa</p>
       </div>
       
-      <div class="event normal" data-year="1980s">
-        <div class="event-header">
-          <h4>Moves to Canada</h4>
-          <span class="year-badge">1989</span>
-        </div>
-        <p>Emigrated at 17 to avoid mandatory military service.</p>
+      <div class="event" data-year="1989" data-end="1989">
+        <h4>Moves to Canada</h4>
+        <p>Emigrated at 17 to avoid military service</p>
       </div>
       
-      <div class="event normal" data-year="1990s">
-        <div class="event-header">
-          <h4>University</h4>
-          <span class="year-badge">1992</span>
-        </div>
-        <p>Transfers to University of Pennsylvania. Degrees in Physics and Economics.</p>
+      <div class="event" data-year="1995" data-end="1995">
+        <h4>Zip2 Founded</h4>
+        <p>City guide software with brother Kimbal</p>
+        <div class="detail">Sold for $307M in 1999</div>
       </div>
       
-      <div class="event big" data-year="1990s">
-        <div class="event-header">
-          <h4>Zip2 Founded</h4>
-          <span class="year-badge">1995</span>
-        </div>
-        <p>Co-founded city guide software company with brother Kimbal.</p>
-        <div class="detail">First venture. $307M sale in 1999.</div>
+      <div class="event" data-year="1999" data-end="2002">
+        <h4>X.com / PayPal</h4>
+        <p>Founds X.com, merges to form PayPal</p>
+        <div class="detail">PayPal sold to eBay for $1.5B</div>
       </div>
       
-      <div class="event big" data-year="1990s">
-        <div class="event-header">
-          <h4>X.com / PayPal</h4>
-          <span class="year-badge">1999</span>
-        </div>
-        <p>Founds X.com with $12M. Merges with Confinity to form PayPal.</p>
-        <div class="detail">PayPal sold to eBay for $1.5B in 2002.</div>
+      <div class="event" data-year="2002" data-end="2002">
+        <h4>SpaceX Founded</h4>
+        <p>Starts rocket company to reduce space costs</p>
       </div>
       
-      <div class="event big" data-year="2000s">
-        <div class="event-header">
-          <h4>SpaceX Founded</h4>
-          <span class="year-badge">2002</span>
-        </div>
-        <p>After PayPal sale, starts rocket company to reduce space colonization costs.</p>
-        <div class="detail">First successful launch: 2008 (4th attempt). Now worth $350B.</div>
+      <div class="event" data-year="2004" data-end="2004">
+        <h4>Joins Tesla</h4>
+        <p>Co-founder and product architect</p>
       </div>
       
-      <div class="event big" data-year="2000s">
-        <div class="event-header">
-          <h4>Tesla</h4>
-          <span class="year-badge">2004</span>
-        </div>
-        <p>Joins as co-founder and product architect. Leads design of Roadster and Model S.</p>
-        <div class="detail">Tesla IPO 2010. Now $1.1T market cap.</div>
+      <div class="event" data-year="2008" data-end="2008">
+        <h4>SpaceX First Success</h4>
+        <p>Fourth Falcon 1 launch succeeds</p>
+        <div class="detail">First private liquid-fuel rocket to orbit</div>
       </div>
       
-      <div class="event big" data-year="2000s">
-        <div class="event-header">
-          <h4>SpaceX Success</h4>
-          <span class="year-badge">2008</span>
-        </div>
-        <p>Fourth Falcon 1 launch succeeds. First private liquid-fuel rocket to orbit.</p>
+      <div class="event" data-year="2010" data-end="2010">
+        <h4>Tesla IPO</h4>
+        <p>Electric car company goes public</p>
       </div>
       
-      <div class="event normal" data-year="2010s">
-        <div class="event-header">
-          <h4>Tesla IPO + SolarCity</h4>
-          <span class="year-badge">2010-2016</span>
-        </div>
-        <p>Tesla goes public. Co-founds SolarCity (2006), Neuralink (2016), The Boring Company (2016).</p>
+      <div class="event" data-year="2016" data-end="2016">
+        <h4>Neuralink + Boring Co</h4>
+        <p>Brain-computer and tunnel companies</p>
       </div>
       
-      <div class="event big" data-year="2020s">
-        <div class="event-header">
-          <h4>SpaceX Milestones</h4>
-          <span class="year-badge">2020</span>
-        </div>
-        <p>Starlink launches. Becomes most valuable car company. First private crewed spaceflight.</p>
+      <div class="event" data-year="2020" data-end="2020">
+        <h4>Space Milestones</h4>
+        <p>Starlink launches. Most valuable car company.</p>
+        <div class="detail">First private crewed spaceflight</div>
       </div>
       
-      <div class="event big" data-year="2020s">
-        <div class="event-header">
-          <h4>Twitter / X</h4>
-          <span class="year-badge">2022</span>
-        </div>
-        <p>Acquires Twitter for $44B. Becomes world's richest person.</p>
-        <div class="detail">Renamed to X. Valuation dropped to ~$19B.</div>
+      <div class="event" data-year="2022" data-end="2022">
+        <h4>Twitter / X</h4>
+        <p>Acquires Twitter for $44B</p>
+        <div class="detail">Becomes world's richest person</div>
       </div>
       
-      <div class="event big" data-year="2020s">
-        <div class="event-header">
-          <h4>xAI + Cybertruck</h4>
-          <span class="year-badge">2023</span>
-        </div>
-        <p>Founds xAI. Tesla Cybertruck delivered. Twitter becomes X.</p>
+      <div class="event" data-year="2023" data-end="2023">
+        <h4>xAI + Cybertruck</h4>
+        <p>Founds xAI. Cybertruck delivered.</p>
       </div>
       
-      <div class="event big" data-year="2020s">
-        <div class="event-header">
-          <h4>Starship + Robotaxi</h4>
-          <span class="year-badge">2024</span>
-        </div>
-        <p>Starship reaches orbit. Tesla Robotaxi unveiled.</p>
+      <div class="event" data-year="2024" data-end="2024">
+        <h4>Starship + Robotaxi</h4>
+        <p>Starship reaches orbit. Robotaxi unveiled.</p>
       </div>
       
-      <div class="event big" data-year="2020s">
-        <div class="event-header">
-          <h4>DOGE + Grok</h4>
-          <span class="year-badge">2025</span>
-        </div>
-        <p>Government efficiency team (DOGE). xAI Grok deployed. Tesla FSD reaches 10B+ miles.</p>
+      <div class="event" data-year="2025" data-end="2025">
+        <h4>DOGE + Grok</h4>
+        <p>Government team. xAI Grok deployed.</p>
+        <div class="detail">Tesla FSD 10B+ miles</div>
       </div>
       
-      <div class="event year" data-year="2026">
-        <div class="event-header">
-          <h4>Forbes #1</h4>
-          <span class="year-badge">2026</span>
-        </div>
-        <p>First $850B net worth. World wealthiest person. SpaceX Mars missions planned.</p>
+      <div class="event" data-year="2026" data-end="2026">
+        <h4>Forbes #1</h4>
+        <p>First $850B net worth. World's wealthiest.</p>
       </div>
+      
     </div>
   </div>
   
-  <!-- RIGHT: Companies + Achievements -->
+  <!-- RIGHT: Companies -->
   <div class="right">
     <div class="card companies">
       <h3>Companies</h3>
@@ -556,14 +497,8 @@
           </div>
         </div>
         <div class="company-stats">
-          <div class="stat">
-            <div class="val">$1.1T</div>
-            <div class="label">Market Cap</div>
-          </div>
-          <div class="stat">
-            <div class="val">13.5%</div>
-            <div class="label">Musk Stake</div>
-          </div>
+          <div class="stat"><div class="val">$1.1T</div><div class="label">Market Cap</div></div>
+          <div class="stat"><div class="val">13.5%</div><div class="label">Stake</div></div>
         </div>
       </div>
       
@@ -576,14 +511,8 @@
           </div>
         </div>
         <div class="company-stats">
-          <div class="stat">
-            <div class="val">$350B</div>
-            <div class="label">Valuation</div>
-          </div>
-          <div class="stat">
-            <div class="val">42%</div>
-            <div class="label">Musk Stake</div>
-          </div>
+          <div class="stat"><div class="val">$350B</div><div class="label">Value</div></div>
+          <div class="stat"><div class="val">42%</div><div class="label">Stake</div></div>
         </div>
       </div>
       
@@ -596,14 +525,8 @@
           </div>
         </div>
         <div class="company-stats">
-          <div class="stat">
-            <div class="val">$19B</div>
-            <div class="label">Valuation</div>
-          </div>
-          <div class="stat">
-            <div class="val">$44B</div>
-            <div class="label">Paid</div>
-          </div>
+          <div class="stat"><div class="val">$19B</div><div class="label">Value</div></div>
+          <div class="stat"><div class="val">$44B</div><div class="label">Paid</div></div>
         </div>
       </div>
       
@@ -616,14 +539,8 @@
           </div>
         </div>
         <div class="company-stats">
-          <div class="stat">
-            <div class="val">$75B</div>
-            <div class="label">Valuation</div>
-          </div>
-          <div class="stat">
-            <div class="val">Grok 3</div>
-            <div class="label">Product</div>
-          </div>
+          <div class="stat"><div class="val">$75B</div><div class="label">Value</div></div>
+          <div class="stat"><div class="val">Grok 3</div><div class="label">Product</div></div>
         </div>
       </div>
       
@@ -636,42 +553,8 @@
           </div>
         </div>
         <div class="company-stats">
-          <div class="stat">
-            <div class="val">$5B</div>
-            <div class="label">Valuation</div>
-          </div>
-          <div class="stat">
-            <div class="val">2</div>
-            <div class="label">Patients</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="card achievements">
-      <h3>Key Achievements</h3>
-      <div class="achievement">
-        <div>
-          <div class="name">Reusable Rockets</div>
-          <div class="desc">Cut launch costs by 90%</div>
-        </div>
-      </div>
-      <div class="achievement">
-        <div>
-          <div class="name">Electric Car Revolution</div>
-          <div class="desc">Made EVs mainstream</div>
-        </div>
-      </div>
-      <div class="achievement">
-        <div>
-          <div class="name">FSD 10B+ Miles</div>
-          <div class="desc">World's largest driving dataset</div>
-        </div>
-      </div>
-      <div class="achievement">
-        <div>
-          <div class="name">Starlink</div>
-          <div class="desc">7,000+ satellites, global internet</div>
+          <div class="stat"><div class="val">$5B</div><div class="label">Value</div></div>
+          <div class="stat"><div class="val">2</div><div class="label">Patients</div></div>
         </div>
       </div>
     </div>
@@ -680,53 +563,122 @@
 </div>
 
 <script>
-let currentFilter = 'all';
+const startYear = 1971;
+const endYear = 2026;
+const totalYears = endYear - startYear;
 
-function filterYear(period) {
-  currentFilter = period;
+let currentYear = startYear;
+let isPlaying = false;
+let playInterval = null;
+
+const sliderTrack = document.getElementById('slider-track');
+const sliderThumb = document.getElementById('slider-thumb');
+const sliderProgress = document.getElementById('slider-progress');
+const yearDisplay = document.getElementById('current-year');
+const events = document.querySelectorAll('.event');
+
+function updateTimeline(year) {
+  currentYear = Math.round(year);
+  yearDisplay.textContent = currentYear;
   
-  // Update buttons
-  document.querySelectorAll('.year-btn').forEach(btn => {
-    btn.classList.remove('active');
-    if (btn.textContent === period || (period === 'all' && btn.textContent === 'All')) {
-      btn.classList.add('active');
-    }
-  });
+  // Update slider
+  const progress = ((year - startYear) / totalYears) * 100;
+  sliderProgress.style.width = progress + '%';
+  sliderThumb.style.left = progress + '%';
   
-  // Filter events
-  document.querySelectorAll('.event').forEach(event => {
-    const year = event.dataset.year;
-    let show = false;
+  // Update events
+  events.forEach(event => {
+    const eventYear = parseInt(event.dataset.year);
+    const eventEnd = parseInt(event.dataset.end) || eventYear;
     
-    if (period === 'all') {
-      show = true;
-    } else if (period === year) {
-      show = true;
-    } else if (period === '1970s' && year === '1970s') {
-      show = true;
-    } else if (period === '1990s' && year === '1990s') {
-      show = true;
-    } else if (period === '2000s' && year === '2000s') {
-      show = true;
-    } else if (period === '2010s' && year === '2010s') {
-      show = true;
-    } else if (period === '2020s' && year === '2020s') {
-      show = true;
+    if (year >= eventYear && year <= eventEnd + 1) {
+      event.classList.add('active');
+      event.classList.remove('past');
+    } else if (year > eventEnd) {
+      event.classList.remove('active');
+      event.classList.add('past');
+    } else {
+      event.classList.remove('active', 'past');
     }
-    
-    event.style.display = show ? 'block' : 'none';
   });
 }
 
-// Click to expand events
-document.querySelectorAll('.event').forEach(event => {
-  event.addEventListener('click', () => {
-    event.classList.toggle('expanded');
-  });
+function getYearFromX(clientX) {
+  const rect = sliderTrack.getBoundingClientRect();
+  const x = clientX - rect.left;
+  const percent = Math.max(0, Math.min(1, x / rect.width));
+  return startYear + (percent * totalYears);
+}
+
+// Slider drag
+let isDragging = false;
+
+sliderTrack.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  updateTimeline(getYearFromX(e.clientX));
 });
 
+document.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    updateTimeline(getYearFromX(e.clientX));
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+// Touch support
+sliderTrack.addEventListener('touchstart', (e) => {
+  isDragging = true;
+  updateTimeline(getYearFromX(e.touches[0].clientX));
+});
+
+document.addEventListener('touchmove', (e) => {
+  if (isDragging) {
+    updateTimeline(getYearFromX(e.touches[0].clientX));
+  }
+});
+
+document.addEventListener('touchend', () => {
+  isDragging = false;
+});
+
+function togglePlay() {
+  const btn = document.getElementById('play-btn');
+  
+  if (isPlaying) {
+    clearInterval(playInterval);
+    isPlaying = false;
+    btn.textContent = 'Play';
+    btn.classList.remove('playing');
+  } else {
+    if (currentYear >= endYear) {
+      currentYear = startYear;
+    }
+    isPlaying = true;
+    btn.textContent = 'Pause';
+    btn.classList.add('playing');
+    
+    playInterval = setInterval(() => {
+      currentYear += 0.2;
+      if (currentYear >= endYear) {
+        currentYear = endYear;
+        togglePlay();
+      }
+      updateTimeline(currentYear);
+    }, 50);
+  }
+}
+
+function resetTimeline() {
+  if (isPlaying) togglePlay();
+  currentYear = startYear;
+  updateTimeline(startYear);
+}
+
 // Init
-filterYear('all');
+updateTimeline(startYear);
 </script>
 
 </body>
