@@ -372,28 +372,22 @@ function updateTimeline(year) {
   updateFromPosition(percent);
 }
 
-let isDragging = false;
+// Hover on track
+sliderTrack.addEventListener('mousemove', e => {
+  updateFromPosition(getPercentFromX(e.clientX));
+});
+
+// Hover on dots
+dots.forEach((d, i) => {
+  const pos = (i / (events.length - 1)) * 100;
+  d.addEventListener('mouseenter', () => updateFromPosition(pos));
+});
 
 function getPercentFromX(clientX) {
   const rect = sliderTrack.getBoundingClientRect();
   const x = clientX - rect.left;
   return Math.max(0, Math.min(100, (x / rect.width) * 100));
 }
-
-sliderTrack.addEventListener('mousedown', e => { isDragging = true; updateFromPosition(getPercentFromX(e.clientX)); });
-document.addEventListener('mousemove', e => { if (isDragging) updateFromPosition(getPercentFromX(e.clientX)); });
-document.addEventListener('mouseup', () => { isDragging = false; });
-
-sliderTrack.addEventListener('touchstart', e => { isDragging = true; updateFromPosition(getPercentFromX(e.touches[0].clientX)); });
-document.addEventListener('touchmove', e => { if (isDragging) updateFromPosition(getPercentFromX(e.touches[0].clientX)); });
-document.addEventListener('touchend', () => { isDragging = false; });
-
-// Clicking dots
-dots.forEach((d, i) => {
-  const pos = (i / (events.length - 1)) * 100;
-  d.addEventListener('click', () => updateFromPosition(pos));
-  d.addEventListener('touchend', () => updateFromPosition(pos));
-});
 
 updateFromPosition(0);
 </script>
