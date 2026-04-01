@@ -48,13 +48,20 @@
     gap: 12px;
   }
   
-  .profile-card {
+  .card {
     background: #161b22;
     border-radius: 12px;
-    padding: 16px;
+    padding: 14px;
+  }
+  .card h3 {
+    color: #58a6ff;
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-card {
     text-align: center;
   }
-
   .profile-card h2 {
     color: #c9d1d9;
     font-size: 20px;
@@ -72,10 +79,9 @@
     padding: 4px 12px;
     border-radius: 12px;
     display: inline-block;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   
-  /* Social Links */
   .social-links {
     display: flex;
     justify-content: center;
@@ -93,80 +99,120 @@
     border-radius: 6px;
     font-size: 11px;
     text-decoration: none;
-    transition: all 0.2s;
   }
-  .social-btn:hover {
-    border-color: #58a6ff;
-    color: #58a6ff;
-  }
-  .social-btn .icon { font-size: 14px; }
+  .social-btn:hover { border-color: #58a6ff; color: #58a6ff; }
   
-  /* Stats */
-  .stats-grid {
-    background: #161b22;
-    border-radius: 12px;
-    padding: 14px;
+  .quote {
+    background: linear-gradient(135deg, #2d2416 0%, #161b22 100%);
+    border: 1px solid #f0883e;
   }
-  .stats-grid h3 {
-    color: #58a6ff;
-    font-size: 11px;
-    margin-bottom: 10px;
+  .quote p {
+    color: #c9d1d9;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 6px;
   }
-  .stat-row {
+  .quote .author {
+    color: #8b949e;
+    font-size: 10px;
+    text-align: right;
+  }
+  
+  .stats-grid .stat-row {
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
     border-bottom: 1px solid #21262d;
     font-size: 11px;
   }
-  .stat-row:last-child { border-bottom: none; }
-  .stat-row .label { color: #8b949e; }
-  .stat-row .value { color: #c9d1d9; font-weight: bold; }
-  .stat-row .value.green { color: #3fb950; }
-  
-
+  .stats-grid .stat-row:last-child { border-bottom: none; }
+  .stats-grid .label { color: #8b949e; }
+  .stats-grid .value { color: #c9d1d9; font-weight: bold; }
+  .stats-grid .value.green { color: #3fb950; }
   
   /* MIDDLE: Timeline */
   .middle {
     flex: 1;
-    min-width: 280px;
+    min-width: 300px;
     background: #161b22;
     border-radius: 12px;
-    padding: 14px;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
-  .middle h3 {
+  
+  .timeline-header {
+    padding: 12px 14px;
+    border-bottom: 1px solid #21262d;
+    flex-shrink: 0;
+  }
+  .timeline-header h3 {
     color: #58a6ff;
     font-size: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .year-selector {
     display: flex;
-    align-items: center;
-    gap: 6px;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .year-btn {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .year-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .year-btn.active { 
+    background: #58a6ff; 
+    border-color: #58a6ff; 
+    color: #0d1117;
+  }
+  
+  .timeline-content {
+    flex: 1;
+    overflow: auto;
+    padding: 14px;
   }
   
   .timeline {
     position: relative;
-    padding-left: 16px;
+    padding-left: 20px;
   }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 4px;
+    left: 5px;
     top: 0;
     bottom: 0;
     width: 2px;
     background: #30363d;
   }
+  
   .event {
     position: relative;
-    margin-bottom: 14px;
-    padding-left: 16px;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: #0d1117;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
   }
+  .event:hover { border-color: #30363d; }
+  .event.expanded { border-color: #58a6ff; }
+  
   .event::before {
     content: '';
     position: absolute;
-    left: -16px;
-    top: 4px;
+    left: -19px;
+    top: 12px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -174,48 +220,63 @@
   }
   .event.year::before { border-color: #f0883e; background: #f0883e; }
   .event.big::before { border-color: #3fb950; background: #3fb950; }
-  .event.release::before { border-color: #58a6ff; background: #58a6ff; }
+  .event.normal::before { border-color: #58a6ff; background: #58a6ff; }
   
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .event h4 {
     font-size: 12px;
     color: #c9d1d9;
     margin-bottom: 2px;
   }
-  .event.year h4 { color: #f0883e; font-size: 13px; }
+  .event.year h4 { color: #f0883e; }
+  .event .year-badge {
+    font-size: 10px;
+    background: #21262d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #8b949e;
+  }
+  
   .event p {
     color: #8b949e;
-    font-size: 10px;
+    font-size: 11px;
     margin: 0;
     line-height: 1.4;
+    display: none;
   }
+  .event.expanded p { display: block; margin-top: 6px; }
+  
+  .event .detail {
+    display: none;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #21262d;
+    font-size: 11px;
+    color: #8b949e;
+  }
+  .event.expanded .detail { display: block; }
   
   /* RIGHT: Companies */
   .right {
-    width: 300px;
+    width: 280px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
   
-  .companies {
-    background: #161b22;
-    border-radius: 12px;
-    padding: 14px;
-  }
-  .companies h3 {
-    color: #58a6ff;
-    font-size: 12px;
-    margin-bottom: 10px;
-  }
-  
-  .company {
+  .companies .company {
     background: #0d1117;
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     margin-bottom: 8px;
   }
-  .company:last-child { margin-bottom: 0; }
+  .companies .company:last-child { margin-bottom: 0; }
+  
   .company-header {
     display: flex;
     align-items: center;
@@ -223,13 +284,13 @@
     margin-bottom: 8px;
   }
   .company-logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #0d1117;
   }
@@ -238,6 +299,7 @@
   .company-logo.x { background: #000; color: #fff; }
   .company-logo.xai { background: #a371f7; }
   .company-logo.neuralink { background: #3fb950; }
+  
   .company .name {
     font-size: 13px;
     font-weight: bold;
@@ -247,15 +309,14 @@
     font-size: 10px;
     color: #8b949e;
   }
+  
   .company-stats {
     display: flex;
     gap: 12px;
   }
-  .company .stat {
-    flex: 1;
-  }
+  .company .stat { flex: 1; }
   .company .stat .val {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: #3fb950;
   }
@@ -264,55 +325,21 @@
     color: #8b949e;
   }
   
-  /* Achievements */
-  .achievements {
-    background: #161b22;
-    border-radius: 12px;
-    padding: 14px;
-  }
-  .achievements h3 {
-    color: #58a6ff;
-    font-size: 12px;
-    margin-bottom: 10px;
-  }
-  .achievement {
+  .achievements .achievement {
     display: flex;
-    align-items: flex-start;
     gap: 10px;
     padding: 8px 0;
     border-bottom: 1px solid #21262d;
     font-size: 11px;
   }
-  .achievement:last-child { border-bottom: none; }
-  .achievement .icon { font-size: 16px; }
-  .achievement .text .name {
+  .achievements .achievement:last-child { border-bottom: none; }
+  .achievements .name {
     color: #c9d1d9;
     font-weight: bold;
-    margin-bottom: 2px;
   }
-  .achievement .text .desc {
+  .achievements .desc {
     color: #8b949e;
     font-size: 10px;
-  }
-  
-  /* Quote */
-  .quote {
-    background: linear-gradient(135deg, #2d2416 0%, #161b22 100%);
-    border: 1px solid #f0883e;
-    border-radius: 12px;
-    padding: 14px;
-  }
-  .quote p {
-    color: #c9d1d9;
-    font-size: 13px;
-    font-style: italic;
-    line-height: 1.5;
-    margin-bottom: 8px;
-  }
-  .quote .author {
-    color: #8b949e;
-    font-size: 11px;
-    text-align: right;
   }
 </style>
 </head>
@@ -327,30 +354,28 @@
   
   <!-- LEFT: Profile -->
   <div class="left">
-    <div class="profile-card">
+    <div class="card profile-card">
       <h2>Elon Musk</h2>
       <div class="born">June 28, 1971 • Pretoria, SA</div>
       <div class="title">CEO & Visionary</div>
       
       <div class="social-links">
         <a href="https://x.com/elonmusk" target="_blank" class="social-btn">
-          <span class="icon">𝕏</span>
+          <span>𝕏</span>
           <span>@elonmusk</span>
         </a>
         <a href="https://en.wikipedia.org/wiki/Elon_Musk" target="_blank" class="social-btn">
-          <span class="icon">📄</span>
-          <span>Wikipedia</span>
+          <span>Wiki</span>
         </a>
       </div>
     </div>
     
-    <div class="quote">
+    <div class="card quote">
       <p>"When something is important enough, you do it even if the odds are not in your favor."</p>
       <div class="author">— Elon Musk</div>
     </div>
     
-    <div class="stats-grid">
-      <h3>📊 Key Numbers</h3>
+    <div class="card stats-grid">
       <div class="stat-row">
         <span class="label">Net Worth</span>
         <span class="value green">$850B</span>
@@ -371,103 +396,155 @@
         <span class="label">Work Week</span>
         <span class="value">120 hrs</span>
       </div>
-      <div class="stat-row">
-        <span class="label">Citizenship</span>
-        <span class="value">US, CA, SA</span>
-      </div>
     </div>
   </div>
   
-  <!-- MIDDLE: Timeline -->
+  <!-- MIDDLE: Interactive Timeline -->
   <div class="middle">
-    <h3>Life Timeline</h3>
-    <div class="timeline">
-      <div class="event year">
-        <h4>1971</h4>
-        <p>Born in Pretoria, South Africa</p>
+    <div class="timeline-header">
+      <h3>Life Timeline</h3>
+      <div class="year-selector">
+        <button class="year-btn" onclick="filterYear('all')">All</button>
+        <button class="year-btn" onclick="filterYear('1970s')">1970s</button>
+        <button class="year-btn" onclick="filterYear('1990s')">1990s</button>
+        <button class="year-btn" onclick="filterYear('2000s')">2000s</button>
+        <button class="year-btn" onclick="filterYear('2010s')">2010s</button>
+        <button class="year-btn" onclick="filterYear('2020s')">2020s</button>
+        <button class="year-btn" onclick="filterYear('2026')">2026</button>
       </div>
-      <div class="event">
-        <h4>1980s</h4>
-        <p>Bullied in school. Learned programming at age 10.</p>
+    </div>
+    
+    <div class="timeline-content" id="timeline">
+      <div class="event year" data-year="1970s">
+        <div class="event-header">
+          <h4>Born</h4>
+          <span class="year-badge">1971</span>
+        </div>
+        <p>Pretoria, South Africa. Bullied in school. Learned programming at age 10.</p>
       </div>
-      <div class="event">
-        <h4>1989</h4>
-        <p>Moved to Canada at 17</p>
+      
+      <div class="event normal" data-year="1980s">
+        <div class="event-header">
+          <h4>Moves to Canada</h4>
+          <span class="year-badge">1989</span>
+        </div>
+        <p>Emigrated at 17 to avoid mandatory military service.</p>
       </div>
-      <div class="event">
-        <h4>1992</h4>
-        <p>Transfers to University of Pennsylvania (Physics + Economics)</p>
+      
+      <div class="event normal" data-year="1990s">
+        <div class="event-header">
+          <h4>University</h4>
+          <span class="year-badge">1992</span>
+        </div>
+        <p>Transfers to University of Pennsylvania. Degrees in Physics and Economics.</p>
       </div>
-      <div class="event big">
-        <h4>1995</h4>
-        <p>Co-founds Zip2 (city guide software)</p>
+      
+      <div class="event big" data-year="1990s">
+        <div class="event-header">
+          <h4>Zip2 Founded</h4>
+          <span class="year-badge">1995</span>
+        </div>
+        <p>Co-founded city guide software company with brother Kimbal.</p>
+        <div class="detail">First venture. $307M sale in 1999.</div>
       </div>
-      <div class="event big">
-        <h4>1999</h4>
-        <p>Zip2 sold for $307M. Founds X.com with $12M</p>
+      
+      <div class="event big" data-year="1990s">
+        <div class="event-header">
+          <h4>X.com / PayPal</h4>
+          <span class="year-badge">1999</span>
+        </div>
+        <p>Founds X.com with $12M. Merges with Confinity to form PayPal.</p>
+        <div class="detail">PayPal sold to eBay for $1.5B in 2002.</div>
       </div>
-      <div class="event">
-        <h4>2000</h4>
-        <p>X.com merges with Confinity → PayPal</p>
+      
+      <div class="event big" data-year="2000s">
+        <div class="event-header">
+          <h4>SpaceX Founded</h4>
+          <span class="year-badge">2002</span>
+        </div>
+        <p>After PayPal sale, starts rocket company to reduce space colonization costs.</p>
+        <div class="detail">First successful launch: 2008 (4th attempt). Now worth $350B.</div>
       </div>
-      <div class="event big">
-        <h4>2002</h4>
-        <p>PayPal sold to eBay for $1.5B. Founds SpaceX</p>
+      
+      <div class="event big" data-year="2000s">
+        <div class="event-header">
+          <h4>Tesla</h4>
+          <span class="year-badge">2004</span>
+        </div>
+        <p>Joins as co-founder and product architect. Leads design of Roadster and Model S.</p>
+        <div class="detail">Tesla IPO 2010. Now $1.1T market cap.</div>
       </div>
-      <div class="event">
-        <h4>2004</h4>
-        <p>Joins Tesla as co-founder and product architect</p>
+      
+      <div class="event big" data-year="2000s">
+        <div class="event-header">
+          <h4>SpaceX Success</h4>
+          <span class="year-badge">2008</span>
+        </div>
+        <p>Fourth Falcon 1 launch succeeds. First private liquid-fuel rocket to orbit.</p>
       </div>
-      <div class="event">
-        <h4>2006</h4>
-        <p>Co-founds SolarCity</p>
+      
+      <div class="event normal" data-year="2010s">
+        <div class="event-header">
+          <h4>Tesla IPO + SolarCity</h4>
+          <span class="year-badge">2010-2016</span>
+        </div>
+        <p>Tesla goes public. Co-founds SolarCity (2006), Neuralink (2016), The Boring Company (2016).</p>
       </div>
-      <div class="event">
-        <h4>2008</h4>
-        <p>SpaceX first successful orbital launch (4th attempt)</p>
+      
+      <div class="event big" data-year="2020s">
+        <div class="event-header">
+          <h4>SpaceX Milestones</h4>
+          <span class="year-badge">2020</span>
+        </div>
+        <p>Starlink launches. Becomes most valuable car company. First private crewed spaceflight.</p>
       </div>
-      <div class="event big">
-        <h4>2010</h4>
-        <p>Tesla IPO. SpaceX first commercial satellite mission</p>
+      
+      <div class="event big" data-year="2020s">
+        <div class="event-header">
+          <h4>Twitter / X</h4>
+          <span class="year-badge">2022</span>
+        </div>
+        <p>Acquires Twitter for $44B. Becomes world's richest person.</p>
+        <div class="detail">Renamed to X. Valuation dropped to ~$19B.</div>
       </div>
-      <div class="event">
-        <h4>2015</h4>
-        <p>Co-founds OpenAI</p>
+      
+      <div class="event big" data-year="2020s">
+        <div class="event-header">
+          <h4>xAI + Cybertruck</h4>
+          <span class="year-badge">2023</span>
+        </div>
+        <p>Founds xAI. Tesla Cybertruck delivered. Twitter becomes X.</p>
       </div>
-      <div class="event big">
-        <h4>2016</h4>
-        <p>Co-founds Neuralink & The Boring Company</p>
+      
+      <div class="event big" data-year="2020s">
+        <div class="event-header">
+          <h4>Starship + Robotaxi</h4>
+          <span class="year-badge">2024</span>
+        </div>
+        <p>Starship reaches orbit. Tesla Robotaxi unveiled.</p>
       </div>
-      <div class="event big">
-        <h4>2020</h4>
-        <p>Tesla becomes most valuable car company. Starlink launches</p>
+      
+      <div class="event big" data-year="2020s">
+        <div class="event-header">
+          <h4>DOGE + Grok</h4>
+          <span class="year-badge">2025</span>
+        </div>
+        <p>Government efficiency team (DOGE). xAI Grok deployed. Tesla FSD reaches 10B+ miles.</p>
       </div>
-      <div class="event big">
-        <h4>2022</h4>
-        <p>Buys Twitter for $44B, becomes world's richest person</p>
-      </div>
-      <div class="event">
-        <h4>2023</h4>
-        <p>Founds xAI. Tesla Cybertruck delivered. Twitter → X</p>
-      </div>
-      <div class="event">
-        <h4>2024</h4>
-        <p>Starship reaches orbit. Tesla Robotaxi unveiled</p>
-      </div>
-      <div class="event big">
-        <h4>2025</h4>
-        <p>DOGE. xAI Grok deployed. Tesla FSD 10B+ miles</p>
-      </div>
-      <div class="event year">
-        <h4>2026</h4>
-        <p>Forbes #1. First $850B net worth. SpaceX Mars missions planned</p>
+      
+      <div class="event year" data-year="2026">
+        <div class="event-header">
+          <h4>Forbes #1</h4>
+          <span class="year-badge">2026</span>
+        </div>
+        <p>First $850B net worth. World wealthiest person. SpaceX Mars missions planned.</p>
       </div>
     </div>
   </div>
   
   <!-- RIGHT: Companies + Achievements -->
   <div class="right">
-    <div class="companies">
+    <div class="card companies">
       <h3>Companies</h3>
       
       <div class="company">
@@ -571,39 +648,28 @@
       </div>
     </div>
     
-    <div class="achievements">
-      <h3>🏆 Achievements</h3>
+    <div class="card achievements">
+      <h3>Key Achievements</h3>
       <div class="achievement">
-        <span class="icon">🌙</span>
-        <div class="text">
-          <div class="name">First Private Moon Landing</div>
-          <div class="desc">SpaceX starship planned 2026</div>
-        </div>
-      </div>
-      <div class="achievement">
-        <span class="icon">🚗</span>
-        <div class="text">
-          <div class="name">Electric Car Revolution</div>
-          <div class="desc">Made EVs mainstream with Tesla</div>
-        </div>
-      </div>
-      <div class="achievement">
-        <span class="icon">🛰️</span>
-        <div class="text">
+        <div>
           <div class="name">Reusable Rockets</div>
           <div class="desc">Cut launch costs by 90%</div>
         </div>
       </div>
       <div class="achievement">
-        <span class="icon">🤖</span>
-        <div class="text">
-          <div class="name">FSD 10B+ Miles</div>
-          <div class="desc">Tesla self-driving data</div>
+        <div>
+          <div class="name">Electric Car Revolution</div>
+          <div class="desc">Made EVs mainstream</div>
         </div>
       </div>
       <div class="achievement">
-        <span class="icon">📡</span>
-        <div class="text">
+        <div>
+          <div class="name">FSD 10B+ Miles</div>
+          <div class="desc">World's largest driving dataset</div>
+        </div>
+      </div>
+      <div class="achievement">
+        <div>
           <div class="name">Starlink</div>
           <div class="desc">7,000+ satellites, global internet</div>
         </div>
@@ -612,6 +678,56 @@
   </div>
   
 </div>
+
+<script>
+let currentFilter = 'all';
+
+function filterYear(period) {
+  currentFilter = period;
+  
+  // Update buttons
+  document.querySelectorAll('.year-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.textContent === period || (period === 'all' && btn.textContent === 'All')) {
+      btn.classList.add('active');
+    }
+  });
+  
+  // Filter events
+  document.querySelectorAll('.event').forEach(event => {
+    const year = event.dataset.year;
+    let show = false;
+    
+    if (period === 'all') {
+      show = true;
+    } else if (period === year) {
+      show = true;
+    } else if (period === '1970s' && year === '1970s') {
+      show = true;
+    } else if (period === '1990s' && year === '1990s') {
+      show = true;
+    } else if (period === '2000s' && year === '2000s') {
+      show = true;
+    } else if (period === '2010s' && year === '2010s') {
+      show = true;
+    } else if (period === '2020s' && year === '2020s') {
+      show = true;
+    }
+    
+    event.style.display = show ? 'block' : 'none';
+  });
+}
+
+// Click to expand events
+document.querySelectorAll('.event').forEach(event => {
+  event.addEventListener('click', () => {
+    event.classList.toggle('expanded');
+  });
+});
+
+// Init
+filterYear('all');
+</script>
 
 </body>
 </html>
