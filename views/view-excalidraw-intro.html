@@ -110,7 +110,6 @@
     color: #8b949e;
     display: flex;
     justify-content: space-between;
-    align-items: center;
   }
   
   .history-item-delete {
@@ -230,29 +229,21 @@
   <span class="toolbar-title">Showsee</span>
   
   <button class="toolbar-btn primary" onclick="showCurrent()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"/></svg>
-    Current View
+    👁 Current View
     <span class="notif-badge" id="notif-badge">NEW</span>
   </button>
   
   <div class="history-toggle">
     <button class="toolbar-btn" onclick="toggleHistory()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-      History <span id="history-count"></span>
+      📋 History <span id="history-count"></span>
     </button>
     <div class="history-panel" id="history-panel"></div>
   </div>
   
   <div class="spacer"></div>
   
-  <button class="toolbar-btn" onclick="refresh()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-    Refresh
-  </button>
-  <button class="toolbar-btn" onclick="openExternal()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-    Open
-  </button>
+  <button class="toolbar-btn" onclick="refresh()">🔄 Refresh</button>
+  <button class="toolbar-btn" onclick="openExternal()">↗ Open</button>
 </div>
 
 <div class="content">
@@ -357,12 +348,12 @@ function renderHistory() {
   panel.innerHTML = `
     <div class="history-header">
       <span>View History</span>
-      <button class="toolbar-btn danger" onclick="clearAll(event)" style="padding:3px 8px;font-size:10px;">Clear All</button>
+      <button class="toolbar-btn danger" onclick="clearAll()" style="padding:3px 8px;font-size:10px;">Clear All</button>
     </div>
     ${views.map((v, i) => `
       <div class="history-item ${i === 0 ? 'current' : ''}" onclick="showView(views[${i}])">
         <div class="history-item-title">
-          ${escapeHtml(v.title)}
+          ${v.title}
           ${i === 0 ? '<span style="color:#3fb950;font-size:10px;margin-left:5px;">CURRENT</span>' : ''}
         </div>
         <div class="history-item-meta">
@@ -376,17 +367,11 @@ function renderHistory() {
   // Welcome screen cards (last 6)
   welcome.innerHTML = views.slice(0, 6).map((v, i) => `
     <div class="view-card" onclick="showView(views[${i}])">
-      <h3>${escapeHtml(v.title)}</h3>
+      <h3>${v.title}</h3>
       <p>${i === 0 ? 'Latest view' : 'Click to view'}</p>
       <div class="date">${formatDate(v.date)}</div>
     </div>
   `).join('');
-}
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
 }
 
 // Format date
@@ -406,6 +391,7 @@ function formatDate(iso) {
 function deleteView(index) {
   const view = views[index];
   if (currentView && currentView.id === view.id) {
+    // Deleting current view, go to next or welcome
     views.splice(index, 1);
     if (views.length > 0) {
       showView(views[0]);
@@ -420,8 +406,7 @@ function deleteView(index) {
 }
 
 // Clear all views
-function clearAll(e) {
-  e.stopPropagation();
+function clearAll() {
   if (confirm('Delete all view history?')) {
     views = [];
     saveViews();
@@ -451,17 +436,18 @@ function openExternal() {
   }
 }
 
-// Check for new views from server
-let lastCheck = 0;
-async function checkForUpdates() {
-  try {
-    const resp = await fetch('/views/');
-    // Server could return a manifest, for now just poll
-  } catch (e) {}
+// Check for new views (called by server-side update)
+function checkForUpdates() {
+  // This would be called by the agent when a new view is saved
+  // For now, just update the UI
+  loadViews();
+  renderHistory();
+  
+  // If there's a new view we don't have, show notification
+  if (views.length > 0 && (!currentView || views[0].id !== currentView.id)) {
+    document.getElementById('notif-badge').classList.add('show');
+  }
 }
-
-// Poll for updates
-setInterval(checkForUpdates, 3000);
 
 // Close history when clicking outside
 document.addEventListener('click', function(e) {
@@ -470,9 +456,15 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Init - load welcome
+// Poll for updates every 2 seconds
+setInterval(checkForUpdates, 2000);
+
+// Init
 loadViews();
 renderHistory();
+if (views.length > 0) {
+  showView(views[0]);
+}
 </script>
 
 </body>
