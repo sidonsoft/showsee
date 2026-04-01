@@ -250,6 +250,14 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
+// Export feedback for agent review
+function exportFeedback() {
+  const data = localStorage.getItem('showsee_feedback');
+  console.log('=== SHOWSEE FEEDBACK ===');
+  console.log(data);
+  return data;
+}
+
 // Load existing feedback for this view
 const existing = JSON.parse(localStorage.getItem('showsee_feedback') || '[]');
 const existingFeedback = existing.find(f => f.viewId === currentViewId);

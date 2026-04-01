@@ -109,3 +109,29 @@ Commit: `cd ~/showsee && git add -A && git commit -m "Add {topic} view" && git p
 3. Don't over-engineer — a simple diagram beats a broken 3D model
 4. Keep content scannable — bullets, not paragraphs
 5. Consistent dark theme: background #0d1117, text #c9d1d9, accent #58a6ff
+
+## Preference Log
+
+Track Russell's feedback to refine future choices.
+
+### Liked
+| View | What Worked | Layout | Visualization |
+|------|-------------|--------|---------------|
+| DNA Double Helix | 3D interactive helix | Visual + Info | Three.js 3D ✓ |
+| Loan Calculator | Sliders, live math | Interactive | Sliders + chart ✓ |
+| MacBook Pro M5 | Product image, clickable chips | Configurator | Image + buttons ✓ |
+| Home Battery | Animated flow diagram | Visual + modes | Animated arrows ✓ |
+
+### Disliked
+| View | What Didn't Work | Layout | Issue |
+|------|------------------|--------|-------|
+| HexClamp (original) | Concept + flowchart split | 2-col | "Confusing", "errors" |
+
+### Patterns
+- **Prefers**: 3D when structure is physical, interactive elements (sliders, toggles), real product images
+- **Avoid**: Split explanation+flowchart layout (didn't work for HexClamp)
+- **Likes**: Animated diagrams, calculators, configurators, comparisons
+- **Values**: Visual richness, clickable/draggable elements, real images over CSS graphics
+
+### Fresh Info Fallback
+When search/fetch returns nothing, use training but be upfront: "Based on my training data..."
