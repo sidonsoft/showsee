@@ -311,12 +311,12 @@ const sliderProgress = document.getElementById('slider-progress');
 const featured = document.getElementById('featured');
 const eventsList = document.getElementById('events-list');
 
-// Build dots
-events.forEach(e => {
+// Build dots - evenly spaced
+events.forEach((e, i) => {
   const dot = document.createElement('div');
   dot.className = 'slider-dot';
   dot.dataset.year = e.year;
-  const pos = ((e.year - startYear) / totalYears) * 100;
+  const pos = (i / (events.length - 1)) * 100;
   dot.style.left = pos + '%';
   dot.addEventListener('click', () => updateTimeline(e.year));
   dot.addEventListener('touchend', () => updateTimeline(e.year));
@@ -339,8 +339,9 @@ const dots = sliderTrack.querySelectorAll('.slider-dot');
 
 function updateTimeline(year) {
   const currentEvent = events.find(e => year >= e.year) || events[events.length - 1];
+  const eventIndex = events.indexOf(currentEvent);
   
-  const progress = ((year - startYear) / totalYears) * 100;
+  const progress = (eventIndex / (events.length - 1)) * 100;
   sliderProgress.style.width = progress + '%';
   sliderThumb.style.left = progress + '%';
   
