@@ -35,55 +35,59 @@
   .panel h2 {
     font-size: 14px;
     color: #8b949e;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     padding-bottom: 8px;
     border-bottom: 1px solid #21262d;
   }
   
-  /* Flowchart */
+  /* Explanation - LEFT */
+  .explain {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #c9d1d9;
+  }
+  .explain h3 {
+    color: #58a6ff;
+    font-size: 14px;
+    margin: 16px 0 8px;
+  }
+  .explain h3:first-child { margin-top: 0; }
+  .explain p { margin-bottom: 10px; color: #8b949e; }
+  .explain strong { color: #c9d1d9; }
+  .explain .stage { 
+    display: inline-block;
+    background: #161b22;
+    border: 1px solid;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 4px;
+  }
+  .explain .o { border-color: #58a6ff; color: #58a6ff; }
+  .explain .c { border-color: #79c0ff; color: #79c0ff; }
+  .explain .p { border-color: #a5d6ff; color: #a5d6ff; }
+  .explain .e { border-color: #f0883e; color: #f0883e; }
+  .explain .v { border-color: #a371f7; color: #a371f7; }
+  .explain .t { border-color: #3fb950; color: #3fb950; }
+  
+  /* Flowchart - RIGHT */
   .flow {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    padding-top: 10px;
+    padding-top: 20px;
   }
   .stage {
     background: #161b22;
     border: 2px solid;
     border-radius: 6px;
-    padding: 10px 20px;
+    padding: 10px 24px;
     font-size: 13px;
     font-weight: bold;
   }
   .arrow { color: #484f58; font-size: 16px; }
-  
-  /* Explanation */
-  .explain {
-    font-size: 13px;
-    line-height: 1.7;
-    color: #c9d1d9;
-  }
-  .explain h3 {
-    color: #58a6ff;
-    font-size: 15px;
-    margin: 20px 0 10px;
-  }
-  .explain h3:first-child { margin-top: 0; }
-  .explain p { margin-bottom: 12px; color: #8b949e; }
-  .explain strong { color: #c9d1d9; }
-  .explain .stage-mention { 
-    background: #161b22;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 12px;
-  }
-  .explain .o { color: #58a6ff; }
-  .explain .c { color: #79c0ff; }
-  .explain .p { color: #a5d6ff; }
-  .explain .e { color: #f0883e; }
-  .explain .v { color: #a371f7; }
-  .explain .t { color: #3fb950; }
 </style>
 </head>
 <body>
@@ -92,7 +96,27 @@
 
 <div class="split">
   <div class="panel">
-    <h2>The Flow</h2>
+    <h2>Explanation</h2>
+    <div class="explain">
+      <h3>What is HexClamp?</h3>
+      <p>An autonomous loop that keeps running, learning, and improving. Forever.</p>
+      
+      <h3>How It Works</h3>
+      <p><span class="stage o">OBSERVE</span> Look around. What's happening now?</p>
+      <p><span class="stage c">CONDENSE</span> Filter noise. Keep what's relevant.</p>
+      <p><span class="stage p">PLAN</span> Decide what to do next.</p>
+      <p><span class="stage e">EXECUTE</span> Run the plan.</p>
+      <p><span class="stage v">VERIFY</span> Did it work? Find problems?</p>
+      <p><span class="stage t">PERSIST</span> Save results for next loop.</p>
+      
+      <h3>The Loops</h3>
+      <p>After PERSIST → back to OBSERVE (main loop).</p>
+      <p>If VERIFY fails → back to PLAN (retry loop).</p>
+    </div>
+  </div>
+  
+  <div class="panel">
+    <h2>Flow</h2>
     <div class="flow">
       <div class="stage" style="border-color:#58a6ff;color:#58a6ff;">OBSERVE</div>
       <div class="arrow">↓</div>
@@ -107,26 +131,6 @@
       <div class="arrow">↓</div>
       <div class="stage" style="border-color:#3fb950;color:#3fb950;">PERSIST</div>
       <div class="arrow">↻ loop</div>
-    </div>
-  </div>
-  
-  <div class="panel">
-    <h2>The Explanation</h2>
-    <div class="explain">
-      <h3>What is HexClamp?</h3>
-      <p>An autonomous loop that never stops. It keeps running, learning, and improving with each cycle.</p>
-      
-      <h3>How It Works</h3>
-      <p><span class="stage-mention o">OBSERVE</span> — Look around. What just happened? What's the current state?</p>
-      <p><span class="stage-mention c">CONDENSE</span> — Filter out the noise. Keep only what's relevant.</p>
-      <p><span class="stage-mention p">PLAN</span> — Decide: what should we do next?</p>
-      <p><span class="stage-mention e">EXECUTE</span> — Do it. Run the plan.</p>
-      <p><span class="stage-mention v">VERIFY</span> — Did it work? Find any problems?</p>
-      <p><span class="stage-mention t">PERSIST</span> — Save the results. Remember for next loop.</p>
-      
-      <h3>The Loop</h3>
-      <p>After <strong>PERSIST</strong>, it loops back to <strong>OBSERVE</strong> and starts again. Forever.</p>
-      <p>If <strong>VERIFY</strong> finds a problem, it loops back to <strong>PLAN</strong> to try again.</p>
     </div>
   </div>
 </div>
