@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    perspective: 1000px;
   }
   
   .header {
@@ -56,91 +57,203 @@
   .stats-grid .value { color: #c9d1d9; font-weight: bold; }
   .stats-grid .value.green { color: #3fb950; }
   
-  /* MIDDLE */
-  .middle { flex: 1; min-width: 300px; background: #161b22; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
+  /* MIDDLE - 2.5D Timeline */
+  .middle { 
+    flex: 1; 
+    min-width: 340px; 
+    background: #161b22; 
+    border-radius: 12px; 
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden;
+    perspective: 800px;
+  }
+  
+  /* Featured - slides in */
+  .featured-container {
+    height: 130px;
+    position: relative;
+    overflow: hidden;
+  }
   
   .featured-event {
+    position: absolute;
+    inset: 0;
     padding: 16px 20px;
-    background: linear-gradient(180deg, rgba(88, 166, 255, 0.1) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(88, 166, 255, 0.15) 0%, transparent 100%);
     border-bottom: 1px solid #21262d;
-    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
   }
-  .featured-event .year { font-size: 36px; font-weight: bold; color: #58a6ff; line-height: 1; }
-  .featured-event h2 { color: #c9d1d9; font-size: 14px; margin: 6px 0 4px; min-height: 20px; }
-  .featured-event p { color: #8b949e; font-size: 12px; margin: 0; min-height: 18px; }
-  .featured-event .detail { margin-top: 6px; font-size: 11px; color: #3fb950; min-height: 16px; }
+  .featured-event.active {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  .featured-event.past {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
   
-  .slider-section { padding: 16px 20px; border-bottom: 1px solid #21262d; }
+  .featured-event .year { font-size: 48px; font-weight: bold; color: #58a6ff; line-height: 1; }
+  .featured-event h2 { color: #c9d1d9; font-size: 18px; margin: 8px 0 4px; }
+  .featured-event p { color: #8b949e; font-size: 13px; line-height: 1.5; }
+  .featured-event .detail { margin-top: 8px; font-size: 12px; color: #3fb950; }
   
-  .slider-container { position: relative; }
+  /* 2.5D Ribbon Timeline */
+  .ribbon-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 30px;
+    transform-style: preserve-3d;
+  }
   
-  .slider-track {
-    height: 8px;
-    background: #21262d;
-    border-radius: 4px;
+  .ribbon {
     position: relative;
-    cursor: pointer;
+    height: 120px;
+    transform: rotateX(15deg);
+    transform-style: preserve-3d;
   }
   
-  .slider-progress { position: absolute; left: 0; top: 0; height: 100%; background: linear-gradient(90deg, #58a6ff, #3fb950); border-radius: 4px; }
-  
-  .slider-dot {
+  .ribbon-track {
     position: absolute;
+    left: 0;
+    right: 0;
     top: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
+    transform: translateY(-50%);
+    height: 8px;
+    background: linear-gradient(180deg, #21262d 0%, #30363d 50%, #21262d 100%);
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  
+  .ribbon-events {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .event-dot {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+  }
+  
+  .event-dot .dot {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     background: #30363d;
     border-radius: 50%;
-    cursor: pointer;
-    z-index: 1;
+    border: 3px solid #30363d;
+    transition: all 0.3s ease;
+    transform: translateZ(0);
+  }
+  
+  .event-dot.passed .dot {
+    background: #58a6ff;
+    border-color: #58a6ff;
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.5);
+  }
+  
+  .event-dot.active .dot {
+    background: #3fb950;
+    border-color: #3fb950;
+    box-shadow: 0 0 25px rgba(63, 185, 80, 0.7);
+    transform: translateZ(30px) scale(1.3);
+  }
+  
+  .event-dot .label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%) translateZ(0);
+    font-size: 10px;
+    color: #484f58;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+  }
+  
+  .event-dot.passed .label { color: #8b949e; }
+  
+  .event-dot.active .label {
+    color: #3fb950;
+    font-weight: bold;
+    font-size: 11px;
+    transform: translateX(-50%) translateZ(40px);
+  }
+  
+  /* Card popup */
+  .event-card {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%) translateZ(60px) scale(0.8);
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 10px 14px;
+    width: 140px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  .event-dot.active .event-card {
+    opacity: 1;
+    transform: translateX(-50%) translateZ(60px) scale(1);
+  }
+  
+  .event-card .year { font-size: 12px; font-weight: bold; color: #58a6ff; }
+  .event-card .title { font-size: 11px; color: #c9d1d9; margin-top: 4px; }
+  .event-card .desc { font-size: 10px; color: #8b949e; margin-top: 2px; }
+  
+  /* Hover interaction zone */
+  .hover-zone {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    cursor: ew-resize;
+  }
+  
+  /* Events list - subtle at bottom */
+  .events-footer {
+    padding: 12px 16px;
+    border-top: 1px solid #21262d;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+  
+  .events-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .event-chip {
+    background: #0d1117;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    color: #484f58;
+    border: 1px solid transparent;
     transition: all 0.2s;
   }
-  .slider-dot:hover { transform: translate(-50%, -50%) scale(1.4); background: #58a6ff; }
-  .slider-dot.passed { background: #58a6ff; }
-  .slider-dot.active { background: #3fb950; transform: translate(-50%, -50%) scale(1.5); }
-  
-  .slider-thumb {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 22px;
-    height: 22px;
-    background: #58a6ff;
-    border-radius: 50%;
-    cursor: grab;
-    box-shadow: 0 2px 10px rgba(88, 166, 255, 0.5);
-    z-index: 2;
-  }
-  .slider-thumb:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.15); }
-  
-  .year-markers { display: flex; justify-content: space-between; margin-top: 10px; font-size: 9px; color: #484f58; }
-  
-  .events-list { flex: 1; overflow: auto; padding: 12px; }
-  
-  .event {
-    padding: 10px 12px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    background: #0d1117;
-    opacity: 0.4;
-    transition: all 0.3s ease;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-  .event.active { opacity: 1; background: rgba(88, 166, 255, 0.15); border-left: 3px solid #3fb950; }
-  .event.past { opacity: 0.7; border-left: 3px solid #58a6ff; }
-  
-  .event .year { font-size: 12px; font-weight: bold; color: #484f58; min-width: 40px; }
-  .event.active .year { color: #3fb950; }
-  .event.past .year { color: #58a6ff; }
-  
-  .event h4 { font-size: 12px; color: #c9d1d9; }
-  .event p { font-size: 10px; color: #8b949e; margin-top: 2px; }
+  .event-chip.passed { color: #8b949e; }
+  .event-chip.active { color: #3fb950; border-color: #3fb950; }
   
   /* RIGHT */
   .right { width: 220px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -197,26 +310,24 @@
     </div>
   </div>
   
+  <!-- MIDDLE - 2.5D Timeline -->
   <div class="middle">
-    <div class="featured-event" id="featured">
-      <div class="year">1971</div>
-      <h2>Born</h2>
-      <p>Pretoria, South Africa</p>
+    <div class="featured-container" id="featured-container">
+      <!-- Featured events slide in from sides -->
     </div>
     
-    <div class="slider-section">
-      <div class="slider-container">
-        <div class="slider-track" id="slider-track">
-          <div class="slider-progress" id="slider-progress"></div>
-          <div class="slider-thumb" id="slider-thumb"></div>
-        </div>
-        <div class="year-markers">
-          <span>1971</span><span>1990</span><span>2000</span><span>2010</span><span>2020</span><span>2026</span>
+    <div class="ribbon-container">
+      <div class="hover-zone" id="hover-zone">
+        <div class="ribbon" id="ribbon">
+          <div class="ribbon-track"></div>
+          <div class="ribbon-events" id="ribbon-events"></div>
         </div>
       </div>
     </div>
     
-    <div class="events-list" id="events-list"></div>
+    <div class="events-footer">
+      <div class="events-row" id="events-row"></div>
+    </div>
   </div>
   
   <div class="right">
@@ -283,10 +394,6 @@
 </div>
 
 <script>
-const startYear = 1971;
-const endYear = 2026;
-const totalYears = endYear - startYear;
-
 const events = [
   { year: 1971, title: 'Born', desc: 'Pretoria, South Africa' },
   { year: 1989, title: 'Moves to Canada', desc: 'Emigrated at 17' },
@@ -294,118 +401,107 @@ const events = [
   { year: 1999, title: 'X.com / PayPal', desc: 'Founds X.com', detail: 'PayPal sold for $1.5B' },
   { year: 2002, title: 'SpaceX Founded', desc: 'Rocket company' },
   { year: 2004, title: 'Joins Tesla', desc: 'Co-founder' },
-  { year: 2008, title: 'Falcon 1 Success', desc: 'First private rocket to orbit' },
+  { year: 2008, title: 'Falcon 1 Success', desc: 'First private rocket', detail: 'To orbit' },
   { year: 2010, title: 'Tesla IPO', desc: 'Goes public' },
-  { year: 2016, title: 'Neuralink', desc: 'Brain-computer company' },
-  { year: 2020, title: 'Starlink Launches', desc: 'Most valuable car company' },
-  { year: 2022, title: 'Twitter / X', desc: 'Acquires for $44B', detail: 'World richest person' },
+  { year: 2016, title: 'Neuralink', desc: 'Brain-computer' },
+  { year: 2020, title: 'Starlink', desc: 'Most valuable car co' },
+  { year: 2022, title: 'Twitter / X', desc: 'Acquires for $44B', detail: 'World richest' },
   { year: 2023, title: 'xAI + Cybertruck', desc: 'Founds xAI' },
   { year: 2024, title: 'Starship + Robotaxi', desc: 'Orbit + unveiled' },
   { year: 2025, title: 'DOGE + Grok', desc: 'Government team' },
   { year: 2026, title: 'Forbes #1', desc: '$850B net worth' }
 ];
 
-const sliderTrack = document.getElementById('slider-track');
-const sliderThumb = document.getElementById('slider-thumb');
-const sliderProgress = document.getElementById('slider-progress');
-const featured = document.getElementById('featured');
-const eventsList = document.getElementById('events-list');
+const ribbonEvents = document.getElementById('ribbon-events');
+const featuredContainer = document.getElementById('featured-container');
+const eventsRow = document.getElementById('events-row');
+const hoverZone = document.getElementById('hover-zone');
 
-// Build dots - evenly spaced
-events.forEach((e, i) => {
-  const dot = document.createElement('div');
-  dot.className = 'slider-dot';
-  dot.dataset.year = e.year;
-  const pos = (i / (events.length - 1)) * 100;
-  dot.style.left = pos + '%';
-  sliderTrack.appendChild(dot);
-});
+// Build featured slides
+featuredContainer.innerHTML = events.map((e, i) => `
+  <div class="featured-event" data-index="${i}">
+    <div class="year">${e.year}</div>
+    <h2>${e.title}</h2>
+    <p>${e.desc}</p>
+    ${e.detail ? `<div class="detail">${e.detail}</div>` : ''}
+  </div>
+`).join('');
 
-// Build events list
-eventsList.innerHTML = events.map(e => `
-  <div class="event" data-year="${e.year}">
-    <span class="year">${e.year}</span>
-    <div>
-      <h4>${e.title}</h4>
-      <p>${e.desc}</p>
+const featuredSlides = featuredContainer.querySelectorAll('.featured-event');
+
+// Build ribbon dots
+ribbonEvents.innerHTML = events.map((e, i) => `
+  <div class="event-dot" data-index="${i}">
+    <div class="dot"></div>
+    <div class="label">${e.year}</div>
+    <div class="event-card">
+      <div class="year">${e.year}</div>
+      <div class="title">${e.title}</div>
+      <div class="desc">${e.desc}</div>
     </div>
   </div>
 `).join('');
 
-const eventEls = eventsList.querySelectorAll('.event');
-const dots = sliderTrack.querySelectorAll('.slider-dot');
+const eventDots = ribbonEvents.querySelectorAll('.event-dot');
 
-function updateFromPosition(percent) {
-  // Percent is 0-100 based on slider position
-  const index = Math.round((percent / 100) * (events.length - 1));
-  const currentEvent = events[Math.max(0, Math.min(events.length - 1, index))];
+// Build footer chips
+eventsRow.innerHTML = events.map((e, i) => `
+  <div class="event-chip" data-index="${i}">${e.year} ${e.title}</div>
+`).join('');
+
+const eventChips = eventsRow.querySelectorAll('.event-chip');
+
+let currentIndex = 0;
+
+function updateTimeline(index) {
+  currentIndex = Math.max(0, Math.min(events.length - 1, Math.round(index)));
   
-  // Update thumb/progress to match position
-  sliderProgress.style.width = percent + '%';
-  sliderThumb.style.left = percent + '%';
-  
-  // Update featured
-  featured.innerHTML = `
-    <div class="year">${currentEvent.year}</div>
-    <h2>${currentEvent.title}</h2>
-    <p>${currentEvent.desc}</p>
-    ${currentEvent.detail ? `<div class="detail">${currentEvent.detail}</div>` : ''}
-  `;
-  
-  // Highlight events
-  eventEls.forEach((el, i) => {
-    el.classList.remove('active', 'past');
-    if (i === index) el.classList.add('active');
-    else if (i < index) el.classList.add('past');
+  featuredSlides.forEach((slide, i) => {
+    slide.classList.remove('active', 'past');
+    if (i < currentIndex) slide.classList.add('past');
+    else if (i === currentIndex) slide.classList.add('active');
   });
   
-  // Highlight dots
-  dots.forEach((d, i) => {
-    d.classList.remove('passed', 'active');
-    if (i === index) d.classList.add('active');
-    else if (i < index) d.classList.add('passed');
+  eventDots.forEach((dot, i) => {
+    dot.classList.remove('active', 'passed');
+    if (i < currentIndex) dot.classList.add('passed');
+    else if (i === currentIndex) dot.classList.add('active');
+  });
+  
+  eventChips.forEach((chip, i) => {
+    chip.classList.remove('active', 'passed');
+    if (i < currentIndex) chip.classList.add('passed');
+    else if (i === currentIndex) chip.classList.add('active');
   });
 }
 
-function updateTimeline(year) {
-  const percent = ((year - startYear) / totalYears) * 100;
-  updateFromPosition(percent);
-}
+// Hover interaction
+let isHovering = false;
 
-let currentPosition = 0;
+hoverZone.addEventListener('mouseenter', () => { isHovering = true; });
+hoverZone.addEventListener('mouseleave', () => { isHovering = false; });
 
-// Only update when hovering on track itself
-sliderTrack.addEventListener('mouseenter', () => {
-  sliderTrack.style.cursor = 'pointer';
+hoverZone.addEventListener('mousemove', (e) => {
+  if (!isHovering) return;
+  
+  const rect = hoverZone.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const percent = x / rect.width;
+  const index = percent * (events.length - 1);
+  
+  updateTimeline(index);
 });
 
-sliderTrack.addEventListener('mousemove', e => {
-  const rect = sliderTrack.getBoundingClientRect();
-  const y = e.clientY - rect.top;
-  const height = rect.height;
-  // Only trigger if within center 50% of track height
-  if (y > height * 0.25 && y < height * 0.75) {
-    currentPosition = getPercentFromX(e.clientX);
-    updateFromPosition(currentPosition);
-  }
+// Also hover on dots directly
+eventDots.forEach((dot, i) => {
+  dot.addEventListener('mouseenter', () => updateTimeline(i));
 });
 
-// Hover on dots
-dots.forEach((d, i) => {
-  const pos = (i / (events.length - 1)) * 100;
-  d.addEventListener('mouseenter', () => {
-    currentPosition = pos;
-    updateFromPosition(pos);
-  });
+eventChips.forEach((chip, i) => {
+  chip.addEventListener('mouseenter', () => updateTimeline(i));
 });
 
-function getPercentFromX(clientX) {
-  const rect = sliderTrack.getBoundingClientRect();
-  const x = clientX - rect.left;
-  return Math.max(0, Math.min(100, (x / rect.width) * 100));
-}
-
-updateFromPosition(0);
+updateTimeline(0);
 </script>
 
 </body>
