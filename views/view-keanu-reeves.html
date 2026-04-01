@@ -267,7 +267,7 @@ function update(index) {
 }
 
 dotEls.forEach((dot, i) => dot.addEventListener('mouseenter', () => update(i));
-eventItems.forEach((item, i) => item.addEventListener('mouseenter', () => update(i)));
+eventItems.forEach((item, i) => item.addEventListener('mouseenter', () => update(i));
 hoverZone.addEventListener('mousemove', e => {
   const rect = hoverZone.getBoundingClientRect();
   update((e.clientX - rect.left) / rect.width * (events.length - 1));
