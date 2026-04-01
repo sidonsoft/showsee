@@ -28,6 +28,7 @@
   .header .subtitle {
     color: #8b949e;
     font-size: 11px;
+    margin-top: 2px;
   }
   
   .content {
@@ -38,100 +39,155 @@
     overflow: auto;
   }
   
-  /* LEFT: Bio */
+  /* LEFT: Profile */
   .left {
-    flex: 1;
+    width: 280px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
   
-  .profile {
+  .profile-card {
     background: #161b22;
     border-radius: 12px;
     padding: 16px;
     text-align: center;
   }
   .profile-img {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #30363d 0%, #21262d 100%);
     margin: 0 auto 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
     overflow: hidden;
+    border: 3px solid #30363d;
   }
   .profile-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .profile h2 {
+  .profile-img .fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #30363d 0%, #21262d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+  .profile-card h2 {
     color: #c9d1d9;
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 4px;
   }
-  .profile .born {
+  .profile-card .born {
     color: #8b949e;
-    font-size: 12px;
+    font-size: 11px;
     margin-bottom: 8px;
   }
-  .profile .title {
+  .profile-card .title {
     color: #f0883e;
     font-size: 11px;
     background: rgba(240, 136, 62, 0.1);
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 12px;
     display: inline-block;
+    margin-bottom: 12px;
   }
   
-  .networth {
-    background: linear-gradient(135deg, #1a3d1a 0%, #161b22 100%);
-    border: 1px solid #3fb950;
-    border-radius: 10px;
-    padding: 14px;
-    text-align: center;
+  /* Social Links */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
   }
-  .networth .label {
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #0d1117;
+    border: 1px solid #30363d;
     color: #8b949e;
-    font-size: 10px;
-    margin-bottom: 4px;
-  }
-  .networth .amount {
-    font-size: 28px;
-    font-weight: bold;
-    color: #3fb950;
-  }
-  .networth .source {
-    color: #8b949e;
-    font-size: 9px;
-    margin-top: 4px;
-  }
-  
-  .bio {
-    background: #161b22;
-    border-radius: 10px;
-    padding: 14px;
-  }
-  .bio h3 {
-    color: #58a6ff;
-    font-size: 12px;
-    margin-bottom: 8px;
-  }
-  .bio p {
-    color: #8b949e;
+    padding: 6px 10px;
+    border-radius: 6px;
     font-size: 11px;
-    line-height: 1.5;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .social-btn:hover {
+    border-color: #58a6ff;
+    color: #58a6ff;
+  }
+  .social-btn .icon { font-size: 14px; }
+  
+  /* Stats */
+  .stats-grid {
+    background: #161b22;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .stats-grid h3 {
+    color: #58a6ff;
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 11px;
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-row .label { color: #8b949e; }
+  .stat-row .value { color: #c9d1d9; font-weight: bold; }
+  .stat-row .value.green { color: #3fb950; }
+  
+  /* Photos Gallery */
+  .photos {
+    background: #161b22;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .photos h3 {
+    color: #58a6ff;
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .photo {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #0d1117;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .photo .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #30363d;
   }
   
   /* MIDDLE: Timeline */
   .middle {
     flex: 1;
+    min-width: 280px;
     background: #161b22;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 14px;
     overflow: auto;
   }
@@ -139,6 +195,9 @@
     color: #58a6ff;
     font-size: 12px;
     margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   
   .timeline {
@@ -183,16 +242,23 @@
     color: #8b949e;
     font-size: 10px;
     margin: 0;
+    line-height: 1.4;
   }
   
   /* RIGHT: Companies */
   .right {
-    flex: 1;
+    width: 300px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
   
+  .companies {
+    background: #161b22;
+    border-radius: 12px;
+    padding: 14px;
+  }
   .companies h3 {
     color: #58a6ff;
     font-size: 12px;
@@ -200,26 +266,27 @@
   }
   
   .company {
-    background: #161b22;
-    border-radius: 10px;
+    background: #0d1117;
+    border-radius: 8px;
     padding: 12px;
     margin-bottom: 8px;
   }
+  .company:last-child { margin-bottom: 0; }
   .company-header {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .company .icon {
-    width: 32px;
-    height: 32px;
-    background: #0d1117;
+    width: 36px;
+    height: 36px;
+    background: #161b22;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
   }
   .company .name {
     font-size: 13px;
@@ -230,85 +297,177 @@
     font-size: 10px;
     color: #8b949e;
   }
-  .company .value {
-    font-size: 16px;
+  .company-stats {
+    display: flex;
+    gap: 12px;
+  }
+  .company .stat {
+    flex: 1;
+  }
+  .company .stat .val {
+    font-size: 14px;
     font-weight: bold;
     color: #3fb950;
   }
-  .company .value-label {
+  .company .stat .label {
     font-size: 9px;
     color: #8b949e;
   }
   
-  .quick-facts {
+  /* Achievements */
+  .achievements {
     background: #161b22;
-    border-radius: 10px;
-    padding: 12px;
+    border-radius: 12px;
+    padding: 14px;
   }
-  .quick-facts h3 {
+  .achievements h3 {
     color: #58a6ff;
     font-size: 12px;
     margin-bottom: 10px;
   }
-  .fact {
+  .achievement {
     display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
     border-bottom: 1px solid #21262d;
     font-size: 11px;
   }
-  .fact:last-child { border-bottom: none; }
-  .fact .label { color: #8b949e; }
-  .fact .value { color: #c9d1d9; font-weight: bold; }
+  .achievement:last-child { border-bottom: none; }
+  .achievement .icon { font-size: 16px; }
+  .achievement .text .name {
+    color: #c9d1d9;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .achievement .text .desc {
+    color: #8b949e;
+    font-size: 10px;
+  }
+  
+  /* Quote */
+  .quote {
+    background: linear-gradient(135deg, #2d2416 0%, #161b22 100%);
+    border: 1px solid #f0883e;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .quote p {
+    color: #c9d1d9;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .quote .author {
+    color: #8b949e;
+    font-size: 11px;
+    text-align: right;
+  }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>Elon Musk</h1>
-  <div class="subtitle">CEO of Tesla, SpaceX, xAI • Owner of X</div>
+  <div class="subtitle">CEO Tesla, SpaceX, xAI • Chairman SolarCity • Owner X</div>
 </div>
 
 <div class="content">
   
-  <!-- LEFT: Bio -->
+  <!-- LEFT: Profile -->
   <div class="left">
-    <div class="profile">
+    <div class="profile-card">
       <div class="profile-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society.jpg/440px-Elon_Musk_Royal_Society.jpg" alt="Elon Musk" onerror="this.parentElement.innerHTML='👤'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society.jpg/440px-Elon_Musk_Royal_Society.jpg" alt="Elon Musk" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="fallback" style="display:none;">👤</div>
       </div>
       <h2>Elon Musk</h2>
-      <div class="born">Born: June 28, 1971 • Pretoria, South Africa</div>
+      <div class="born">June 28, 1971 • Pretoria, SA</div>
       <div class="title">CEO & Visionary</div>
+      
+      <div class="social-links">
+        <a href="https://x.com/elonmusk" target="_blank" class="social-btn">
+          <span class="icon">𝕏</span>
+          <span>@elonmusk</span>
+        </a>
+      </div>
     </div>
     
-    <div class="networth">
-      <div class="label">NET WORTH (2026)</div>
-      <div class="amount">$850B</div>
-      <div class="source">Forbes #1 Billionaire</div>
+    <div class="photos">
+      <h3>📷 Photo Gallery</h3>
+      <div class="photo-grid">
+        <div class="photo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/ Elon_Musk_Royal_Society.jpg/440px-Elon_Musk_Royal_Society.jpg" alt="Elon Musk" onerror="this.parentElement.innerHTML='<div class=placeholder>👤</div>'">
+        </div>
+        <div class="photo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Elon_Musk_at_Mars_National_Day.jpg/440px-Elon_Musk_at_Mars_National_Day.jpg" alt="Mars" onerror="this.parentElement.innerHTML='<div class=placeholder>🚀</div>'">
+        </div>
+        <div class="photo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/d4/Elon_Musk_Tesla_Motorzilla_Truck_Launch.jpg/440px-Elon_Musk_Tesla_Motorzilla_Truck_Launch.jpg" alt="Cybertruck" onerror="this.parentElement.innerHTML='<div class=placeholder>🚗</div>'">
+        </div>
+        <div class="photo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/SpaceX_Headquarters.jpg/440px-SpaceX_Headquarters.jpg" alt="SpaceX" onerror="this.parentElement.innerHTML='<div class=placeholder>🏢</div>'">
+        </div>
+      </div>
     </div>
     
-    <div class="bio">
-      <h3>About</h3>
-      <p>South African-born Canadian-American entrepreneur. Co-founded Zip2, X.com/PayPal, SpaceX, Tesla, SolarCity, Neuralink, The Boring Company, and xAI. Known for pushing boundaries in EVs, space travel, AI, and social media.</p>
+    <div class="stats-grid">
+      <h3>📊 Key Numbers</h3>
+      <div class="stat-row">
+        <span class="label">Net Worth</span>
+        <span class="value green">$850B</span>
+      </div>
+      <div class="stat-row">
+        <span class="label">X Followers</span>
+        <span class="value">200M+</span>
+      </div>
+      <div class="stat-row">
+        <span class="label">Companies</span>
+        <span class="value">9</span>
+      </div>
+      <div class="stat-row">
+        <span class="label">Children</span>
+        <span class="value">11+</span>
+      </div>
+      <div class="stat-row">
+        <span class="label">Work Week</span>
+        <span class="value">120 hrs</span>
+      </div>
+      <div class="stat-row">
+        <span class="label">Citizenship</span>
+        <span class="value">US, CA, SA</span>
+      </div>
     </div>
   </div>
   
   <!-- MIDDLE: Timeline -->
   <div class="middle">
-    <h3>Timeline</h3>
+    <h3>📅 Life Timeline</h3>
     <div class="timeline">
       <div class="event year">
         <h4>1971</h4>
         <p>Born in Pretoria, South Africa</p>
       </div>
       <div class="event">
+        <h4>1980s</h4>
+        <p>Bullied in school. Learned programming at age 10.</p>
+      </div>
+      <div class="event">
+        <h4>1989</h4>
+        <p>Moved to Canada at 17</p>
+      </div>
+      <div class="event">
+        <h4>1992</h4>
+        <p>Transfers to University of Pennsylvania (Physics + Economics)</p>
+      </div>
+      <div class="event big">
         <h4>1995</h4>
         <p>Co-founds Zip2 (city guide software)</p>
       </div>
       <div class="event big">
         <h4>1999</h4>
-        <p>Zip2 sold for $307M. Co-founds X.com</p>
+        <p>Zip2 sold for $307M. Founds X.com with $12M</p>
       </div>
       <div class="event">
         <h4>2000</h4>
@@ -320,7 +479,7 @@
       </div>
       <div class="event">
         <h4>2004</h4>
-        <p>Joins Tesla as co-founder</p>
+        <p>Joins Tesla as co-founder and product architect</p>
       </div>
       <div class="event">
         <h4>2006</h4>
@@ -328,39 +487,51 @@
       </div>
       <div class="event">
         <h4>2008</h4>
-        <p>SpaceX first successful orbital launch</p>
+        <p>SpaceX first successful orbital launch (4th attempt)</p>
       </div>
       <div class="event big">
         <h4>2010</h4>
-        <p>Tesla IPO. SpaceX first commercial mission</p>
+        <p>Tesla IPO. SpaceX first commercial satellite mission</p>
       </div>
       <div class="event">
+        <h4>2015</h4>
+        <p>Co-founds OpenAI</p>
+      </div>
+      <div class="event big">
         <h4>2016</h4>
         <p>Co-founds Neuralink & The Boring Company</p>
       </div>
       <div class="event big">
+        <h4>2020</h4>
+        <p>Tesla becomes most valuable car company. Starlink launches</p>
+      </div>
+      <div class="event big">
         <h4>2022</h4>
-        <p>Buys Twitter for $44B, renames to X</p>
+        <p>Buys Twitter for $44B, becomes world's richest person</p>
       </div>
       <div class="event">
         <h4>2023</h4>
-        <p>Founds xAI. Tesla Cybertruck launched</p>
+        <p>Founds xAI. Tesla Cybertruck delivered. Twitter → X</p>
+      </div>
+      <div class="event">
+        <h4>2024</h4>
+        <p>Starship reaches orbit. Tesla Robotaxi unveiled</p>
       </div>
       <div class="event big">
         <h4>2025</h4>
-        <p> DOGE (government efficiency). xAI Grok deployed</p>
+        <p>DOGE. xAI Grok deployed. Tesla FSD 10B+ miles</p>
       </div>
       <div class="event year">
         <h4>2026</h4>
-        <p>World's first trillionaire? (Forbes #1)</p>
+        <p>Forbes #1. First $850B net worth. SpaceX Mars missions planned</p>
       </div>
     </div>
   </div>
   
-  <!-- RIGHT: Companies -->
+  <!-- RIGHT: Companies + Achievements -->
   <div class="right">
     <div class="companies">
-      <h3>Companies & Valuations</h3>
+      <h3>🏢 Companies & Empire</h3>
       
       <div class="company">
         <div class="company-header">
@@ -370,8 +541,16 @@
             <div class="role">CEO & Co-founder</div>
           </div>
         </div>
-        <div class="value">$1.1T</div>
-        <div class="value-label">market cap</div>
+        <div class="company-stats">
+          <div class="stat">
+            <div class="val">$1.1T</div>
+            <div class="label">Market Cap</div>
+          </div>
+          <div class="stat">
+            <div class="val">13.5%</div>
+            <div class="label">Musk Stake</div>
+          </div>
+        </div>
       </div>
       
       <div class="company">
@@ -382,20 +561,36 @@
             <div class="role">CEO & Founder</div>
           </div>
         </div>
-        <div class="value">$350B</div>
-        <div class="value-label">valuation</div>
+        <div class="company-stats">
+          <div class="stat">
+            <div class="val">$350B</div>
+            <div class="label">Valuation</div>
+          </div>
+          <div class="stat">
+            <div class="val">42%</div>
+            <div class="label">Musk Stake</div>
+          </div>
+        </div>
       </div>
       
       <div class="company">
         <div class="company-header">
-          <div class="icon">💬</div>
+          <div class="icon">𝕏</div>
           <div>
             <div class="name">X / Twitter</div>
             <div class="role">Owner</div>
           </div>
         </div>
-        <div class="value">$19B</div>
-        <div class="value-label">valuation (down from $44B)</div>
+        <div class="company-stats">
+          <div class="stat">
+            <div class="val">$19B</div>
+            <div class="label">Valuation</div>
+          </div>
+          <div class="stat">
+            <div class="val">$44B</div>
+            <div class="label">Paid</div>
+          </div>
+        </div>
       </div>
       
       <div class="company">
@@ -406,8 +601,16 @@
             <div class="role">Founder</div>
           </div>
         </div>
-        <div class="value">$75B</div>
-        <div class="value-label">valuation</div>
+        <div class="company-stats">
+          <div class="stat">
+            <div class="val">$75B</div>
+            <div class="label">Valuation</div>
+          </div>
+          <div class="stat">
+            <div class="val">Grok 3</div>
+            <div class="label">Product</div>
+          </div>
+        </div>
       </div>
       
       <div class="company">
@@ -418,29 +621,61 @@
             <div class="role">Founder</div>
           </div>
         </div>
-        <div class="value">$5B</div>
-        <div class="value-label">valuation</div>
+        <div class="company-stats">
+          <div class="stat">
+            <div class="val">$5B</div>
+            <div class="label">Valuation</div>
+          </div>
+          <div class="stat">
+            <div class="val">2</div>
+            <div class="label">Patients</div>
+          </div>
+        </div>
       </div>
     </div>
     
-    <div class="quick-facts">
-      <h3>Quick Facts</h3>
-      <div class="fact">
-        <span class="label">Citizenship</span>
-        <span class="value">US, Canada, South Africa</span>
+    <div class="achievements">
+      <h3>🏆 Achievements</h3>
+      <div class="achievement">
+        <span class="icon">🌙</span>
+        <div class="text">
+          <div class="name">First Private Moon Landing</div>
+          <div class="desc">SpaceX starship planned 2026</div>
+        </div>
       </div>
-      <div class="fact">
-        <span class="label">Education</span>
-        <span class="value">UPenn (BA Physics, BA Econ)</span>
+      <div class="achievement">
+        <span class="icon">🚗</span>
+        <div class="text">
+          <div class="name">Electric Car Revolution</div>
+          <div class="desc">Made EVs mainstream with Tesla</div>
+        </div>
       </div>
-      <div class="fact">
-        <span class="label">Children</span>
-        <span class="value">11+</span>
+      <div class="achievement">
+        <span class="icon">🛰️</span>
+        <div class="text">
+          <div class="name">Reusable Rockets</div>
+          <div class="desc">Cut launch costs by 90%</div>
+        </div>
       </div>
-      <div class="fact">
-        <span class="label">Work week</span>
-        <span class="value">120 hours</span>
+      <div class="achievement">
+        <span class="icon">🤖</span>
+        <div class="text">
+          <div class="name">FSD 10B+ Miles</div>
+          <div class="desc">Tesla self-driving data</div>
+        </div>
       </div>
+      <div class="achievement">
+        <span class="icon">📡</span>
+        <div class="text">
+          <div class="name">Starlink</div>
+          <div class="desc">7,000+ satellites, global internet</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="quote">
+      <p>"When something is important enough, you do it even if the odds are not in your favor."</p>
+      <div class="author">— Elon Musk</div>
     </div>
   </div>
   
