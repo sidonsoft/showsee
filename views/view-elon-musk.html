@@ -60,21 +60,18 @@
     border-radius: 50%;
     margin: 0 auto 12px;
     overflow: hidden;
-    border: 3px solid #30363d;
+    border: 3px solid #f0883e;
   }
-  .profile-img img {
+  .profile-img .avatar {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-  }
-  .profile-img .fallback {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #30363d 0%, #21262d 100%);
+    background: linear-gradient(135deg, #f0883e 0%, #c9d1d9 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 48px;
+    font-size: 42px;
+    font-weight: bold;
+    color: #0d1117;
   }
   .profile-card h2 {
     color: #c9d1d9;
@@ -145,42 +142,7 @@
   .stat-row .value { color: #c9d1d9; font-weight: bold; }
   .stat-row .value.green { color: #3fb950; }
   
-  /* Photos Gallery */
-  .photos {
-    background: #161b22;
-    border-radius: 12px;
-    padding: 14px;
-  }
-  .photos h3 {
-    color: #58a6ff;
-    font-size: 11px;
-    margin-bottom: 10px;
-  }
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-  .photo {
-    aspect-ratio: 1;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #0d1117;
-  }
-  .photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .photo .placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: #30363d;
-  }
+
   
   /* MIDDLE: Timeline */
   .middle {
@@ -379,8 +341,7 @@
   <div class="left">
     <div class="profile-card">
       <div class="profile-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society.jpg/440px-Elon_Musk_Royal_Society.jpg" alt="Elon Musk" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="fallback" style="display:none;">👤</div>
+        <div class="avatar">EM</div>
       </div>
       <h2>Elon Musk</h2>
       <div class="born">June 28, 1971 • Pretoria, SA</div>
@@ -391,24 +352,10 @@
           <span class="icon">𝕏</span>
           <span>@elonmusk</span>
         </a>
-      </div>
-    </div>
-    
-    <div class="photos">
-      <h3>📷 Photo Gallery</h3>
-      <div class="photo-grid">
-        <div class="photo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/ Elon_Musk_Royal_Society.jpg/440px-Elon_Musk_Royal_Society.jpg" alt="Elon Musk" onerror="this.parentElement.innerHTML='<div class=placeholder>👤</div>'">
-        </div>
-        <div class="photo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Elon_Musk_at_Mars_National_Day.jpg/440px-Elon_Musk_at_Mars_National_Day.jpg" alt="Mars" onerror="this.parentElement.innerHTML='<div class=placeholder>🚀</div>'">
-        </div>
-        <div class="photo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/d4/Elon_Musk_Tesla_Motorzilla_Truck_Launch.jpg/440px-Elon_Musk_Tesla_Motorzilla_Truck_Launch.jpg" alt="Cybertruck" onerror="this.parentElement.innerHTML='<div class=placeholder>🚗</div>'">
-        </div>
-        <div class="photo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/SpaceX_Headquarters.jpg/440px-SpaceX_Headquarters.jpg" alt="SpaceX" onerror="this.parentElement.innerHTML='<div class=placeholder>🏢</div>'">
-        </div>
+        <a href="https://en.wikipedia.org/wiki/Elon_Musk" target="_blank" class="social-btn">
+          <span class="icon">📄</span>
+          <span>Wikipedia</span>
+        </a>
       </div>
     </div>
     
