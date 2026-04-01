@@ -12,22 +12,22 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
   
   .header {
-    padding: 12px 16px;
+    padding: 10px 16px;
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
     border-bottom: 1px solid #21262d;
-    background: #161b22;
     flex-shrink: 0;
   }
   .header h1 {
     color: #c9d1d9;
-    font-size: 16px;
+    font-size: 18px;
   }
   .header .subtitle {
     color: #8b949e;
     font-size: 12px;
-    margin-top: 2px;
   }
   
   .content {
@@ -38,198 +38,421 @@
     overflow: auto;
   }
   
-  .panel {
+  /* LEFT: Visual + Config */
+  .left {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
   
-  .section {
-    background: #161b22;
-    border-radius: 8px;
-    padding: 14px;
+  .product-image {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
   }
-  .section h2 {
+  
+  .laptop-graphic {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+  }
+  
+  .laptop-screen {
+    background: #0d1117;
+    border: 3px solid #30363d;
+    border-radius: 8px 8px 0 0;
+    padding: 8px;
+    aspect-ratio: 16/10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .screen-content {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #1a1a2e 0%, #0d1117 100%);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
     color: #58a6ff;
+  }
+  
+  .laptop-base {
+    background: linear-gradient(180deg, #30363d 0%, #21262d 100%);
+    height: 8px;
+    border-radius: 0 0 4px 4px;
+    position: relative;
+  }
+  .laptop-base::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 2px;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: #484f58;
+    border-radius: 2px;
+  }
+  
+  .chip-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #58a6ff;
+    color: #0d1117;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: bold;
     font-size: 12px;
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #21262d;
   }
-  .section p, .section li {
+  
+  /* Stats Row */
+  .stats-row {
+    display: flex;
+    gap: 12px;
+  }
+  .stat-card {
+    flex: 1;
+    background: #161b22;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    border: 1px solid #30363d;
+  }
+  .stat-card .icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  .stat-card .value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #c9d1d9;
+  }
+  .stat-card .label {
+    font-size: 10px;
     color: #8b949e;
-    font-size: 11px;
-    line-height: 1.5;
   }
-  .section ul {
-    padding-left: 14px;
-    margin: 0;
+  .stat-card.highlight {
+    background: linear-gradient(135deg, #1f3d1f 0%, #161b22 100%);
+    border-color: #3fb950;
   }
-  .section li { margin-bottom: 4px; }
+  .stat-card.highlight .value { color: #3fb950; }
   
   /* Configurator */
-  .config {
+  .configurator {
     background: #161b22;
-    border-radius: 8px;
-    padding: 14px;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #30363d;
   }
-  .config h2 {
+  .configurator h2 {
     color: #58a6ff;
-    font-size: 12px;
-    margin-bottom: 12px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   
-  .option-group {
-    margin-bottom: 12px;
+  .option-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
   }
-  .option-group label {
-    display: block;
+  
+  .chip-option {
+    flex: 1;
+    background: #0d1117;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .chip-option:hover { border-color: #58a6ff; }
+  .chip-option.selected {
+    border-color: #58a6ff;
+    background: rgba(88, 166, 255, 0.1);
+  }
+  .chip-option .name {
+    font-size: 12px;
+    font-weight: bold;
     color: #c9d1d9;
-    font-size: 11px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
-  .option-group select {
-    width: 100%;
+  .chip-option .price {
+    font-size: 11px;
+    color: #8b949e;
+  }
+  .chip-option .specs {
+    font-size: 10px;
+    color: #58a6ff;
+    margin-top: 4px;
+  }
+  
+  .selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .selector label {
+    width: 60px;
+    font-size: 11px;
+    color: #8b949e;
+    display: flex;
+    align-items: center;
+  }
+  .selector select {
+    flex: 1;
     background: #0d1117;
     border: 1px solid #30363d;
     color: #c9d1d9;
-    padding: 6px 8px;
-    border-radius: 4px;
-    font-size: 11px;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
   }
   
-  .price-display {
-    background: #0d1117;
-    border-radius: 6px;
-    padding: 12px;
+  .price-final {
+    background: linear-gradient(135deg, #1a3d1a 0%, #161b22 100%);
+    border: 2px solid #3fb950;
+    border-radius: 10px;
+    padding: 16px;
     text-align: center;
     margin-top: 10px;
   }
-  .price-display .label {
+  .price-final .label {
     color: #8b949e;
-    font-size: 10px;
+    font-size: 11px;
     margin-bottom: 4px;
   }
-  .price-display .price {
-    font-size: 24px;
+  .price-final .amount {
+    font-size: 32px;
     font-weight: bold;
     color: #3fb950;
   }
   
-  /* Specs Table */
-  .specs-table {
-    width: 100%;
+  /* RIGHT: Details */
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .card {
+    background: #161b22;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #30363d;
+  }
+  .card h3 {
+    color: #58a6ff;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  /* Comparison Bars */
+  .compare-item {
+    margin-bottom: 12px;
+  }
+  .compare-item:last-child { margin-bottom: 0; }
+  .compare-item .label {
     font-size: 11px;
-  }
-  .specs-table tr {
-    border-bottom: 1px solid #21262d;
-  }
-  .specs-table tr:last-child { border-bottom: none; }
-  .specs-table td {
-    padding: 6px 0;
-  }
-  .specs-table .name {
     color: #8b949e;
-    width: 40%;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
   }
-  .specs-table .value {
-    color: #c9d1d9;
-    font-weight: bold;
+  .compare-item .bar-bg {
+    height: 8px;
+    background: #21262d;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
   }
-  
-  /* Comparison */
-  .compare-table {
-    width: 100%;
+  .compare-item .bar-m4 {
+    background: #8b949e;
+    height: 100%;
+  }
+  .compare-item .bar-m5 {
+    background: #58a6ff;
+    height: 100%;
+  }
+  .compare-item .values {
+    display: flex;
     font-size: 10px;
-    border-collapse: collapse;
+    margin-top: 2px;
   }
-  .compare-table th, .compare-table td {
-    padding: 8px 6px;
+  .compare-item .m4-val { color: #8b949e; width: 50%; }
+  .compare-item .m5-val { color: #58a6ff; text-align: right; }
+  
+  /* Spec Grid */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .spec-item {
+    background: #0d1117;
+    padding: 10px;
+    border-radius: 6px;
     text-align: center;
-    border-bottom: 1px solid #21262d;
   }
-  .compare-table th {
-    color: #8b949e;
-    font-weight: normal;
-    font-size: 10px;
-  }
-  .compare-table th:first-child, .compare-table td:first-child {
-    text-align: left;
-  }
-  .compare-table .chip {
-    color: #c9d1d9;
+  .spec-item .val {
+    font-size: 14px;
     font-weight: bold;
+    color: #c9d1d9;
   }
-  .compare-table .winner {
-    color: #3fb950;
+  .spec-item .key {
+    font-size: 10px;
+    color: #8b949e;
   }
   
-  /* Key Features */
-  .features {
+  /* Features List */
+  .feature-list {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
-  .feature {
+  .feature-item {
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: #0d1117;
+    border-radius: 6px;
   }
-  .feature .icon {
-    font-size: 14px;
+  .feature-item .icon {
+    font-size: 18px;
   }
-  .feature .text {
-    flex: 1;
-  }
-  .feature .name {
-    font-size: 11px;
-    color: #c9d1d9;
+  .feature-item .text .name {
+    font-size: 12px;
     font-weight: bold;
+    color: #c9d1d9;
   }
-  .feature .desc {
+  .feature-item .text .desc {
     font-size: 10px;
     color: #8b949e;
+  }
+  
+  /* Verdict */
+  .verdict {
+    background: linear-gradient(135deg, #2d2416 0%, #161b22 100%);
+    border: 1px solid #f0883e;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .verdict h4 {
+    color: #f0883e;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .verdict p {
+    font-size: 11px;
+    color: #8b949e;
+    line-height: 1.5;
   }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>MacBook Pro with M5 Pro / M5 Max</h1>
-  <div class="subtitle">Released March 2026</div>
+  <h1>MacBook Pro M5</h1>
+  <div class="subtitle">M5 Pro & M5 Max — Available Now</div>
 </div>
 
 <div class="content">
   
-  <!-- LEFT: Configurator -->
-  <div class="panel">
-    <div class="config">
-      <h2>Build Your MacBook Pro</h2>
+  <!-- LEFT -->
+  <div class="left">
+    <div class="product-image">
+      <div class="laptop-graphic">
+        <div class="laptop-screen">
+          <div class="screen-content">🍎</div>
+        </div>
+        <div class="laptop-base"></div>
+      </div>
+      <div class="chip-badge">M5</div>
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat-card highlight">
+        <div class="icon">⚡</div>
+        <div class="value">2x</div>
+        <div class="label">AI Performance</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon">📶</div>
+        <div class="value">Wi-Fi 7</div>
+        <div class="label">Wireless</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon">🔋</div>
+        <div class="value">24hr</div>
+        <div class="label">Battery</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon">💾</div>
+        <div class="value">2TB</div>
+        <div class="label">Base Storage</div>
+      </div>
+    </div>
+    
+    <div class="configurator">
+      <h2>⚙️ Configure</h2>
       
-      <div class="option-group">
-        <label>Chip</label>
-        <select id="chip">
-          <option value="pro14">M5 Pro (14") — $2,199</option>
-          <option value="pro16">M5 Pro (16") — $2,699</option>
-          <option value="max14">M5 Max (14") — $3,599</option>
-          <option value="max16">M5 Max (16") — $3,899</option>
-        </select>
+      <div class="option-row">
+        <div class="chip-option selected" data-chip="pro14" onclick="selectChip(this)">
+          <div class="name">M5 Pro 14"</div>
+          <div class="price">$2,199</div>
+          <div class="specs">14-core CPU, 20-core GPU</div>
+        </div>
+        <div class="chip-option" data-chip="pro16" onclick="selectChip(this)">
+          <div class="name">M5 Pro 16"</div>
+          <div class="price">$2,699</div>
+          <div class="specs">14-core CPU, 20-core GPU</div>
+        </div>
+        <div class="chip-option" data-chip="max14" onclick="selectChip(this)">
+          <div class="name">M5 Max 14"</div>
+          <div class="price">$3,599</div>
+          <div class="specs">16-core CPU, 40-core GPU</div>
+        </div>
+        <div class="chip-option" data-chip="max16" onclick="selectChip(this)">
+          <div class="name">M5 Max 16"</div>
+          <div class="price">$3,899</div>
+          <div class="specs">16-core CPU, 40-core GPU</div>
+        </div>
       </div>
       
-      <div class="option-group">
+      <div class="selector">
         <label>RAM</label>
-        <select id="ram">
+        <select id="ram-select" onchange="updatePrice()">
           <option value="24">24GB (+$0)</option>
           <option value="36">36GB (+$200)</option>
           <option value="48">48GB (+$400)</option>
           <option value="64">64GB (+$800)</option>
+          <option value="128">128GB (+$1,600)</option>
         </select>
       </div>
       
-      <div class="option-group">
+      <div class="selector">
         <label>Storage</label>
-        <select id="storage">
+        <select id="storage-select" onchange="updatePrice()">
           <option value="1tb">1TB (+$0)</option>
           <option value="2tb">2TB (+$200)</option>
           <option value="4tb">4TB (+$600)</option>
@@ -237,138 +460,126 @@
         </select>
       </div>
       
-      <div class="price-display">
-        <div class="label">Estimated Price</div>
-        <div class="price" id="total-price">$2,199</div>
-      </div>
-    </div>
-    
-    <div class="section">
-      <h2>Key Features</h2>
-      <div class="features">
-        <div class="feature">
-          <span class="icon">🚀</span>
-          <div class="text">
-            <div class="name">M5 Pro / M5 Max</div>
-            <div class="desc">Major AI & parallel processing gains. 2x faster SSD.</div>
-          </div>
-        </div>
-        <div class="feature">
-          <span class="icon">📶</span>
-          <div class="text">
-            <div class="name">Wi-Fi 7 + Bluetooth 6</div>
-            <div class="desc">New N1 chip. First Mac with Bluetooth 6.</div>
-          </div>
-        </div>
-        <div class="feature">
-          <span class="icon">💾</span>
-          <div class="text">
-            <div class="name">Starting Storage Doubled</div>
-            <div class="desc">M5 Pro: 1TB, M5 Max: 2TB base</div>
-          </div>
-        </div>
-        <div class="feature">
-          <span class="icon">🔋</span>
-          <div class="text">
-            <div class="name">All-Day Battery</div>
-            <div class="desc">Up to 24 hours battery life</div>
-          </div>
-        </div>
+      <div class="price-final">
+        <div class="label">Your MacBook Pro</div>
+        <div class="amount" id="total-price">$2,199</div>
       </div>
     </div>
   </div>
   
-  <!-- RIGHT: Specs + Comparison -->
-  <div class="panel">
-    <div class="section">
-      <h2>M5 vs M4 Comparison</h2>
-      <table class="compare-table">
-        <tr>
-          <th></th>
-          <th class="chip">M4</th>
-          <th class="chip winner">M5</th>
-        </tr>
-        <tr>
-          <td>Geekbench Single</td>
-          <td>~3,600</td>
-          <td class="winner">~4,300</td>
-        </tr>
-        <tr>
-          <td>Geekbench Multi</td>
-          <td>~14,000</td>
-          <td class="winner">~32,400</td>
-        </tr>
-        <tr>
-          <td>AI Benchmark</td>
-          <td>11,616</td>
-          <td class="winner">23,628</td>
-        </tr>
-        <tr>
-          <td>3DMark GPU</td>
-          <td>Good</td>
-          <td class="winner">Dramatically better</td>
-        </tr>
-        <tr>
-          <td>Wi-Fi</td>
-          <td>Wi-Fi 6E</td>
-          <td class="winner">Wi-Fi 7</td>
-        </tr>
-        <tr>
-          <td>Bluetooth</td>
-          <td>5.3</td>
-          <td class="winner">6.0</td>
-        </tr>
-        <tr>
-          <td>Base Storage</td>
-          <td>512GB</td>
-          <td class="winner">1-2TB</td>
-        </tr>
-      </table>
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="card">
+      <h3>📊 M5 vs M4 Performance</h3>
+      <div class="compare-item">
+        <div class="label">
+          <span>Geekbench Multi</span>
+          <span class="m5-val">2.3x faster</span>
+        </div>
+        <div class="bar-bg">
+          <div class="bar-m4" style="width:43%"></div>
+          <div class="bar-m5" style="width:100%"></div>
+        </div>
+        <div class="values">
+          <span class="m4-val">14,000</span>
+          <span class="m5-val">32,400</span>
+        </div>
+      </div>
+      <div class="compare-item">
+        <div class="label">
+          <span>AI Benchmark</span>
+          <span class="m5-val">2x faster</span>
+        </div>
+        <div class="bar-bg">
+          <div class="bar-m4" style="width:49%"></div>
+          <div class="bar-m5" style="width:100%"></div>
+        </div>
+        <div class="values">
+          <span class="m4-val">11,616</span>
+          <span class="m5-val">23,628</span>
+        </div>
+      </div>
+      <div class="compare-item">
+        <div class="label">
+          <span>SSD Speed</span>
+          <span class="m5-val">2x faster</span>
+        </div>
+        <div class="bar-bg">
+          <div class="bar-m4" style="width:50%"></div>
+          <div class="bar-m5" style="width:100%"></div>
+        </div>
+      </div>
     </div>
     
-    <div class="section">
-      <h2>M5 Pro vs M5 Max</h2>
-      <table class="specs-table">
-        <tr>
-          <td class="name">CPU Cores</td>
-          <td class="value">Pro: 14-core | Max: 16-core</td>
-        </tr>
-        <tr>
-          <td class="name">GPU Cores</td>
-          <td class="value">Pro: 20-core | Max: 40-core</td>
-        </tr>
-        <tr>
-          <td class="name">Neural Engine</td>
-          <td class="value">Pro: 16-core | Max: 16-core</td>
-        </tr>
-        <tr>
-          <td class="name">Memory Bandwidth</td>
-          <td class="value">Pro: 273 GB/s | Max: 546 GB/s</td>
-        </tr>
-        <tr>
-          <td class="name">Max Memory</td>
-          <td class="value">Pro: 64GB | Max: 128GB</td>
-        </tr>
-        <tr>
-          <td class="name">Starting Price</td>
-          <td class="value">Pro: $2,199 | Max: $3,599</td>
-        </tr>
-      </table>
+    <div class="card">
+      <h3>🔧 Specs</h3>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <div class="val">M5 Pro</div>
+          <div class="key">14-core CPU</div>
+        </div>
+        <div class="spec-item">
+          <div class="val">M5 Max</div>
+          <div class="key">16-core CPU</div>
+        </div>
+        <div class="spec-item">
+          <div class="val">20-core</div>
+          <div class="key">M5 Pro GPU</div>
+        </div>
+        <div class="spec-item">
+          <div class="val">40-core</div>
+          <div class="key">M5 Max GPU</div>
+        </div>
+        <div class="spec-item">
+          <div class="val">16-core</div>
+          <div class="key">Neural Engine</div>
+        </div>
+        <div class="spec-item">
+          <div class="val">546 GB/s</div>
+          <div class="key">Memory Bandwidth</div>
+        </div>
+      </div>
     </div>
     
-    <div class="section">
-      <h2>Should You Buy?</h2>
-      <ul>
-        <li><strong>Yes if:</strong> You have M3 or older, need AI/GPU power, want Wi-Fi 7</li>
-        <li><strong>Wait if:</strong> You have M4 MacBook, your current machine works fine</li>
-        <li><strong>Consider base M5:</strong> If you don't need Pro/Max power (coming later)</li>
-      </ul>
+    <div class="card">
+      <h3>✨ New Features</h3>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="icon">📶</span>
+          <div class="text">
+            <div class="name">Wi-Fi 7 + Bluetooth 6</div>
+            <div class="desc">First Mac with Bluetooth 6</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="icon">💾</span>
+          <div class="text">
+            <div class="name">Doubled Base Storage</div>
+            <div class="desc">Pro: 1TB, Max: 2TB</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="icon">🚀</span>
+          <div class="text">
+            <div class="name">AI Architecture</div>
+            <div class="desc">Major parallel processing gains</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="verdict">
+      <h4>💡 Should You Buy?</h4>
+      <p><strong>Yes:</strong> M3 or older, need AI/GPU power, want latest wireless.<br>
+      <strong>Wait:</strong> M4 MacBook, current machine works fine.</p>
     </div>
   </div>
   
 </div>
 
 <script>
+let selectedChip = 'pro14';
+
 const chipPrices = {
   'pro14': 2199,
   'pro16': 2699,
@@ -376,40 +587,31 @@ const chipPrices = {
   'max16': 3899
 };
 
-const storagePrices = {
-  '1tb': 0,
-  '2tb': 200,
-  '4tb': 600,
-  '8tb': 1200
+const ramPrices = {
+  '24': 0, '36': 200, '48': 400, '64': 800, '128': 1600
 };
 
-const ramPrices = {
-  '24': 0,
-  '36': 200,
-  '48': 400,
-  '64': 800
+const storagePrices = {
+  '1tb': 0, '2tb': 200, '4tb': 600, '8tb': 1200
 };
+
+function selectChip(el) {
+  document.querySelectorAll('.chip-option').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedChip = el.dataset.chip;
+  updatePrice();
+}
 
 function updatePrice() {
-  const chip = parseInt(document.getElementById('chip').value);
-  const ram = parseInt(document.getElementById('ram').value);
-  const storage = document.getElementById('storage').value;
+  const ram = document.getElementById('ram-select').value;
+  const storage = document.getElementById('storage-select').value;
   
-  let total = chipPrices[document.getElementById('chip').id];
-  if (document.getElementById('chip').value === 'pro14') total = 2199;
-  if (document.getElementById('chip').value === 'pro16') total = 2699;
-  if (document.getElementById('chip').value === 'max14') total = 3599;
-  if (document.getElementById('chip').value === 'max16') total = 3899;
-  
+  let total = chipPrices[selectedChip];
+  total += ramPrices[ram];
   total += storagePrices[storage];
-  total += ramPrices[document.getElementById('ram').value];
   
   document.getElementById('total-price').textContent = '$' + total.toLocaleString();
 }
-
-document.getElementById('chip').addEventListener('change', updatePrice);
-document.getElementById('ram').addEventListener('change', updatePrice);
-document.getElementById('storage').addEventListener('change', updatePrice);
 </script>
 
 </body>
