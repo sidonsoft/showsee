@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MacBook Pro M5</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #21262d;
+    background: #161b22;
+    flex-shrink: 0;
+  }
+  .header h1 {
+    color: #c9d1d9;
+    font-size: 16px;
+  }
+  .header .subtitle {
+    color: #8b949e;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    overflow: auto;
+  }
+  
+  .panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .section {
+    background: #161b22;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .section h2 {
+    color: #58a6ff;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #21262d;
+  }
+  .section p, .section li {
+    color: #8b949e;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .section ul {
+    padding-left: 14px;
+    margin: 0;
+  }
+  .section li { margin-bottom: 4px; }
+  
+  /* Configurator */
+  .config {
+    background: #161b22;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .config h2 {
+    color: #58a6ff;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .option-group {
+    margin-bottom: 12px;
+  }
+  .option-group label {
+    display: block;
+    color: #c9d1d9;
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  .option-group select {
+    width: 100%;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  
+  .price-display {
+    background: #0d1117;
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .price-display .label {
+    color: #8b949e;
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+  .price-display .price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3fb950;
+  }
+  
+  /* Specs Table */
+  .specs-table {
+    width: 100%;
+    font-size: 11px;
+  }
+  .specs-table tr {
+    border-bottom: 1px solid #21262d;
+  }
+  .specs-table tr:last-child { border-bottom: none; }
+  .specs-table td {
+    padding: 6px 0;
+  }
+  .specs-table .name {
+    color: #8b949e;
+    width: 40%;
+  }
+  .specs-table .value {
+    color: #c9d1d9;
+    font-weight: bold;
+  }
+  
+  /* Comparison */
+  .compare-table {
+    width: 100%;
+    font-size: 10px;
+    border-collapse: collapse;
+  }
+  .compare-table th, .compare-table td {
+    padding: 8px 6px;
+    text-align: center;
+    border-bottom: 1px solid #21262d;
+  }
+  .compare-table th {
+    color: #8b949e;
+    font-weight: normal;
+    font-size: 10px;
+  }
+  .compare-table th:first-child, .compare-table td:first-child {
+    text-align: left;
+  }
+  .compare-table .chip {
+    color: #c9d1d9;
+    font-weight: bold;
+  }
+  .compare-table .winner {
+    color: #3fb950;
+  }
+  
+  /* Key Features */
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .feature .icon {
+    font-size: 14px;
+  }
+  .feature .text {
+    flex: 1;
+  }
+  .feature .name {
+    font-size: 11px;
+    color: #c9d1d9;
+    font-weight: bold;
+  }
+  .feature .desc {
+    font-size: 10px;
+    color: #8b949e;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>MacBook Pro with M5 Pro / M5 Max</h1>
+  <div class="subtitle">Released March 2026</div>
+</div>
+
+<div class="content">
+  
+  <!-- LEFT: Configurator -->
+  <div class="panel">
+    <div class="config">
+      <h2>Build Your MacBook Pro</h2>
+      
+      <div class="option-group">
+        <label>Chip</label>
+        <select id="chip">
+          <option value="pro14">M5 Pro (14") — $2,199</option>
+          <option value="pro16">M5 Pro (16") — $2,699</option>
+          <option value="max14">M5 Max (14") — $3,599</option>
+          <option value="max16">M5 Max (16") — $3,899</option>
+        </select>
+      </div>
+      
+      <div class="option-group">
+        <label>RAM</label>
+        <select id="ram">
+          <option value="24">24GB (+$0)</option>
+          <option value="36">36GB (+$200)</option>
+          <option value="48">48GB (+$400)</option>
+          <option value="64">64GB (+$800)</option>
+        </select>
+      </div>
+      
+      <div class="option-group">
+        <label>Storage</label>
+        <select id="storage">
+          <option value="1tb">1TB (+$0)</option>
+          <option value="2tb">2TB (+$200)</option>
+          <option value="4tb">4TB (+$600)</option>
+          <option value="8tb">8TB (+$1,200)</option>
+        </select>
+      </div>
+      
+      <div class="price-display">
+        <div class="label">Estimated Price</div>
+        <div class="price" id="total-price">$2,199</div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Key Features</h2>
+      <div class="features">
+        <div class="feature">
+          <span class="icon">🚀</span>
+          <div class="text">
+            <div class="name">M5 Pro / M5 Max</div>
+            <div class="desc">Major AI & parallel processing gains. 2x faster SSD.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="icon">📶</span>
+          <div class="text">
+            <div class="name">Wi-Fi 7 + Bluetooth 6</div>
+            <div class="desc">New N1 chip. First Mac with Bluetooth 6.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="icon">💾</span>
+          <div class="text">
+            <div class="name">Starting Storage Doubled</div>
+            <div class="desc">M5 Pro: 1TB, M5 Max: 2TB base</div>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="icon">🔋</span>
+          <div class="text">
+            <div class="name">All-Day Battery</div>
+            <div class="desc">Up to 24 hours battery life</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- RIGHT: Specs + Comparison -->
+  <div class="panel">
+    <div class="section">
+      <h2>M5 vs M4 Comparison</h2>
+      <table class="compare-table">
+        <tr>
+          <th></th>
+          <th class="chip">M4</th>
+          <th class="chip winner">M5</th>
+        </tr>
+        <tr>
+          <td>Geekbench Single</td>
+          <td>~3,600</td>
+          <td class="winner">~4,300</td>
+        </tr>
+        <tr>
+          <td>Geekbench Multi</td>
+          <td>~14,000</td>
+          <td class="winner">~32,400</td>
+        </tr>
+        <tr>
+          <td>AI Benchmark</td>
+          <td>11,616</td>
+          <td class="winner">23,628</td>
+        </tr>
+        <tr>
+          <td>3DMark GPU</td>
+          <td>Good</td>
+          <td class="winner">Dramatically better</td>
+        </tr>
+        <tr>
+          <td>Wi-Fi</td>
+          <td>Wi-Fi 6E</td>
+          <td class="winner">Wi-Fi 7</td>
+        </tr>
+        <tr>
+          <td>Bluetooth</td>
+          <td>5.3</td>
+          <td class="winner">6.0</td>
+        </tr>
+        <tr>
+          <td>Base Storage</td>
+          <td>512GB</td>
+          <td class="winner">1-2TB</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="section">
+      <h2>M5 Pro vs M5 Max</h2>
+      <table class="specs-table">
+        <tr>
+          <td class="name">CPU Cores</td>
+          <td class="value">Pro: 14-core | Max: 16-core</td>
+        </tr>
+        <tr>
+          <td class="name">GPU Cores</td>
+          <td class="value">Pro: 20-core | Max: 40-core</td>
+        </tr>
+        <tr>
+          <td class="name">Neural Engine</td>
+          <td class="value">Pro: 16-core | Max: 16-core</td>
+        </tr>
+        <tr>
+          <td class="name">Memory Bandwidth</td>
+          <td class="value">Pro: 273 GB/s | Max: 546 GB/s</td>
+        </tr>
+        <tr>
+          <td class="name">Max Memory</td>
+          <td class="value">Pro: 64GB | Max: 128GB</td>
+        </tr>
+        <tr>
+          <td class="name">Starting Price</td>
+          <td class="value">Pro: $2,199 | Max: $3,599</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="section">
+      <h2>Should You Buy?</h2>
+      <ul>
+        <li><strong>Yes if:</strong> You have M3 or older, need AI/GPU power, want Wi-Fi 7</li>
+        <li><strong>Wait if:</strong> You have M4 MacBook, your current machine works fine</li>
+        <li><strong>Consider base M5:</strong> If you don't need Pro/Max power (coming later)</li>
+      </ul>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+const chipPrices = {
+  'pro14': 2199,
+  'pro16': 2699,
+  'max14': 3599,
+  'max16': 3899
+};
+
+const storagePrices = {
+  '1tb': 0,
+  '2tb': 200,
+  '4tb': 600,
+  '8tb': 1200
+};
+
+const ramPrices = {
+  '24': 0,
+  '36': 200,
+  '48': 400,
+  '64': 800
+};
+
+function updatePrice() {
+  const chip = parseInt(document.getElementById('chip').value);
+  const ram = parseInt(document.getElementById('ram').value);
+  const storage = document.getElementById('storage').value;
+  
+  let total = chipPrices[document.getElementById('chip').id];
+  if (document.getElementById('chip').value === 'pro14') total = 2199;
+  if (document.getElementById('chip').value === 'pro16') total = 2699;
+  if (document.getElementById('chip').value === 'max14') total = 3599;
+  if (document.getElementById('chip').value === 'max16') total = 3899;
+  
+  total += storagePrices[storage];
+  total += ramPrices[document.getElementById('ram').value];
+  
+  document.getElementById('total-price').textContent = '$' + total.toLocaleString();
+}
+
+document.getElementById('chip').addEventListener('change', updatePrice);
+document.getElementById('ram').addEventListener('change', updatePrice);
+document.getElementById('storage').addEventListener('change', updatePrice);
+</script>
+
+</body>
+</html>
