@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Timeline</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 30px;
+  }
+  
+  h1 {
+    color: #58a6ff;
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #30363d;
+  }
+  
+  .event {
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 30px;
+  }
+  .event::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #21262d;
+    border: 2px solid;
+  }
+  
+  .event.year::before { border-color: #58a6ff; background: #58a6ff; }
+  .event.release::before { border-color: #3fb950; background: #3fb950; }
+  .event.milestone::before { border-color: #a371f7; background: #a371f7; }
+  
+  .event h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .event.year h3 { color: #58a6ff; font-size: 16px; }
+  .event.release h3 { color: #3fb950; }
+  .event.milestone h3 { color: #a371f7; }
+  
+  .event p {
+    color: #8b949e;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  
+  .event .tag {
+    display: inline-block;
+    background: #161b22;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  .event .tag.open { color: #3fb950; border: 1px solid #3fb950; }
+  .event .tag.closed { color: #f85149; border: 1px solid #f85149; }
+  .event .tag.big { color: #f0883e; border: 1px solid #f0883e; }
+</style>
+</head>
+<body>
+
+<h1>LLaMA Evolution</h1>
+
+<div class="timeline">
+  <div class="event year">
+    <h3>2023</h3>
+    <p>Year LLaMA changed everything</p>
+  </div>
+  
+  <div class="event release">
+    <h3>Feb 2023 — LLaMA 1 Released</h3>
+    <p>Meta releases 7B to 65B parameter models. Smaller than GPT-3 but competitive performance.</p>
+    <span class="tag open">Open weights</span>
+  </div>
+  
+  <div class="event milestone">
+    <h3>March 2023 — Leaked, Goes Viral</h3>
+    <p>Someone posts weights on 4chan. Everyone runs it locally. Open source AI democratized.</p>
+    <span class="tag big">Viral moment</span>
+  </div>
+  
+  <div class="event release">
+    <h3>July 2023 — LLaMA 2</h3>
+    <p>Released with commercial license (with restrictions). Larger context window. Better training.</p>
+    <span class="tag open">Open weights</span>
+  </div>
+  
+  <div class="event release">
+    <h3>2024 — Smaller, Faster Models</h3>
+    <p>LLaMA 3 (8B, 70B), Phi, Mistral, Gemma. Quality improves, hardware requirements drop.</p>
+    <span class="tag open">Open weights</span>
+  </div>
+  
+  <div class="event year">
+    <h3>Today</h3>
+    <p>Open models nearly match closed ones for most tasks</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Comparison</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #21262d;
+    flex-shrink: 0;
+  }
+  .header h1 {
+    color: #58a6ff;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: #8b949e;
+    font-size: 14px;
+  }
+  
+  .compare {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+  }
+  
+  .col {
+    flex: 1;
+    padding: 24px;
+    border-right: 1px solid #21262d;
+    min-width: 200px;
+  }
+  .col:last-child { border-right: none; }
+  
+  .col h2 {
+    font-size: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid;
+    margin-bottom: 16px;
+  }
+  .col.llama h2 { color: #f0883e; border-color: #f0883e; }
+  .col.gpt h2 { color: #3fb950; border-color: #3fb950; }
+  .col.claude h2 { color: #a371f7; border-color: #a371f7; }
+  
+  .col h3 {
+    color: #c9d1d9;
+    font-size: 13px;
+    margin: 16px 0 8px;
+  }
+  .col h3:first-of-type { margin-top: 0; }
+  
+  .col p, .col li {
+    color: #8b949e;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .col ul { padding-left: 16px; }
+  
+  .badge {
+    display: inline-block;
+    background: #161b22;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-right: 4px;
+  }
+  .open { border: 1px solid #3fb950; color: #3fb950; }
+  .closed { border: 1px solid #f85149; color: #f85149; }
+  .free { border: 1px solid #58a6ff; color: #58a6ff; }
+  .paid { border: 1px solid #f0883e; color: #f0883e; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>LLM Comparison</h1>
+  <p>How LLaMA stacks up against GPT and Claude</p>
+</div>
+
+<div class="compare">
+  <div class="col llama">
+    <h2>LLaMA</h2>
+    
+    <h3>What</h3>
+    <p>Meta's open source language model. "Large Language Model Meta AI"</p>
+    
+    <h3>Access</h3>
+    <p><span class="badge open">Open</span> Free, downloadable weights</p>
+    
+    <h3>Good at</h3>
+    <ul>
+      <li>Research, experimentation</li>
+      <li>Running locally</li>
+      <li>Fine-tuning on custom data</li>
+      <li>No API costs</li>
+    </ul>
+    
+    <h3>Trade-offs</h3>
+    <ul>
+      <li>Needs powerful hardware</li>
+      <li>Setup required</li>
+      <li>Smaller models less capable</li>
+    </ul>
+  </div>
+  
+  <div class="col gpt">
+    <h2>GPT (OpenAI)</h2>
+    
+    <h3>What</h3>
+    <p>Closed API model. Most widely used. Powers ChatGPT.</p>
+    
+    <h3>Access</h3>
+    <p><span class="badge closed">Closed</span> <span class="badge paid">Paid</span> API only, usage fees</p>
+    
+    <h3>Good at</h3>
+    <ul>
+      <li>General purpose tasks</li>
+      <li>Easy to use</li>
+      <li>Most capable (GPT-4)</li>
+      <li>Good tooling ecosystem</li>
+    </ul>
+    
+    <h3>Trade-offs</h3>
+    <ul>
+      <li>Costs money to use</li>
+      <li>Not open source</li>
+      <li>Data leaves your machine</li>
+    </ul>
+  </div>
+  
+  <div class="col claude">
+    <h2>Claude</h2>
+    
+    <h3>What</h3>
+    <p>Anthropic's model. Known for long context, ethics focus.</p>
+    
+    <h3>Access</h3>
+    <p><span class="badge closed">Closed</span> <span class="badge paid">Paid</span> API + free tier (limited)</p>
+    
+    <h3>Good at</h3>
+    <ul>
+      <li>Long documents (200k context)</li>
+      <li>Careful, nuanced answers</li>
+      <li>Reading files, analysis</li>
+      <li>Less likely to hallucinate</li>
+    </ul>
+    
+    <h3>Trade-offs</h3>
+    <ul>
+      <li>Not open source</li>
+      <li>Costs money for heavy use</li>
+      <li>Data leaves your machine</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

@@ -101,15 +101,15 @@
 </div>
 
 <div class="content">
-  <iframe id="frame" src="/view-neural-networks.html"></iframe>
+  <iframe id="frame" src="/view-comparison.html"></iframe>
 </div>
 
 <script>
 const STORAGE_KEY = 'showsee_history';
 const MAX_HISTORY = 30;
 
-let currentViewId = 'view-neural-networks';
-let currentViewTitle = 'Neural Networks';
+let currentViewId = 'view-comparison';
+let currentViewTitle = 'LLM Comparison';
 
 function loadHistory() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } 
