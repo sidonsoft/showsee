@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home Battery</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .header {
+    padding: 10px 16px;
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    border-bottom: 1px solid #21262d;
+    flex-shrink: 0;
+  }
+  .header h1 {
+    color: #c9d1d9;
+    font-size: 16px;
+  }
+  .header .subtitle {
+    color: #8b949e;
+    font-size: 11px;
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    overflow: auto;
+  }
+  
+  /* LEFT: Visual */
+  .left {
+    flex: 1.2;
+    background: #161b22;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .diagram {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .box {
+    background: #0d1117;
+    border: 2px solid #30363d;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    width: 120px;
+    position: relative;
+  }
+  .box .icon { font-size: 32px; margin-bottom: 8px; }
+  .box .label { font-size: 12px; color: #c9d1d9; font-weight: bold; }
+  .box .sub { font-size: 10px; color: #8b949e; }
+  
+  .box.grid { border-color: #f0883e; }
+  .box.grid .icon { color: #f0883e; }
+  .box.battery { border-color: #58a6ff; }
+  .box.battery .icon { color: #58a6ff; }
+  .box.home { border-color: #3fb950; }
+  .box.home .icon { color: #3fb950; }
+  
+  /* Arrows */
+  .arrow {
+    position: relative;
+    width: 50px;
+    height: 4px;
+  }
+  .arrow::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 0;
+    right: 0;
+    height: 16px;
+    background: repeating-linear-gradient(
+      90deg,
+      #f0883e 0px,
+      #f0883e 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    animation: flow 1s linear infinite;
+    opacity: 0.7;
+  }
+  .arrow.down::before {
+    background: repeating-linear-gradient(
+      180deg,
+      #58a6ff 0px,
+      #58a6ff 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
+  .arrow.up::before {
+    background: repeating-linear-gradient(
+      0deg,
+      #f0883e 0px,
+      #f0883e 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
+  .arrow.reverse::before {
+    animation-direction: reverse;
+  }
+  
+  @keyframes flow {
+    0% { background-position: 0 0; }
+    100% { background-position: 16px 0; }
+  }
+  
+  .arrow.down.reverse::before {
+    background: repeating-linear-gradient(
+      180deg,
+      #3fb950 0px,
+      #3fb950 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
+  
+  .controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .mode-btn {
+    background: #21262d;
+    border: 2px solid #30363d;
+    color: #c9d1d9;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mode-btn:hover { border-color: #58a6ff; }
+  .mode-btn.active { 
+    border-color: #58a6ff; 
+    background: rgba(88, 166, 255, 0.1);
+    color: #58a6ff;
+  }
+  
+  /* RIGHT: Info */
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: auto;
+  }
+  
+  .card {
+    background: #161b22;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #30363d;
+  }
+  .card h3 {
+    color: #58a6ff;
+    font-size: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card p, .card li {
+    color: #8b949e;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .card ul {
+    padding-left: 14px;
+    margin: 0;
+  }
+  .card li { margin-bottom: 4px; }
+  
+  /* Components */
+  .components {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .comp {
+    background: #0d1117;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  .comp .name {
+    font-size: 11px;
+    font-weight: bold;
+    color: #c9d1d9;
+    margin-bottom: 2px;
+  }
+  .comp .desc {
+    font-size: 10px;
+    color: #8b949e;
+  }
+  
+  /* Stats */
+  .stats {
+    display: flex;
+    gap: 8px;
+  }
+  .stat {
+    flex: 1;
+    background: #0d1117;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+  }
+  .stat .val {
+    font-size: 16px;
+    font-weight: bold;
+    color: #58a6ff;
+  }
+  .stat .key {
+    font-size: 9px;
+    color: #8b949e;
+  }
+  
+  /* Modes */
+  .modes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mode {
+    background: #0d1117;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 3px solid #30363d;
+  }
+  .mode.charge { border-color: #f0883e; }
+  .mode.discharge { border-color: #3fb950; }
+  .mode.backup { border-color: #a371f7; }
+  .mode .name {
+    font-size: 11px;
+    font-weight: bold;
+    color: #c9d1d9;
+    margin-bottom: 2px;
+  }
+  .mode .desc { font-size: 10px; color: #8b949e; }
+  
+  /* Price */
+  .price-card {
+    background: linear-gradient(135deg, #1a3d1a 0%, #161b22 100%);
+    border: 1px solid #3fb950;
+  }
+  .price-card h3 { color: #3fb950; }
+  .price-card .big {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3fb950;
+    margin: 8px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Home Battery System</h1>
+  <div class="subtitle">Without Solar — How It Works</div>
+</div>
+
+<div class="content">
+  
+  <!-- LEFT: Diagram -->
+  <div class="left">
+    <div class="diagram">
+      <div class="box grid">
+        <div class="icon">⚡</div>
+        <div class="label">Grid</div>
+        <div class="sub">Electricity</div>
+      </div>
+      
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div class="arrow down" id="arrow-charge"></div>
+        <span style="font-size:10px;color:#8b949e;">Charge</span>
+        <div class="arrow up reverse" id="arrow-discharge"></div>
+        <span style="font-size:10px;color:#8b949e;">Discharge</span>
+      </div>
+      
+      <div class="box battery">
+        <div class="icon">🔋</div>
+        <div class="label">Battery</div>
+        <div class="sub">13.5 kWh</div>
+      </div>
+      
+      <div class="arrow reverse" id="arrow-use"></div>
+      
+      <div class="box home">
+        <div class="icon">🏠</div>
+        <div class="label">Home</div>
+        <div class="sub">Appliances</div>
+      </div>
+    </div>
+    
+    <div class="controls">
+      <button class="mode-btn active" id="btn-idle" onclick="setMode('idle')">Idle</button>
+      <button class="mode-btn" id="btn-charge" onclick="setMode('charge')">Charge (Off-Peak)</button>
+      <button class="mode-btn" id="btn-discharge" onclick="setMode('discharge')">Discharge (Peak)</button>
+      <button class="mode-btn" id="btn-outage" onclick="setMode('outage')">Power Outage</button>
+    </div>
+  </div>
+  
+  <!-- RIGHT: Info -->
+  <div class="right">
+    <div class="card">
+      <h3>⚙️ Components</h3>
+      <div class="components">
+        <div class="comp">
+          <div class="name">Battery Cells</div>
+          <div class="desc">LFP chemistry. Stores DC electricity.</div>
+        </div>
+        <div class="comp">
+          <div class="name">Inverter</div>
+          <div class="desc">Converts DC → AC for home use.</div>
+        </div>
+        <div class="comp">
+          <div class="name">Controller</div>
+          <div class="desc">Smart brain. Manages charge/discharge.</div>
+        </div>
+        <div class="comp">
+          <div class="name">Meter</div>
+          <div class="desc">Tracks energy flow in/out.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>📊 How Much Power?</h3>
+      <div class="stats">
+        <div class="stat">
+          <div class="val">13.5</div>
+          <div class="key">kWh capacity</div>
+        </div>
+        <div class="stat">
+          <div class="val">5</div>
+          <div class="key">kW output</div>
+        </div>
+        <div class="stat">
+          <div class="val">24hr</div>
+          <div class="key">backup</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>🔄 How It Works (No Solar)</h3>
+      <div class="modes">
+        <div class="mode charge">
+          <div class="name">Off-Peak: 10pm-6am</div>
+          <div class="desc">Battery charges from cheap grid power.</div>
+        </div>
+        <div class="mode discharge">
+          <div class="name">Peak: 4pm-9pm</div>
+          <div class="desc">Battery powers home. Avoid expensive peak rates.</div>
+        </div>
+        <div class="mode backup">
+          <div class="name">Outage</div>
+          <div class="desc">Instant switch to battery. No interruption.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>💰 Why Do This?</h3>
+      <ul>
+        <li><strong>Save money:</strong> Charge cheap, use during expensive peak</li>
+        <li><strong>Backup:</strong> Power stays on during outages</li>
+        <li><strong>Virtual Power Plant:</strong> Some utilities pay you to share battery during grid stress</li>
+      </ul>
+    </div>
+    
+    <div class="card price-card">
+      <h3>💵 Cost (Tesla Powerwall 3)</h3>
+      <div class="big">$9,300</div>
+      <p>Installed. Plus potential utility rebates.</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+const arrows = {
+  charge: ['arrow-charge'],
+  discharge: ['arrow-discharge', 'arrow-use'],
+  outage: ['arrow-discharge', 'arrow-use'],
+  idle: []
+};
+
+function setMode(mode) {
+  // Reset all buttons
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + mode).classList.add('active');
+  
+  // Hide all arrows
+  document.querySelectorAll('.arrow').forEach(a => {
+    a.style.opacity = '0.2';
+  });
+  
+  // Show active arrows
+  arrows[mode].forEach(id => {
+    document.getElementById(id).style.opacity = '1';
+  });
+}
+
+// Init
+setMode('idle');
+</script>
+
+</body>
+</html>

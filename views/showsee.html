@@ -101,15 +101,15 @@
 </div>
 
 <div class="content">
-  <iframe id="frame" src="/view-macbook-pro.html"></iframe>
+  <iframe id="frame" src="/view-home-battery.html"></iframe>
 </div>
 
 <script>
 const STORAGE_KEY = 'showsee_history';
 const MAX_HISTORY = 30;
 
-let currentViewId = 'view-macbook-pro';
-let currentViewTitle = 'MacBook Pro M5';
+let currentViewId = 'view-home-battery';
+let currentViewTitle = 'Home Battery';
 
 function loadHistory() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } 
