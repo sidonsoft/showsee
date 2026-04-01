@@ -372,15 +372,31 @@ function updateTimeline(year) {
   updateFromPosition(percent);
 }
 
-// Hover on track
+let currentPosition = 0;
+
+// Only update when hovering on track itself
+sliderTrack.addEventListener('mouseenter', () => {
+  sliderTrack.style.cursor = 'pointer';
+});
+
 sliderTrack.addEventListener('mousemove', e => {
-  updateFromPosition(getPercentFromX(e.clientX));
+  const rect = sliderTrack.getBoundingClientRect();
+  const y = e.clientY - rect.top;
+  const height = rect.height;
+  // Only trigger if within center 50% of track height
+  if (y > height * 0.25 && y < height * 0.75) {
+    currentPosition = getPercentFromX(e.clientX);
+    updateFromPosition(currentPosition);
+  }
 });
 
 // Hover on dots
 dots.forEach((d, i) => {
   const pos = (i / (events.length - 1)) * 100;
-  d.addEventListener('mouseenter', () => updateFromPosition(pos));
+  d.addEventListener('mouseenter', () => {
+    currentPosition = pos;
+    updateFromPosition(pos);
+  });
 });
 
 function getPercentFromX(clientX) {
