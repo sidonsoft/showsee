@@ -12,75 +12,84 @@ What does the user want to see?
 - How something works?
 - Current state/status?
 
-### Step 2: Pick View Layout
+### Step 2: Pick Visualization
+Choose the visual format that fits the topic:
+
+| Visualization | Use When | Example |
+|---------------|----------|---------|
+| **Text + Icons** | Abstract concepts, processes | HexClamp loop |
+| **Static Diagram** | Flows, hierarchies, org charts | Neural network layers |
+| **Animated CSS** | Simple movements, transitions | Twisting helix |
+| **3D (Three.js)** | Physical structure, spatial relationships | DNA, molecules, machines |
+| **Interactive** | User needs to explore, rotate, zoom | 3D models |
+
+**Rule**: If the topic has physical/spatial structure → consider 3D. Otherwise → simpler is better.
+
+### Step 3: Pick View Layout
 Choose the layout that fits the content:
 
 | Layout | Use When |
 |--------|----------|
-| **Single** | One flowchart, one diagram, one piece of info |
-| **Split (2-col)** | Explanation + diagram, intro + details |
-| **Timeline** | History, evolution, chronological events |
-| **Comparison** | X vs Y vs Z, pros/cons, side-by-side |
-| **Multi-view** | Combine 2+ layouts for richer information |
+| **Single** | One visual, minimal text |
+| **Split (2-col)** | Visual + explanation side by side |
+| **Split (3-col)** | Complex topics with multiple facets |
+| **Timeline** | History, evolution, chronological |
+| **Comparison** | X vs Y vs Z, pros/cons, specs |
+| **Multi-view** | Combine layouts for rich information |
 
-### Step 3: Get Fresh Information
+### Step 4: Get Fresh Information
 **Never use training knowledge.** Always fetch fresh data:
 - Web search for current info
 - Web fetch for specific pages
 - Local files if relevant
 
-### Step 4: Markdown First
-Write the content in markdown first, then format.
+**Fallback**: If search/fetch returns nothing, use training knowledge but be upfront: "Based on my training data..."
 
-### Step 5: Apply Template
-Use the templates in `/Users/burnz/showsee/views/`:
+### Step 5: Markdown First
+Write the content in markdown, then format.
 
-| Template | File | Best For |
-|----------|------|----------|
-| Timeline | `view-timeline.html` | History, evolution, releases |
-| Comparison | `view-comparison.html` | X vs Y, specs, pros/cons |
-| Multi | Create custom | Rich views combining layouts |
+### Step 6: Build and Push
+Create the HTML file, update default view, commit to git.
 
-## Examples
+## Visualization Decision Tree
 
-**User asks: "Tell me about LLaMA"**
-1. Intent: Overview + comparison
-2. Layout: Multi-view (split + timeline + table)
-3. Fresh info: Search for LLaMA 4 specs
-4. Content: Markdown overview
-5. Template: Custom multi-view
+```
+Topic has physical/spatial structure?
+├── Yes → Can it be represented in 2D?
+│   ├── Yes → Static diagram or CSS animation
+│   └── No → 3D (Three.js)
+└── No → Text/diagram based
+```
 
-**User asks: "History of iPhones"**
-1. Intent: Timeline
-2. Layout: Timeline view
-3. Fresh info: Search iPhone releases
-4. Content: Markdown events
-5. Template: Timeline
+**3D candidates**: DNA, proteins, machines, buildings, molecules, engines, solar systems, anatomical structures, tools with parts
 
-**User asks: "Compare GPT vs Claude"**
-1. Intent: Comparison
-2. Layout: 3-column comparison
-3. Fresh info: Current model specs
-4. Content: Markdown comparison
-5. Template: Comparison
+**2D diagram candidates**: Networks, flows, hierarchies, timelines, comparisons, charts
+
+**Text-based**: Concepts, explanations, definitions, processes (with icons/flowcharts)
+
+## Available Libraries (CDN)
+
+- **Three.js**: `https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js` — 3D
+- **Chart.js**: `https://cdn.jsdelivr.net/npm/chart.js` — charts
+- **D3.js**: `https://d3js.org/d3.v7.min.js` — data visualization
 
 ## Output
 
-Create a new `.html` file in `/Users/burnz/showsee/views/` named:
-`view-{topic}-{type}.html`
+Create a new `.html` file in `/Users/burnz/showsee/views/`:
+`view-{topic}.html`
 
-Example: `view-llama-multi.html`
-
-Then update `showsee.html` to set it as the default:
+Update `showsee.html` to set as default:
 ```javascript
-currentViewId = 'view-llama-multi';
-currentViewTitle = 'LLaMA';
+currentViewId = 'view-{topic}';
+currentViewTitle = '{Topic Name}';
 ```
+
+Commit: `cd ~/showsee && git add -A && git commit -m "Add {topic} view" && git push`
 
 ## Rules
 
-1. Always get fresh info, never rely on training knowledge
-2. Pick the simplest layout that fits
-3. Keep content concise — bullet points, not paragraphs
-4. Use consistent styling (dark theme, GitHub colors)
-5. Commit views to git: `cd ~/showsee && git add -A && git commit -m "Add [topic] view" && git push`
+1. Always get fresh info first, fall back to training if needed (say so)
+2. Pick the simplest visualization that works
+3. Don't over-engineer — a simple diagram beats a broken 3D model
+4. Keep content scannable — bullets, not paragraphs
+5. Consistent dark theme: background #0d1117, text #c9d1d9, accent #58a6ff
