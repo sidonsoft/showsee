@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LLaMA Timeline</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #0d1117; 
+    color: #c9d1d9; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 30px;
+  }
+  
+  h1 {
+    color: #f0883e;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    color: #8b949e;
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+    max-width: 700px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #30363d;
+  }
+  
+  .event {
+    position: relative;
+    margin-bottom: 28px;
+    padding-left: 30px;
+  }
+  .event::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid;
+  }
+  
+  .event.year::before { border-color: #f0883e; background: #f0883e; }
+  .event.release::before { border-color: #58a6ff; background: #58a6ff; }
+  .event.big::before { border-color: #3fb950; background: #3fb950; }
+  
+  .event h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .event.year h3 { color: #f0883e; font-size: 18px; }
+  .event.release h3 { color: #58a6ff; }
+  .event.big h3 { color: #3fb950; }
+  
+  .event p {
+    color: #8b949e;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  
+  .event .tag {
+    display: inline-block;
+    background: #161b22;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-right: 6px;
+  }
+  .event .tag.open { color: #3fb950; border: 1px solid #3fb950; }
+  .event .tag.viral { color: #a371f7; border: 1px solid #a371f7; }
+  .event .tag.big { color: #f0883e; border: 1px solid #f0883e; }
+  .event .tag.model { color: #79c0ff; border: 1px solid #79c0ff; }
+  
+  .compare {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #21262d;
+  }
+  .compare h2 {
+    color: #58a6ff;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .models {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .model {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 16px;
+    min-width: 180px;
+  }
+  .model h4 {
+    font-size: 14px;
+    color: #c9d1d9;
+    margin-bottom: 8px;
+  }
+  .model p {
+    font-size: 12px;
+    color: #8b949e;
+    margin: 4px 0;
+  }
+  .model .size { color: #f0883e; }
+</style>
+</head>
+<body>
+
+<h1>Meta LLaMA</h1>
+<p class="subtitle">Open source AI from Facebook/Meta</p>
+
+<div class="timeline">
+  <div class="event year">
+    <h3>February 2023</h3>
+    <p>The beginning</p>
+  </div>
+  
+  <div class="event release">
+    <h3>LLaMA 1 Released</h3>
+    <p>Meta releases 4 model sizes: 7B, 13B, 33B, 65B parameters. Outperforms GPT-3 despite being smaller.</p>
+    <span class="tag open">Open weights</span>
+    <span class="tag model">Research only</span>
+  </div>
+  
+  <div class="event big">
+    <h3>March 2023 — The Leak</h3>
+    <p>A user posts LLaMA weights on 4chan. Within hours, everyone has it. Suddenly anyone can run a GPT-class model locally. Free. Forever.</p>
+    <span class="tag viral">Went viral</span>
+    <span class="tag big">Game changer</span>
+  </div>
+  
+  <div class="event year">
+    <h3>July 2023</h3>
+    <p>Bigger and commercial</p>
+  </div>
+  
+  <div class="event release">
+    <h3>LLaMA 2</h3>
+    <p>Commercial license available (with terms). Larger context (4k → 8k). Better training with RLHF. Chat fine-tune included.</p>
+    <span class="tag open">Open weights</span>
+    <span class="tag model">Commercial OK</span>
+  </div>
+  
+  <div class="event big">
+    <h3>LLaMA 2 Powers the Ecosystem</h3>
+    <p>Alpaca, Vicuna, LlamaCpp, Ollama, LM Studio — everyone builds on it. Local AI becomes mainstream.</p>
+    <span class="tag big">Ecosystem boom</span>
+  </div>
+  
+  <div class="event year">
+    <h3>2024</h3>
+    <p>Smaller, smarter, faster</p>
+  </div>
+  
+  <div class="event release">
+    <h3>LLaMA 3 (April 2024)</h3>
+    <p>8B and 70B models. Significant improvements. Runs well on consumer hardware. Open weights, no restrictions.</p>
+    <span class="tag open">Fully open</span>
+  </div>
+  
+  <div class="event release">
+    <h3>The Small Model Race</h3>
+    <p>Phi-3, Mistral, Gemma, TinyLLaMA — quality improves while size drops. Now runs on phones and laptops.</p>
+    <span class="tag model">1B-7B models</span>
+  </div>
+  
+  <div class="event year">
+    <h3>Today</h3>
+    <p>Open source matches closed for most tasks</p>
+  </div>
+</div>
+
+<div class="compare">
+  <h2>LLaMA Model Sizes</h2>
+  <div class="models">
+    <div class="model">
+      <h4>LLaMA 3.2</h4>
+      <p>1B, 3B parameters</p>
+      <p class="size">Runs on phones</p>
+    </div>
+    <div class="model">
+      <h4>LLaMA 3.1</h4>
+      <p>8B parameters</p>
+      <p class="size">Laptop capable</p>
+    </div>
+    <div class="model">
+      <h4>LLaMA 3.1</h4>
+      <p>70B parameters</p>
+      <p class="size">GPU recommended</p>
+    </div>
+    <div class="model">
+      <h4>LLaMA 3.1</h4>
+      <p>405B parameters</p>
+      <p class="size">Datacenter only</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
